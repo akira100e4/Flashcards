@@ -5,64 +5,64 @@
       "italiano": "Lontano",
       "priorita": true,
       "corrette": 0,
-      "sbagliate": 1,
-      "ultima_revisione": "2025-10-02T11:41:58.531994"
+      "sbagliate": 3,
+      "ultima_revisione": "2025-10-02T12:35:08.011440"
     },
     {
       "tedesco": "üben",
       "italiano": "esercitare",
       "priorita": true,
       "corrette": 0,
-      "sbagliate": 0,
-      "ultima_revisione": null
+      "sbagliate": 2,
+      "ultima_revisione": "2025-10-02T12:35:10.575362"
     },
     {
       "tedesco": "Nachmittag",
       "italiano": "pomeriggio",
       "priorita": false,
-      "corrette": 1,
+      "corrette": 2,
       "sbagliate": 0,
-      "ultima_revisione": "2025-10-02T11:41:38.114291"
+      "ultima_revisione": "2025-10-02T11:58:55.200671"
     },
     {
       "tedesco": "verkauft",
       "italiano": "vende",
       "priorita": true,
-      "corrette": 0,
-      "sbagliate": 0,
-      "ultima_revisione": null
+      "corrette": 1,
+      "sbagliate": 1,
+      "ultima_revisione": "2025-10-02T12:35:14.442391"
     },
     {
       "tedesco": "Leute",
       "italiano": "persone",
       "priorita": true,
-      "corrette": 1,
+      "corrette": 2,
       "sbagliate": 0,
-      "ultima_revisione": "2025-10-02T11:42:29.444046"
+      "ultima_revisione": "2025-10-02T12:01:19.000847"
     },
     {
       "tedesco": "Kunden",
       "italiano": "clienti",
       "priorita": true,
-      "corrette": 0,
-      "sbagliate": 0,
-      "ultima_revisione": null
+      "corrette": 1,
+      "sbagliate": 1,
+      "ultima_revisione": "2025-10-02T12:35:17.193405"
     },
     {
       "tedesco": "schwierig",
       "italiano": "difficile",
       "priorita": true,
-      "corrette": 0,
-      "sbagliate": 0,
-      "ultima_revisione": null
+      "corrette": 1,
+      "sbagliate": 1,
+      "ultima_revisione": "2025-10-02T12:35:19.760551"
     },
     {
       "tedesco": "erzählen",
       "italiano": "raccontare",
       "priorita": true,
-      "corrette": 0,
+      "corrette": 2,
       "sbagliate": 1,
-      "ultima_revisione": "2025-10-02T11:43:04.990652"
+      "ultima_revisione": "2025-10-02T12:36:38.128233"
     },
     {
       "tedesco": "Nachrichten",
@@ -77,64 +77,64 @@
       "italiano": "preparare",
       "priorita": true,
       "corrette": 0,
-      "sbagliate": 1,
-      "ultima_revisione": "2025-10-02T11:41:48.408749"
+      "sbagliate": 3,
+      "ultima_revisione": "2025-10-02T12:35:22.107992"
     },
     {
       "tedesco": "regnet es",
       "italiano": "piove",
       "priorita": true,
-      "corrette": 0,
+      "corrette": 1,
       "sbagliate": 0,
-      "ultima_revisione": null
+      "ultima_revisione": "2025-10-02T12:01:07.296800"
     },
     {
       "tedesco": "anziehen",
       "italiano": "vestirsi",
       "priorita": true,
-      "corrette": 0,
-      "sbagliate": 1,
-      "ultima_revisione": "2025-10-02T11:42:54.210881"
+      "corrette": 1,
+      "sbagliate": 2,
+      "ultima_revisione": "2025-10-02T12:36:42.013847"
     },
     {
       "tedesco": "nach",
       "italiano": "poi/dopo",
       "priorita": true,
-      "corrette": 1,
+      "corrette": 2,
       "sbagliate": 0,
-      "ultima_revisione": "2025-10-02T11:41:06.763372"
+      "ultima_revisione": "2025-10-02T11:58:48.440849"
     },
     {
       "tedesco": "aufmerksam",
       "italiano": "attentamente",
       "priorita": true,
-      "corrette": 1,
-      "sbagliate": 1,
-      "ultima_revisione": "2025-10-02T11:43:23.980243"
+      "corrette": 2,
+      "sbagliate": 4,
+      "ultima_revisione": "2025-10-02T12:37:30.231585"
     },
     {
       "tedesco": "stellen",
       "italiano": "mettere/porre",
       "priorita": true,
-      "corrette": 0,
+      "corrette": 2,
       "sbagliate": 1,
-      "ultima_revisione": "2025-10-02T11:43:14.826929"
+      "ultima_revisione": "2025-10-02T12:36:49.494242"
     },
     {
       "tedesco": "dort",
       "italiano": "lì",
       "priorita": true,
-      "corrette": 1,
+      "corrette": 2,
       "sbagliate": 0,
-      "ultima_revisione": "2025-10-02T11:41:35.473535"
+      "ultima_revisione": "2025-10-02T11:59:23.177618"
     },
     {
       "tedesco": "treffen",
       "italiano": "incontrare",
       "priorita": true,
-      "corrette": 0,
-      "sbagliate": 1,
-      "ultima_revisione": "2025-10-02T11:43:11.595478"
+      "corrette": 1,
+      "sbagliate": 2,
+      "ultima_revisione": "2025-10-02T12:37:00.995240"
     },
     {
       "tedesco": "danach",
@@ -148,177 +148,177 @@
       "tedesco": "bergen",
       "italiano": "montagne",
       "priorita": true,
-      "corrette": 1,
+      "corrette": 2,
       "sbagliate": 0,
-      "ultima_revisione": "2025-10-02T11:43:19.540291"
+      "ultima_revisione": "2025-10-02T12:01:52.527057"
     },
     {
       "tedesco": "träume",
       "italiano": "sogno",
       "priorita": true,
-      "corrette": 1,
+      "corrette": 2,
       "sbagliate": 0,
-      "ultima_revisione": "2025-10-02T11:43:16.699842"
+      "ultima_revisione": "2025-10-02T12:01:16.021896"
     },
     {
       "tedesco": "Zukunft",
       "italiano": "futuro",
       "priorita": true,
-      "corrette": 0,
-      "sbagliate": 1,
-      "ultima_revisione": "2025-10-02T11:41:43.256134"
+      "corrette": 1,
+      "sbagliate": 2,
+      "ultima_revisione": "2025-10-02T12:35:24.162721"
     },
     {
       "tedesco": "froh",
       "italiano": "felice",
       "priorita": true,
-      "corrette": 0,
+      "corrette": 1,
       "sbagliate": 0,
-      "ultima_revisione": null
+      "ultima_revisione": "2025-10-02T12:01:41.138138"
     },
     {
       "tedesco": "zufrieden",
       "italiano": "soddisfatto",
       "priorita": true,
       "corrette": 0,
-      "sbagliate": 1,
-      "ultima_revisione": "2025-10-02T11:43:32.423597"
+      "sbagliate": 3,
+      "ultima_revisione": "2025-10-02T12:35:27.540484"
     },
     {
       "tedesco": "seiten",
       "italiano": "pagine",
       "priorita": true,
       "corrette": 0,
-      "sbagliate": 0,
-      "ultima_revisione": null
+      "sbagliate": 2,
+      "ultima_revisione": "2025-10-02T12:35:29.875809"
     },
     {
       "tedesco": "schlafen",
       "italiano": "dormire",
       "priorita": true,
-      "corrette": 0,
+      "corrette": 2,
       "sbagliate": 1,
-      "ultima_revisione": "2025-10-02T11:41:32.511072"
+      "ultima_revisione": "2025-10-02T12:37:02.575549"
     },
     {
       "tedesco": "möglichkeiten",
       "italiano": "possibilità",
       "priorita": true,
-      "corrette": 0,
-      "sbagliate": 0,
-      "ultima_revisione": null
+      "corrette": 1,
+      "sbagliate": 1,
+      "ultima_revisione": "2025-10-02T12:35:34.676551"
     },
     {
       "tedesco": "Gesicht",
       "italiano": "volto, faccia",
       "priorita": true,
       "corrette": 0,
-      "sbagliate": 1,
-      "ultima_revisione": "2025-10-02T11:30:52.976362"
+      "sbagliate": 3,
+      "ultima_revisione": "2025-10-02T12:35:37.928700"
     },
     {
       "tedesco": "Zahnbürste",
       "italiano": "spazzolino da denti",
       "priorita": true,
-      "corrette": 2,
+      "corrette": 3,
       "sbagliate": 0,
-      "ultima_revisione": "2025-10-02T11:42:23.679052"
+      "ultima_revisione": "2025-10-02T11:59:42.184043"
     },
     {
       "tedesco": "Haare kämmen",
       "italiano": "pettinarsi i capelli",
       "priorita": true,
-      "corrette": 0,
+      "corrette": 2,
       "sbagliate": 1,
-      "ultima_revisione": "2025-10-02T11:43:09.331983"
+      "ultima_revisione": "2025-10-02T12:37:04.707595"
     },
     {
       "tedesco": "Kleidung",
       "italiano": "vestiti",
       "priorita": true,
-      "corrette": 1,
+      "corrette": 2,
       "sbagliate": 0,
-      "ultima_revisione": "2025-10-02T11:42:42.398983"
+      "ultima_revisione": "2025-10-02T12:01:42.880445"
     },
     {
       "tedesco": "überlegen",
       "italiano": "riflettere, pensare a cosa fare",
       "priorita": true,
       "corrette": 0,
-      "sbagliate": 0,
-      "ultima_revisione": null
+      "sbagliate": 2,
+      "ultima_revisione": "2025-10-02T12:35:41.409467"
     },
     {
       "tedesco": "tragen",
       "italiano": "portare, indossare",
       "priorita": true,
-      "corrette": 0,
+      "corrette": 2,
       "sbagliate": 1,
-      "ultima_revisione": "2025-10-02T11:42:59.719313"
+      "ultima_revisione": "2025-10-02T12:37:08.045873"
     },
     {
       "tedesco": "Hose",
       "italiano": "pantaloni",
       "priorita": true,
-      "corrette": 0,
+      "corrette": 2,
       "sbagliate": 1,
-      "ultima_revisione": "2025-10-02T11:42:27.760834"
+      "ultima_revisione": "2025-10-02T12:37:09.777902"
     },
     {
       "tedesco": "deshalb",
       "italiano": "perciò, quindi",
       "priorita": true,
       "corrette": 0,
-      "sbagliate": 0,
-      "ultima_revisione": null
+      "sbagliate": 2,
+      "ultima_revisione": "2025-10-02T12:35:44.975488"
     },
     {
       "tedesco": "während",
       "italiano": "mentre",
       "priorita": true,
       "corrette": 0,
-      "sbagliate": 0,
-      "ultima_revisione": null
+      "sbagliate": 2,
+      "ultima_revisione": "2025-10-02T12:35:48.943437"
     },
     {
       "tedesco": "räumen (aufräumen)",
       "italiano": "mettere in ordine",
       "priorita": true,
-      "corrette": 0,
-      "sbagliate": 0,
-      "ultima_revisione": null
+      "corrette": 1,
+      "sbagliate": 1,
+      "ultima_revisione": "2025-10-02T12:35:54.091985"
     },
     {
       "tedesco": "verlassen",
       "italiano": "lasciare, uscire da",
       "priorita": true,
       "corrette": 0,
-      "sbagliate": 1,
-      "ultima_revisione": "2025-10-02T11:42:37.748841"
+      "sbagliate": 3,
+      "ultima_revisione": "2025-10-02T12:35:59.326916"
     },
     {
       "tedesco": "draußen",
       "italiano": "fuori",
       "priorita": true,
-      "corrette": 0,
-      "sbagliate": 1,
-      "ultima_revisione": "2025-10-02T11:41:14.826517"
+      "corrette": 1,
+      "sbagliate": 2,
+      "ultima_revisione": "2025-10-02T12:36:02.527896"
     },
     {
       "tedesco": "der Himmel",
       "italiano": "il cielo",
       "priorita": true,
       "corrette": 0,
-      "sbagliate": 0,
-      "ultima_revisione": null
+      "sbagliate": 2,
+      "ultima_revisione": "2025-10-02T12:36:06.659418"
     },
     {
       "tedesco": "Bushaltestelle",
       "italiano": "fermata dell’autobus",
       "priorita": true,
-      "corrette": 0,
+      "corrette": 1,
       "sbagliate": 0,
-      "ultima_revisione": null
+      "ultima_revisione": "2025-10-02T11:59:48.703645"
     },
     {
       "tedesco": "warten",
@@ -332,97 +332,97 @@
       "tedesco": "manche",
       "italiano": "alcuni",
       "priorita": true,
-      "corrette": 0,
+      "corrette": 1,
       "sbagliate": 0,
-      "ultima_revisione": null
+      "ultima_revisione": "2025-10-02T11:59:26.914601"
     },
     {
       "tedesco": "andere",
       "italiano": "altri",
       "priorita": true,
-      "corrette": 0,
-      "sbagliate": 0,
-      "ultima_revisione": null
+      "corrette": 1,
+      "sbagliate": 1,
+      "ultima_revisione": "2025-10-02T12:36:10.147748"
     },
     {
       "tedesco": "wach werden",
       "italiano": "svegliarsi",
       "priorita": false,
-      "corrette": 0,
+      "corrette": 1,
       "sbagliate": 0,
-      "ultima_revisione": null
+      "ultima_revisione": "2025-10-02T12:01:10.377203"
     },
     {
       "tedesco": "Wohnzimmer",
       "italiano": "salotto",
       "priorita": false,
-      "corrette": 2,
+      "corrette": 3,
       "sbagliate": 0,
-      "ultima_revisione": "2025-10-02T11:42:44.647391"
+      "ultima_revisione": "2025-10-02T12:00:12.576001"
     },
     {
       "tedesco": "entfernt",
       "italiano": "distante",
       "priorita": false,
       "corrette": 0,
-      "sbagliate": 0,
-      "ultima_revisione": null
+      "sbagliate": 2,
+      "ultima_revisione": "2025-10-02T12:36:12.327718"
     },
     {
       "tedesco": "Das klingt toll",
       "italiano": "sembra fantasico",
       "priorita": false,
-      "corrette": 0,
+      "corrette": 1,
       "sbagliate": 1,
-      "ultima_revisione": "2025-10-02T11:54:01.990706"
+      "ultima_revisione": "2025-10-02T12:36:15.259687"
     },
     {
       "tedesco": "Tafel",
       "italiano": "lavagna",
       "priorita": false,
-      "corrette": 0,
+      "corrette": 1,
       "sbagliate": 0,
-      "ultima_revisione": null
+      "ultima_revisione": "2025-10-02T12:01:44.437805"
     },
     {
       "tedesco": "wartet auf",
       "italiano": "sta aspettando / essere in attesa",
       "priorita": false,
       "corrette": 0,
-      "sbagliate": 2,
-      "ultima_revisione": "2025-10-02T11:54:10.747973"
+      "sbagliate": 3,
+      "ultima_revisione": "2025-10-02T12:36:18.881816"
     },
     {
       "tedesco": "fühlt sich",
       "italiano": "si sente",
       "priorita": false,
       "corrette": 0,
-      "sbagliate": 0,
-      "ultima_revisione": null
+      "sbagliate": 2,
+      "ultima_revisione": "2025-10-02T12:36:21.880406"
     },
     {
       "tedesco": "er weiß",
       "italiano": "lo sa",
       "priorita": false,
-      "corrette": 0,
+      "corrette": 2,
       "sbagliate": 1,
-      "ultima_revisione": "2025-10-02T11:42:20.478092"
+      "ultima_revisione": "2025-10-02T12:37:13.127644"
     },
     {
       "tedesco": "erklären",
       "italiano": "spiegare",
       "priorita": false,
       "corrette": 1,
-      "sbagliate": 0,
-      "ultima_revisione": "2025-10-02T11:43:38.091191"
+      "sbagliate": 2,
+      "ultima_revisione": "2025-10-02T12:37:15.393610"
     },
     {
       "tedesco": "schauen",
       "italiano": "vedere / dare un’occhiata / controllare",
       "priorita": false,
       "corrette": 0,
-      "sbagliate": 0,
-      "ultima_revisione": null
+      "sbagliate": 2,
+      "ultima_revisione": "2025-10-02T12:36:27.377376"
     },
     {
       "tedesco": "aufmerksam",
@@ -437,24 +437,24 @@
       "italiano": "uccelli",
       "priorita": false,
       "corrette": 0,
-      "sbagliate": 1,
-      "ultima_revisione": "2025-10-02T11:42:49.449780"
+      "sbagliate": 3,
+      "ultima_revisione": "2025-10-02T12:36:32.628646"
     },
     {
       "tedesco": "gleich",
       "italiano": "uguale",
       "priorita": false,
-      "corrette": 1,
+      "corrette": 2,
       "sbagliate": 0,
-      "ultima_revisione": "2025-10-02T11:42:32.732411"
+      "ultima_revisione": "2025-10-02T11:59:44.291249"
     },
     {
       "tedesco": "wichtig",
       "italiano": "essenziale / importante",
       "priorita": false,
-      "corrette": 1,
+      "corrette": 2,
       "sbagliate": 0,
-      "ultima_revisione": "2025-10-02T11:41:20.493230"
+      "ultima_revisione": "2025-10-02T11:59:06.113867"
     },
     {
       "tedesco": "holen",
@@ -469,16 +469,16 @@
       "italiano": "orgoglioso",
       "priorita": false,
       "corrette": 1,
-      "sbagliate": 0,
-      "ultima_revisione": "2025-10-02T11:35:46.581967"
+      "sbagliate": 2,
+      "ultima_revisione": "2025-10-02T12:37:19.841537"
     },
     {
       "tedesco": "geschichten",
       "italiano": "storie",
       "priorita": false,
-      "corrette": 1,
+      "corrette": 2,
       "sbagliate": 0,
-      "ultima_revisione": "2025-10-02T11:42:01.826940"
+      "ultima_revisione": "2025-10-02T12:00:46.625296"
     }
   ]
 }

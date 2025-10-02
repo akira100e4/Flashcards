@@ -130,9 +130,30 @@ def start_study():
     try:
         data = request.get_json()
         modalita = data.get('modalita', 'tedesco-italiano')
+        tipo_studio = data.get('tipo_studio', 'tutte')  # 'tutte', 'difficili', 'priorita'
         
         collection = get_collection()
-        flashcards = collection.get_flashcards_casuali()
+        
+        # Seleziona le flashcards in base al tipo di studio
+        if tipo_studio == 'difficili':
+            # Filtra le card con percentuale < 70% o mai studiate
+            cards_difficili = [
+                card for card in collection 
+                if card.tentativi_totali == 0 or card.percentuale_successo < 70
+            ]
+            if not cards_difficili:
+                return jsonify({'error': 'Nessuna flashcard difficile trovata! Sei bravissimo! 🌟'}), 400
+            flashcards = cards_difficili
+            # Ordina per difficoltà (più sbagliate prima)
+            flashcards.sort(key=lambda x: (x.tentativi_totali == 0, x.percentuale_successo))
+        elif tipo_studio == 'priorita':
+            flashcards = collection.filtra_per_priorita()
+            if not flashcards:
+                return jsonify({'error': 'Nessuna flashcard con priorità trovata!'}), 400
+            import random
+            random.shuffle(flashcards)
+        else:
+            flashcards = collection.get_flashcards_casuali()
         
         # Salva la sessione
         session['flashcards'] = [
@@ -144,6 +165,7 @@ def start_study():
             for card in flashcards
         ]
         session['modalita'] = modalita
+        session['tipo_studio'] = tipo_studio
         session['indice'] = 0
         session['corrette'] = 0
         
@@ -164,8 +186,13 @@ def get_current_flashcard():
         indice = session.get('indice', 0)
         modalita = session.get('modalita', 'tedesco-italiano')
         
+        # Se la sessione è completata, restituisci i risultati
         if not flashcards or indice >= len(flashcards):
-            return jsonify({'completed': True})
+            return jsonify({
+                'completed': True,
+                'corrette': session.get('corrette', 0),
+                'totale': len(flashcards) if flashcards else 0
+            })
         
         card = flashcards[indice]
         

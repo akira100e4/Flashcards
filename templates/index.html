@@ -39,14 +39,30 @@
         <!-- Controlli principali -->
         <div class="main-controls">
             <div class="mode-selector">
-                <h3>Modalità di Studio</h3>
+                <h3>Modalità di Traduzione</h3>
                 <label>
                     <input type="radio" name="modalita" value="tedesco-italiano" checked>
-                    <span>Tedesco → Italiano</span>
+                    <span>🇩🇪 Tedesco → Italiano 🇮🇹</span>
                 </label>
                 <label>
                     <input type="radio" name="modalita" value="italiano-tedesco">
-                    <span>Italiano → Tedesco</span>
+                    <span>🇮🇹 Italiano → Tedesco 🇩🇪</span>
+                </label>
+            </div>
+
+            <div class="mode-selector">
+                <h3>Tipo di Studio</h3>
+                <label>
+                    <input type="radio" name="tipo_studio" value="tutte" checked>
+                    <span>📚 Tutte le flashcards</span>
+                </label>
+                <label>
+                    <input type="radio" name="tipo_studio" value="difficili">
+                    <span>🎯 Solo quelle difficili (&lt; 70%)</span>
+                </label>
+                <label>
+                    <input type="radio" name="tipo_studio" value="priorita">
+                    <span>⭐ Solo priorità</span>
                 </label>
             </div>
 
@@ -156,25 +172,16 @@
                 return;
             }
 
-            // Ferma eventuali audio in riproduzione
             speechSynthesis.cancel();
-
-            // Converti codice lingua
             const langCode = lang === 'de' ? 'de-DE' : 'it-IT';
-
-            // Crea l'utterance
             const utterance = new SpeechSynthesisUtterance(text);
             utterance.lang = langCode;
             utterance.rate = 0.9;
             utterance.pitch = 1.0;
             utterance.volume = 1.0;
-
-            // Gestione errori
             utterance.onerror = function(error) {
                 console.error('Errore sintesi vocale:', error);
             };
-
-            // Riproduci
             speechSynthesis.speak(utterance);
         }
 
@@ -253,18 +260,24 @@
 
         async function startStudy() {
             const modalita = document.querySelector('input[name="modalita"]:checked').value;
+            const tipoStudio = document.querySelector('input[name="tipo_studio"]:checked').value;
 
             try {
                 const response = await fetch('/api/study/start', {
                     method: 'POST',
                     headers: {'Content-Type': 'application/json'},
-                    body: JSON.stringify({modalita: modalita})
+                    body: JSON.stringify({
+                        modalita: modalita,
+                        tipo_studio: tipoStudio
+                    })
                 });
+
+                const data = await response.json();
 
                 if (response.ok) {
                     location.href = '/study';
                 } else {
-                    alert('Errore durante l\'avvio dello studio');
+                    alert(data.error || 'Errore durante l\'avvio dello studio');
                 }
             } catch (error) {
                 alert('Errore di rete: ' + error);
@@ -288,7 +301,6 @@
             });
         }
 
-        // Chiudi dialog quando si clicca fuori
         window.onclick = function(event) {
             const modal = document.getElementById('addDialog');
             if (event.target == modal) {
