@@ -68,9 +68,9 @@
       "tedesco": "Nachrichten",
       "italiano": "Notizie",
       "priorita": true,
-      "corrette": 1,
+      "corrette": 2,
       "sbagliate": 0,
-      "ultima_revisione": "2025-10-02T11:41:26.125910"
+      "ultima_revisione": "2025-10-02T11:54:17.022521"
     },
     {
       "tedesco": "vorvereiten",
@@ -140,9 +140,9 @@
       "tedesco": "danach",
       "italiano": "Dopodiché",
       "priorita": true,
-      "corrette": 1,
+      "corrette": 2,
       "sbagliate": 0,
-      "ultima_revisione": "2025-10-02T11:42:09.725780"
+      "ultima_revisione": "2025-10-02T11:54:24.618535"
     },
     {
       "tedesco": "bergen",
@@ -324,9 +324,9 @@
       "tedesco": "warten",
       "italiano": "aspettare",
       "priorita": true,
-      "corrette": 0,
+      "corrette": 1,
       "sbagliate": 0,
-      "ultima_revisione": null
+      "ultima_revisione": "2025-10-02T11:54:21.784549"
     },
     {
       "tedesco": "manche",
@@ -373,8 +373,8 @@
       "italiano": "sembra fantasico",
       "priorita": false,
       "corrette": 0,
-      "sbagliate": 0,
-      "ultima_revisione": null
+      "sbagliate": 1,
+      "ultima_revisione": "2025-10-02T11:54:01.990706"
     },
     {
       "tedesco": "Tafel",
@@ -389,8 +389,8 @@
       "italiano": "sta aspettando / essere in attesa",
       "priorita": false,
       "corrette": 0,
-      "sbagliate": 1,
-      "ultima_revisione": "2025-10-02T11:42:07.394167"
+      "sbagliate": 2,
+      "ultima_revisione": "2025-10-02T11:54:10.747973"
     },
     {
       "tedesco": "fühlt sich",
@@ -460,9 +460,9 @@
       "tedesco": "holen",
       "italiano": "prendere",
       "priorita": false,
-      "corrette": 0,
+      "corrette": 1,
       "sbagliate": 0,
-      "ultima_revisione": null
+      "ultima_revisione": "2025-10-02T11:54:07.253291"
     },
     {
       "tedesco": "stolz",

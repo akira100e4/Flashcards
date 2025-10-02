@@ -1,289 +1,355 @@
-@app.route('/api/study/answer', methods=['POST']"""
-Flashcards Tedesco-Italiano - Versione Web
-Server Flask per l'applicazione web
-"""
-from flask import Flask, render_template, request, jsonify, session
-import sys
-import os
-import secrets
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>📚 Sessione di Studio</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body class="study-page">
+    <div class="study-container">
+        <div class="progress-bar">
+            <div class="progress-fill" id="progressBar"></div>
+        </div>
 
-# Aggiungi la directory root al path
-sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+        <div class="progress-text" id="progressText"></div>
 
-from src.models.flashcard import FlashcardCollection
-from src.utils.parser import FlashcardParser
-from src.utils.storage import Storage
+        <div class="card-display" id="cardDisplay">
+            <div class="card-type" id="cardType"></div>
+            <div class="card-question-container">
+                <div class="card-question" id="cardQuestion"></div>
+                <button class="audio-btn" id="audioQuestionBtn" onclick="playAudio('question')" title="Ascolta pronuncia">
+                    🔊
+                </button>
+            </div>
+            <div class="card-separator" id="separator" style="display: none;"></div>
+            <div class="card-answer-container" id="answerContainer" style="display: none;">
+                <div class="card-answer" id="cardAnswer"></div>
+                <button class="audio-btn" id="audioAnswerBtn" onclick="playAudio('answer')" title="Ascolta pronuncia">
+                    🔊
+                </button>
+            </div>
+        </div>
 
-app = Flask(__name__)
-app.secret_key = secrets.token_hex(16)
+        <div class="study-controls">
+            <button class="btn btn-primary btn-large" id="showAnswerBtn" onclick="showAnswer()">
+                👁️ Mostra Risposta
+            </button>
 
-# Storage globale
-storage = Storage()
+            <div class="answer-buttons" id="answerButtons" style="display: none;">
+                <button class="btn btn-danger btn-large" onclick="registerAnswer(false)">
+                    ✗ Sbagliata
+                </button>
+                <button class="btn btn-success btn-large" onclick="registerAnswer(true)">
+                    ✓ Corretta
+                </button>
+            </div>
+        </div>
 
+        <div class="study-controls">
+            <button class="btn btn-primary btn-large" id="showAnswerBtn" onclick="showAnswer()">
+                👁️ Mostra Risposta
+            </button>
 
-def get_collection():
-    """Ottiene la collezione di flashcards"""
-    return storage.carica()
+            <div class="answer-buttons" id="answerButtons" style="display: none;">
+                <button class="btn btn-danger btn-large" onclick="registerAnswer(false)">
+                    ✗ Sbagliata
+                </button>
+                <button class="btn btn-success btn-large" onclick="registerAnswer(true)">
+                    ✓ Corretta
+                </button>
+            </div>
+        </div>
 
+        <div class="study-shortcuts">
+            <p><strong>Shortcuts:</strong> Spazio = Mostra risposta | ← = Sbagliata | → = Corretta</p>
+        </div>
+    </div>
 
-def save_collection(collection):
-    """Salva la collezione"""
-    storage.salva(collection)
+    <!-- Schermata riepilogo -->
+    <div id="summaryScreen" class="summary-screen" style="display: none;">
+        <div class="summary-content">
+            <h1>🎉 Sessione Completata!</h1>
+            <div class="summary-stats">
+                <h2>📊 RISULTATI</h2>
+                <div class="result-item">
+                    <span>Risposte Corrette:</span>
+                    <strong id="correctCount"></strong>
+                </div>
+                <div class="result-item">
+                    <span>Percentuale:</span>
+                    <strong id="percentage"></strong>
+                </div>
+            </div>
+            <div class="motivational-message" id="motivationalMessage"></div>
+            <button class="btn btn-primary btn-large" onclick="location.href='/'">
+                ✓ Torna alla Home
+            </button>
+        </div>
+    </div>
 
+    <script>
+        let answerShown = false;
+        let currentCard = null;
+        let questionText = null;
+        let answerText = null;
+        let questionLang = null;
+        let answerLang = null;
 
-@app.route('/')
-def index():
-    """Pagina principale"""
-    collection = get_collection()
-    stats = collection.get_statistiche_generali()
-    flashcards = list(collection)
-    
-    return render_template('index.html', 
-                         flashcards=flashcards,
-                         stats=stats)
-
-
-@app.route('/api/flashcards', methods=['GET'])
-def get_flashcards():
-    """API per ottenere tutte le flashcards"""
-    collection = get_collection()
-    flashcards = [
-        {
-            'tedesco': card.tedesco,
-            'italiano': card.italiano,
-            'priorita': card.priorita,
-            'corrette': card.corrette,
-            'sbagliate': card.sbagliate,
-            'percentuale': card.percentuale_successo
+        // Verifica supporto Web Speech API
+        if (!('speechSynthesis' in window)) {
+            console.warn('Web Speech API non supportata in questo browser');
         }
-        for card in collection
-    ]
-    return jsonify(flashcards)
 
+        async function loadCard() {
+            try {
+                const response = await fetch('/api/study/current');
+                const data = await response.json();
 
-@app.route('/api/flashcards/add', methods=['POST'])
-def add_flashcards():
-    """API per aggiungere flashcards"""
-    try:
-        data = request.get_json()
-        testo = data.get('text', '')
-        
-        nuove_cards = FlashcardParser.parse_testo(testo)
-        
-        if not nuove_cards:
-            return jsonify({'error': 'Nessuna flashcard valida trovata'}), 400
-        
-        collection = get_collection()
-        for card in nuove_cards:
-            collection.aggiungi_flashcard(card)
-        
-        save_collection(collection)
-        
-        return jsonify({
-            'success': True,
-            'count': len(nuove_cards),
-            'message': f'Aggiunte {len(nuove_cards)} flashcards!'
-        })
-    
-    except Exception as e:
-        return jsonify({'error': str(e)}), 500
+                if (data.completed) {
+                    showSummary(data.corrette, data.totale);
+                    return;
+                }
 
+                currentCard = data;
+                answerShown = false;
 
-@app.route('/api/flashcards/<int:index>/delete', methods=['DELETE'])
-def delete_flashcard(index):
-    """API per eliminare una flashcard"""
-    try:
-        collection = get_collection()
-        
-        if 0 <= index < len(collection):
-            collection.rimuovi_flashcard(index)
-            save_collection(collection)
-            return jsonify({'success': True})
-        else:
-            return jsonify({'error': 'Indice non valido'}), 400
-    
-    except Exception as e:
-        return jsonify({'error': str(e)}), 500
+                // Salva i dati per l'audio
+                questionText = data.domanda;
+                answerText = data.risposta;
+                questionLang = data.lingua_domanda === 'de' ? 'de-DE' : 'it-IT';
+                answerLang = data.lingua_risposta === 'de' ? 'de-DE' : 'it-IT';
 
+                // Aggiorna UI
+                document.getElementById('progressText').textContent = 
+                    `Flashcard ${data.indice + 1} di ${data.totale}`;
+                
+                const progressPercent = ((data.indice) / data.totale) * 100;
+                document.getElementById('progressBar').style.width = progressPercent + '%';
 
-@app.route('/api/flashcards/<int:index>/toggle-priority', methods=['POST'])
-def toggle_priority(index):
-    """API per cambiare la priorità di una flashcard"""
-    try:
-        collection = get_collection()
-        card = collection.get_flashcard(index)
-        
-        if card:
-            card.priorita = not card.priorita
-            save_collection(collection)
-            return jsonify({'success': True, 'priorita': card.priorita})
-        else:
-            return jsonify({'error': 'Flashcard non trovata'}), 404
-    
-    except Exception as e:
-        return jsonify({'error': str(e)}), 500
+                document.getElementById('cardType').textContent = 
+                    (data.priorita ? '⭐ ' : '') + 'Traduci:';
+                document.getElementById('cardQuestion').textContent = data.domanda;
+                document.getElementById('cardAnswer').textContent = data.risposta;
 
+                // Nascondi risposta e mostra pulsante
+                document.getElementById('separator').style.display = 'none';
+                document.getElementById('answerContainer').style.display = 'none';
+                document.getElementById('showAnswerBtn').style.display = 'block';
+                document.getElementById('answerButtons').style.display = 'none';
 
-@app.route('/api/study/start', methods=['POST'])
-def start_study():
-    """API per iniziare una sessione di studio"""
-    try:
-        data = request.get_json()
-        modalita = data.get('modalita', 'tedesco-italiano')
-        
-        collection = get_collection()
-        flashcards = collection.get_flashcards_casuali()
-        
-        # Salva la sessione
-        session['flashcards'] = [
-            {
-                'tedesco': card.tedesco,
-                'italiano': card.italiano,
-                'priorita': card.priorita
+            } catch (error) {
+                console.error('Errore nel caricamento della flashcard:', error);
+                alert('Errore nel caricamento della flashcard: ' + error);
             }
-            for card in flashcards
-        ]
-        session['modalita'] = modalita
-        session['indice'] = 0
-        session['corrette'] = 0
-        
-        return jsonify({
-            'success': True,
-            'total': len(flashcards)
-        })
-    
-    except Exception as e:
-        return jsonify({'error': str(e)}), 500
-
-
-@app.route('/api/study/current', methods=['GET'])
-def get_current_flashcard():
-    """API per ottenere la flashcard corrente"""
-    try:
-        flashcards = session.get('flashcards', [])
-        indice = session.get('indice', 0)
-        modalita = session.get('modalita', 'tedesco-italiano')
-        
-        if not flashcards or indice >= len(flashcards):
-            return jsonify({'completed': True})
-        
-        card = flashcards[indice]
-        
-        if modalita == 'tedesco-italiano':
-            domanda = card['tedesco']
-            risposta = card['italiano']
-            lingua_domanda = 'de'
-            lingua_risposta = 'it'
-        else:
-            domanda = card['italiano']
-            risposta = card['tedesco']
-            lingua_domanda = 'it'
-            lingua_risposta = 'de'
-        
-        return jsonify({
-            'domanda': domanda,
-            'risposta': risposta,
-            'priorita': card['priorita'],
-            'indice': indice,
-            'totale': len(flashcards),
-            'corrette': session.get('corrette', 0),
-            'lingua_domanda': lingua_domanda,
-            'lingua_risposta': lingua_risposta
-        })
-    
-    except Exception as e:
-        return jsonify({'error': str(e)}), 500
-
-
-@app.route('/api/audio/<lang>/<text>')
-def get_audio(lang, text):
-    """API per ottenere l'URL dell'audio di Google TTS"""
-    from urllib.parse import quote
-    # Ritorna l'URL dell'API Google TTS
-    audio_url = f"https://translate.google.com/translate_tts?ie=UTF-8&tl={lang}&client=tw-ob&q={quote(text)}"
-    return jsonify({'url': audio_url})
-
-
-@app.route('/api/study/answer', methods=['POST'])
-def register_answer():
-    """API per registrare una risposta"""
-    try:
-        data = request.get_json()
-        corretta = data.get('corretta', False)
-        
-        flashcards = session.get('flashcards', [])
-        indice = session.get('indice', 0)
-        modalita = session.get('modalita', 'tedesco-italiano')
-        
-        if not flashcards or indice >= len(flashcards):
-            return jsonify({'error': 'Sessione non valida'}), 400
-        
-        # Trova e aggiorna la flashcard nella collezione
-        collection = get_collection()
-        card_data = flashcards[indice]
-        
-        for card in collection:
-            if card.tedesco == card_data['tedesco'] and card.italiano == card_data['italiano']:
-                card.registra_risposta(corretta)
-                break
-        
-        save_collection(collection)
-        
-        # Aggiorna la sessione
-        if corretta:
-            session['corrette'] = session.get('corrette', 0) + 1
-        
-        session['indice'] = indice + 1
-        
-        # Controlla se è l'ultima
-        if session['indice'] >= len(flashcards):
-            return jsonify({
-                'completed': True,
-                'corrette': session['corrette'],
-                'totale': len(flashcards)
-            })
-        
-        return jsonify({'success': True})
-    
-    except Exception as e:
-        return jsonify({'error': str(e)}), 500
-
-
-@app.route('/study')
-def study():
-    """Pagina di studio"""
-    return render_template('study.html')
-
-
-@app.route('/stats')
-def stats():
-    """Pagina statistiche"""
-    collection = get_collection()
-    stats = collection.get_statistiche_generali()
-    
-    flashcards = [
-        {
-            'tedesco': card.tedesco,
-            'italiano': card.italiano,
-            'priorita': card.priorita,
-            'corrette': card.corrette,
-            'sbagliate': card.sbagliate,
-            'totale': card.tentativi_totali,
-            'percentuale': card.percentuale_successo
         }
-        for card in collection
-    ]
-    
-    # Ordina per difficoltà (più difficili prima)
-    flashcards.sort(key=lambda x: (x['totale'] == 0, x['percentuale']))
-    
-    return render_template('stats.html', 
-                         flashcards=flashcards,
-                         stats=stats)
 
+        function playAudio(type) {
+            if (!('speechSynthesis' in window)) {
+                alert('Il tuo browser non supporta la sintesi vocale');
+                return;
+            }
 
-if __name__ == '__main__':
-    print("🚀 Avvio server Flask...")
-    print("📱 Apri il browser su: http://localhost:5001")
-    print("⌨️  Premi CTRL+C per fermare il server\n")
-    app.run(debug=True, host='0.0.0.0', port=5001)
+            // Ferma eventuali audio in riproduzione
+            speechSynthesis.cancel();
+
+            const text = type === 'question' ? questionText : answerText;
+            const lang = type === 'question' ? questionLang : answerLang;
+
+            if (!text) {
+                console.error('Testo non disponibile per la sintesi vocale');
+                return;
+            }
+
+            // Crea l'utterance (enunciato)
+            const utterance = new SpeechSynthesisUtterance(text);
+            utterance.lang = lang;
+            utterance.rate = 0.9; // Velocità leggermente ridotta per chiarezza
+            utterance.pitch = 1.0;
+            utterance.volume = 1.0;
+
+            // Gestione errori
+            utterance.onerror = function(event) {
+                console.error('Errore sintesi vocale:', event);
+            };
+
+            // Riproduci
+            speechSynthesis.speak(utterance);
+        }
+
+        function showAnswer() {
+            if (answerShown) return;
+            
+            answerShown = true;
+            
+            // Mostra separatore e risposta
+            document.getElementById('separator').style.display = 'block';
+            document.getElementById('answerContainer').style.display = 'flex';
+            
+            // Nascondi pulsante mostra e mostra pulsanti valutazione
+            document.getElementById('showAnswerBtn').style.display = 'none';
+            document.getElementById('answerButtons').style.display = 'flex';
+        }
+
+        async function registerAnswer(correct) {
+            if (!answerShown) return;
+
+            try {
+                const response = await fetch('/api/study/answer', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({corretta: correct})
+                });
+
+                const data = await response.json();
+
+                if (data.completed) {
+                    showSummary(data.corrette, data.totale);
+                } else {
+                    loadCard();
+                }
+
+            } catch (error) {
+                console.error('Errore nel registrare la risposta:', error);
+                alert('Errore nel registrare la risposta: ' + error);
+            }
+        }
+
+        function showSummary(correct, total) {
+            const percentage = (correct / total) * 100;
+
+            document.querySelector('.study-container').style.display = 'none';
+            document.getElementById('summaryScreen').style.display = 'flex';
+
+            document.getElementById('correctCount').textContent = `${correct} / ${total}`;
+            document.getElementById('percentage').textContent = `${percentage.toFixed(1)}%`;
+
+            let message = '';
+            let color = '';
+
+            if (percentage >= 80) {
+                message = 'Eccellente! Ottimo lavoro! 🌟';
+                color = '#27ae60';
+            } else if (percentage >= 60) {
+                message = 'Buon lavoro! Continua così! 💪';
+                color = '#f39c12';
+            } else {
+                message = 'Continua a esercitarti! 📚';
+                color = '#e74c3c';
+            }
+
+            const msgEl = document.getElementById('motivationalMessage');
+            msgEl.textContent = message;
+            msgEl.style.color = color;
+        }
+
+        // Keyboard shortcuts
+        document.addEventListener('keydown', function(e) {
+            if (e.key === ' ' || e.key === 'Spacebar') {
+                e.preventDefault();
+                if (!answerShown) {
+                    showAnswer();
+                }
+            } else if (e.key === 'ArrowLeft') {
+                if (answerShown) {
+                    registerAnswer(false);
+                }
+            } else if (e.key === 'ArrowRight') {
+                if (answerShown) {
+                    registerAnswer(true);
+                }
+            } else if (e.key === 'Enter') {
+                if (!answerShown) {
+                    showAnswer();
+                } else {
+                    registerAnswer(true);
+                }
+            }
+        });
+
+        // Carica la prima card
+        window.addEventListener('load', function() {
+            loadCard();
+        });
+    </script>
+
+        async function registerAnswer(correct) {
+            if (!answerShown) return;
+
+            try {
+                const response = await fetch('/api/study/answer', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({corretta: correct})
+                });
+
+                const data = await response.json();
+
+                if (data.completed) {
+                    showSummary(data.corrette, data.totale);
+                } else {
+                    loadCard();
+                }
+
+            } catch (error) {
+                alert('Errore nel registrare la risposta: ' + error);
+            }
+        }
+
+        function showSummary(correct, total) {
+            const percentage = (correct / total) * 100;
+
+            document.querySelector('.study-container').style.display = 'none';
+            document.getElementById('summaryScreen').style.display = 'flex';
+
+            document.getElementById('correctCount').textContent = `${correct} / ${total}`;
+            document.getElementById('percentage').textContent = `${percentage.toFixed(1)}%`;
+
+            let message = '';
+            let color = '';
+
+            if (percentage >= 80) {
+                message = 'Eccellente! Ottimo lavoro! 🌟';
+                color = '#27ae60';
+            } else if (percentage >= 60) {
+                message = 'Buon lavoro! Continua così! 💪';
+                color = '#f39c12';
+            } else {
+                message = 'Continua a esercitarti! 📚';
+                color = '#e74c3c';
+            }
+
+            const msgEl = document.getElementById('motivationalMessage');
+            msgEl.textContent = message;
+            msgEl.style.color = color;
+        }
+
+        // Keyboard shortcuts
+        document.addEventListener('keydown', function(e) {
+            if (e.key === ' ' || e.key === 'Spacebar') {
+                e.preventDefault();
+                if (!answerShown) {
+                    showAnswer();
+                }
+            } else if (e.key === 'ArrowLeft') {
+                if (answerShown) {
+                    registerAnswer(false);
+                }
+            } else if (e.key === 'ArrowRight') {
+                if (answerShown) {
+                    registerAnswer(true);
+                }
+            } else if (e.key === 'Enter') {
+                if (!answerShown) {
+                    showAnswer();
+                } else {
+                    registerAnswer(true);
+                }
+            }
+        });
+
+        // Carica la prima card
+        loadCard();
+    </script>
+</body>
+</html>
