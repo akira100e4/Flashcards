@@ -1,0 +1,46 @@
+# Flashcards Tedesco-Italiano - Dipendenze
+
+# Nota: Questa applicazione usa solo librerie standard di Python
+# Non sono necessarie dipendenze esterne!
+
+# Python >= 3.7 richiesto
+
+# Le seguenti librerie sono già incluse in Python:
+# - tkinter (GUI)
+# - json (salvataggio dati)
+# - datetime (gestione date)
+# - pathlib (gestione file)
+# - typing (type hints)
+# - random (shuffle flashcards)
+# - re (parsing regex)
+
+# Se hai problemi con tkinter su Linux, installa:
+# Ubuntu/Debian: sudo apt-get install python3-tk
+# Fedora: sudo dnf install python3-tkinter
+# Arch: sudo pacman -S tk
+
+# Per lo sviluppo (opzionali):
+# pylint>=2.15.0  # Linting del codice
+# black>=22.0.0   # Formattazione del codice
+# mypy>=0.991     # Type checking
+
+# Flashcards Tedesco-Italiano - Dipendenze VERSIONE WEB
+
+# Python >= 3.7 richiesto
+
+# Dipendenze necessarie per la versione web
+flask>=3.0.0
+
+# Le seguenti librerie sono già incluse in Python:
+# - json (salvataggio dati)
+# - datetime (gestione date)
+# - pathlib (gestione file)
+# - typing (type hints)
+# - random (shuffle flashcards)
+# - re (parsing regex)
+# - secrets (chiave segreta Flask)
+
+# Per lo sviluppo (opzionali):
+# pylint>=2.15.0  # Linting del codice
+# black>=22.0.0   # Formattazione del codice
+# mypy>=0.991     # Type checking

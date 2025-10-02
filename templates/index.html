@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🇩🇪 Flashcards Tedesco-Italiano 🇮🇹</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🇩🇪 Flashcards Tedesco-Italiano 🇮🇹</h1>
+        </header>
+
+        <!-- Statistiche generali -->
+        <div class="stats-overview">
+            <div class="stat-card">
+                <div class="stat-icon">📚</div>
+                <div class="stat-value">{{ stats.totale_flashcards }}</div>
+                <div class="stat-label">Flashcards</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">⭐</div>
+                <div class="stat-value">{{ stats.con_priorita }}</div>
+                <div class="stat-label">Priorità</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">🎯</div>
+                <div class="stat-value">{{ stats.totale_tentativi }}</div>
+                <div class="stat-label">Tentativi</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">📈</div>
+                <div class="stat-value">{{ "%.1f"|format(stats.percentuale_media) }}%</div>
+                <div class="stat-label">Media</div>
+            </div>
+        </div>
+
+        <!-- Controlli principali -->
+        <div class="main-controls">
+            <div class="mode-selector">
+                <h3>Modalità di Studio</h3>
+                <label>
+                    <input type="radio" name="modalita" value="tedesco-italiano" checked>
+                    <span>Tedesco → Italiano</span>
+                </label>
+                <label>
+                    <input type="radio" name="modalita" value="italiano-tedesco">
+                    <span>Italiano → Tedesco</span>
+                </label>
+            </div>
+
+            <div class="action-buttons">
+                <button class="btn btn-primary btn-large" onclick="startStudy()" {% if stats.totale_flashcards == 0 %}disabled{% endif %}>
+                    🎯 INIZIA STUDIO
+                </button>
+                <button class="btn btn-secondary" onclick="location.href='/stats'">
+                    📊 Statistiche
+                </button>
+                <button class="btn btn-accent" onclick="showAddDialog()">
+                    ➕ Aggiungi Flashcards
+                </button>
+            </div>
+        </div>
+
+        <!-- Lista flashcards -->
+        <div class="flashcards-section">
+            <div class="section-header">
+                <h2>Le tue Flashcards</h2>
+                <div class="search-box">
+                    <input type="text" id="searchInput" placeholder="🔍 Cerca..." onkeyup="filterFlashcards()">
+                    <label>
+                        <input type="checkbox" id="priorityFilter" onchange="filterFlashcards()">
+                        Solo priorità ⭐
+                    </label>
+                </div>
+            </div>
+
+            <div class="flashcards-list" id="flashcardsList">
+                {% if flashcards %}
+                    {% for card in flashcards %}
+                    <div class="flashcard-item" data-tedesco="{{ card.tedesco|lower }}" data-italiano="{{ card.italiano|lower }}" data-priorita="{{ card.priorita }}">
+                        <div class="card-content">
+                            <span class="priority-icon">{% if card.priorita %}⭐{% endif %}</span>
+                            <div class="card-text">
+                                <div class="word-with-audio">
+                                    <strong>{{ card.tedesco }}</strong>
+                                    <button class="audio-btn-small" onclick="playWordAudio('de', '{{ card.tedesco }}', event)" title="Ascolta tedesco">
+                                        🔊
+                                    </button>
+                                </div>
+                                <span class="arrow">→</span>
+                                <div class="word-with-audio">
+                                    <span>{{ card.italiano }}</span>
+                                    <button class="audio-btn-small" onclick="playWordAudio('it', '{{ card.italiano }}', event)" title="Ascolta italiano">
+                                        🔊
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="card-stats">
+                                {% if card.tentativi_totali > 0 %}
+                                    <span class="attempts">{{ card.tentativi_totali }} tentativi</span>
+                                    <span class="success-rate {% if card.percentuale_successo >= 80 %}excellent{% elif card.percentuale_successo >= 60 %}good{% else %}needs-work{% endif %}">
+                                        {{ "%.1f"|format(card.percentuale_successo) }}%
+                                    </span>
+                                {% else %}
+                                    <span class="attempts">Non studiata</span>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="card-actions">
+                            <button class="btn-icon" onclick="togglePriority({{ loop.index0 }})" title="Toggle priorità">
+                                ⭐
+                            </button>
+                            <button class="btn-icon btn-danger" onclick="deleteFlashcard({{ loop.index0 }})" title="Elimina">
+                                🗑️
+                            </button>
+                        </div>
+                    </div>
+                    {% endfor %}
+                {% else %}
+                    <div class="empty-state">
+                        <p>Nessuna flashcard ancora.</p>
+                        <p>Clicca su "Aggiungi Flashcards" per iniziare!</p>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <!-- Dialog per aggiungere flashcards -->
+    <div id="addDialog" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeAddDialog()">&times;</span>
+            <h2>Aggiungi Flashcards</h2>
+            <p>Incolla le tue flashcards nel formato:</p>
+            <code>
+                * **weit→ Lontano**<br>
+                * üben → esercitare<br>
+                Nachmittag → pomeriggio
+            </code>
+            <textarea id="flashcardsText" rows="15" placeholder="Incolla qui le tue flashcards..."></textarea>
+            <div class="modal-actions">
+                <button class="btn btn-primary" onclick="addFlashcards()">✓ Aggiungi</button>
+                <button class="btn btn-secondary" onclick="closeAddDialog()">✗ Annulla</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function playWordAudio(lang, text, event) {
+            event.stopPropagation();
+            
+            if (!('speechSynthesis' in window)) {
+                alert('Il tuo browser non supporta la sintesi vocale');
+                return;
+            }
+
+            // Ferma eventuali audio in riproduzione
+            speechSynthesis.cancel();
+
+            // Converti codice lingua
+            const langCode = lang === 'de' ? 'de-DE' : 'it-IT';
+
+            // Crea l'utterance
+            const utterance = new SpeechSynthesisUtterance(text);
+            utterance.lang = langCode;
+            utterance.rate = 0.9;
+            utterance.pitch = 1.0;
+            utterance.volume = 1.0;
+
+            // Gestione errori
+            utterance.onerror = function(error) {
+                console.error('Errore sintesi vocale:', error);
+            };
+
+            // Riproduci
+            speechSynthesis.speak(utterance);
+        }
+
+        function showAddDialog() {
+            document.getElementById('addDialog').style.display = 'block';
+        }
+
+        function closeAddDialog() {
+            document.getElementById('addDialog').style.display = 'none';
+            document.getElementById('flashcardsText').value = '';
+        }
+
+        async function addFlashcards() {
+            const text = document.getElementById('flashcardsText').value;
+            
+            if (!text.trim()) {
+                alert('Inserisci del testo!');
+                return;
+            }
+
+            try {
+                const response = await fetch('/api/flashcards/add', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({text: text})
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    alert(data.message);
+                    location.reload();
+                } else {
+                    alert('Errore: ' + data.error);
+                }
+            } catch (error) {
+                alert('Errore di rete: ' + error);
+            }
+        }
+
+        async function deleteFlashcard(index) {
+            if (!confirm('Sei sicuro di voler eliminare questa flashcard?')) {
+                return;
+            }
+
+            try {
+                const response = await fetch(`/api/flashcards/${index}/delete`, {
+                    method: 'DELETE'
+                });
+
+                if (response.ok) {
+                    location.reload();
+                } else {
+                    alert('Errore durante l\'eliminazione');
+                }
+            } catch (error) {
+                alert('Errore di rete: ' + error);
+            }
+        }
+
+        async function togglePriority(index) {
+            try {
+                const response = await fetch(`/api/flashcards/${index}/toggle-priority`, {
+                    method: 'POST'
+                });
+
+                if (response.ok) {
+                    location.reload();
+                } else {
+                    alert('Errore durante il cambio di priorità');
+                }
+            } catch (error) {
+                alert('Errore di rete: ' + error);
+            }
+        }
+
+        async function startStudy() {
+            const modalita = document.querySelector('input[name="modalita"]:checked').value;
+
+            try {
+                const response = await fetch('/api/study/start', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({modalita: modalita})
+                });
+
+                if (response.ok) {
+                    location.href = '/study';
+                } else {
+                    alert('Errore durante l\'avvio dello studio');
+                }
+            } catch (error) {
+                alert('Errore di rete: ' + error);
+            }
+        }
+
+        function filterFlashcards() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const priorityOnly = document.getElementById('priorityFilter').checked;
+            const items = document.querySelectorAll('.flashcard-item');
+
+            items.forEach(item => {
+                const tedesco = item.dataset.tedesco;
+                const italiano = item.dataset.italiano;
+                const priorita = item.dataset.priorita === 'True';
+
+                const matchesSearch = tedesco.includes(searchTerm) || italiano.includes(searchTerm);
+                const matchesPriority = !priorityOnly || priorita;
+
+                item.style.display = matchesSearch && matchesPriority ? 'flex' : 'none';
+            });
+        }
+
+        // Chiudi dialog quando si clicca fuori
+        window.onclick = function(event) {
+            const modal = document.getElementById('addDialog');
+            if (event.target == modal) {
+                closeAddDialog();
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>📊 Statistiche</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📊 Statistiche di Apprendimento</h1>
+            <button class="btn btn-secondary" onclick="location.href='/'">← Torna alla Home</button>
+        </header>
+
+        <!-- Statistiche generali -->
+        <div class="stats-overview">
+            <div class="stat-card">
+                <div class="stat-icon">📚</div>
+                <div class="stat-value">{{ stats.totale_flashcards }}</div>
+                <div class="stat-label">Totale Flashcards</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">⭐</div>
+                <div class="stat-value">{{ stats.con_priorita }}</div>
+                <div class="stat-label">Con Priorità</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">🎯</div>
+                <div class="stat-value">{{ stats.totale_tentativi }}</div>
+                <div class="stat-label">Tentativi Totali</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">📈</div>
+                <div class="stat-value">{{ "%.1f"|format(stats.percentuale_media) }}%</div>
+                <div class="stat-label">Media Successo</div>
+            </div>
+        </div>
+
+        <!-- Barra di progresso generale -->
+        {% if stats.totale_tentativi > 0 %}
+        <div class="general-progress">
+            <h3>Livello di Preparazione Generale</h3>
+            <div class="progress-bar-container">
+                <div class="progress-bar-fill {% if stats.percentuale_media >= 80 %}excellent{% elif stats.percentuale_media >= 60 %}good{% else %}needs-work{% endif %}" 
+                     style="width: {{ stats.percentuale_media }}%">
+                    <span class="progress-percentage">{{ "%.1f"|format(stats.percentuale_media) }}%</span>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+
+        <!-- Filtri -->
+        <div class="stats-filters">
+            <label>
+                Ordina per:
+            </label>
+            <select id="sortSelect" onchange="sortFlashcards()">
+                <option value="difficulty">Più difficili</option>
+                <option value="easiest">Più facili</option>
+                <option value="most-studied">Più studiate</option>
+                <option value="alphabetical">Alfabetico</option>
+            </select>
+        </div>
+
+        <!-- Lista dettagliata -->
+        <div class="flashcards-section">
+            <h2>Dettaglio Flashcards</h2>
+            <div class="stats-list" id="statsList">
+                {% if flashcards %}
+                    {% for card in flashcards %}
+                    <div class="stat-item {% if card.totale > 0 %}{% if card.percentuale >= 80 %}excellent{% elif card.percentuale >= 60 %}good{% else %}needs-work{% endif %}{% else %}not-studied{% endif %}"
+                         data-tedesco="{{ card.tedesco }}"
+                         data-percentage="{{ card.percentuale }}"
+                         data-total="{{ card.totale }}">
+                        <div class="stat-item-header">
+                            <span class="priority-icon">{% if card.priorita %}⭐{% endif %}</span>
+                            <div class="stat-item-words">
+                                <strong>{{ card.tedesco }}</strong>
+                                <span class="arrow">→</span>
+                                <span>{{ card.italiano }}</span>
+                            </div>
+                        </div>
+                        <div class="stat-item-data">
+                            <div class="stat-detail">
+                                <span class="stat-label">Corrette:</span>
+                                <span class="stat-value success">{{ card.corrette }}</span>
+                            </div>
+                            <div class="stat-detail">
+                                <span class="stat-label">Sbagliate:</span>
+                                <span class="stat-value error">{{ card.sbagliate }}</span>
+                            </div>
+                            <div class="stat-detail">
+                                <span class="stat-label">Totale:</span>
+                                <span class="stat-value">{{ card.totale }}</span>
+                            </div>
+                            <div class="stat-detail">
+                                <span class="stat-label">Successo:</span>
+                                <span class="stat-value {% if card.totale > 0 %}{% if card.percentuale >= 80 %}success{% elif card.percentuale >= 60 %}warning{% else %}error{% endif %}{% endif %}">
+                                    {% if card.totale > 0 %}{{ "%.1f"|format(card.percentuale) }}%{% else %}-{% endif %}
+                                </span>
+                            </div>
+                        </div>
+                        {% if card.totale > 0 %}
+                        <div class="mini-progress">
+                            <div class="mini-progress-fill {% if card.percentuale >= 80 %}excellent{% elif card.percentuale >= 60 %}good{% else %}needs-work{% endif %}" 
+                                 style="width: {{ card.percentuale }}%"></div>
+                        </div>
+                        {% endif %}
+                    </div>
+                    {% endfor %}
+                {% else %}
+                    <div class="empty-state">
+                        <p>Nessuna statistica disponibile.</p>
+                        <p>Inizia a studiare per vedere i tuoi progressi!</p>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function sortFlashcards() {
+            const sortBy = document.getElementById('sortSelect').value;
+            const list = document.getElementById('statsList');
+            const items = Array.from(list.querySelectorAll('.stat-item'));
+
+            items.sort((a, b) => {
+                switch(sortBy) {
+                    case 'difficulty':
+                        // Prima quelle con tentativi, poi per percentuale crescente
+                        const aTotal = parseInt(a.dataset.total);
+                        const bTotal = parseInt(b.dataset.total);
+                        if (aTotal === 0 && bTotal === 0) return 0;
+                        if (aTotal === 0) return 1;
+                        if (bTotal === 0) return -1;
+                        return parseFloat(a.dataset.percentage) - parseFloat(b.dataset.percentage);
+                    
+                    case 'easiest':
+                        // Prima quelle con tentativi, poi per percentuale decrescente
+                        const aTotalE = parseInt(a.dataset.total);
+                        const bTotalE = parseInt(b.dataset.total);
+                        if (aTotalE === 0 && bTotalE === 0) return 0;
+                        if (aTotalE === 0) return 1;
+                        if (bTotalE === 0) return -1;
+                        return parseFloat(b.dataset.percentage) - parseFloat(a.dataset.percentage);
+                    
+                    case 'most-studied':
+                        return parseInt(b.dataset.total) - parseInt(a.dataset.total);
+                    
+                    case 'alphabetical':
+                        return a.dataset.tedesco.localeCompare(b.dataset.tedesco);
+                    
+                    default:
+                        return 0;
+                }
+            });
+
+            // Riordina gli elementi
+            items.forEach(item => list.appendChild(item));
+        }
+    </script>
+</body>
+</html>
