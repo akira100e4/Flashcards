@@ -5,8 +5,8 @@
       "italiano": "Lontano",
       "priorita": true,
       "corrette": 0,
-      "sbagliate": 6,
-      "ultima_revisione": "2025-10-05T09:59:44.820776",
+      "sbagliate": 5,
+      "ultima_revisione": "2025-10-03T10:58:56.147761",
       "categoria": "Generale"
     },
     {
@@ -14,8 +14,8 @@
       "italiano": "esercitare",
       "priorita": true,
       "corrette": 0,
-      "sbagliate": 4,
-      "ultima_revisione": "2025-10-05T09:59:46.862651",
+      "sbagliate": 3,
+      "ultima_revisione": "2025-10-03T10:59:43.736739",
       "categoria": "Generale"
     },
     {
@@ -77,8 +77,8 @@
       "italiano": "preparare",
       "priorita": true,
       "corrette": 0,
-      "sbagliate": 5,
-      "ultima_revisione": "2025-10-05T09:59:51.633216",
+      "sbagliate": 4,
+      "ultima_revisione": "2025-10-03T11:00:32.869777",
       "categoria": "Generale"
     },
     {
@@ -185,8 +185,8 @@
       "italiano": "pagine",
       "priorita": true,
       "corrette": 0,
-      "sbagliate": 4,
-      "ultima_revisione": "2025-10-05T09:59:54.041251",
+      "sbagliate": 3,
+      "ultima_revisione": "2025-10-03T10:58:34.717875",
       "categoria": "Generale"
     },
     {
@@ -275,8 +275,8 @@
       "italiano": "perciò, quindi",
       "priorita": true,
       "corrette": 0,
-      "sbagliate": 4,
-      "ultima_revisione": "2025-10-05T09:59:55.833858",
+      "sbagliate": 3,
+      "ultima_revisione": "2025-10-03T11:02:58.960906",
       "categoria": "Generale"
     },
     {
@@ -284,8 +284,8 @@
       "italiano": "mentre",
       "priorita": true,
       "corrette": 0,
-      "sbagliate": 4,
-      "ultima_revisione": "2025-10-05T09:59:57.877302",
+      "sbagliate": 3,
+      "ultima_revisione": "2025-10-03T11:01:21.637665",
       "categoria": "Generale"
     },
     {
@@ -302,8 +302,8 @@
       "italiano": "lasciare, uscire da",
       "priorita": true,
       "corrette": 0,
-      "sbagliate": 5,
-      "ultima_revisione": "2025-10-05T10:00:00.472159",
+      "sbagliate": 4,
+      "ultima_revisione": "2025-10-03T11:02:39.579190",
       "categoria": "Generale"
     },
     {
@@ -383,8 +383,8 @@
       "italiano": "distante",
       "priorita": false,
       "corrette": 0,
-      "sbagliate": 4,
-      "ultima_revisione": "2025-10-05T10:00:04.554434",
+      "sbagliate": 3,
+      "ultima_revisione": "2025-10-03T11:03:02.235644",
       "categoria": "Generale"
     },
     {
@@ -410,17 +410,17 @@
       "italiano": "sta aspettando / essere in attesa",
       "priorita": false,
       "corrette": 0,
-      "sbagliate": 5,
-      "ultima_revisione": "2025-10-05T10:00:08.077850",
+      "sbagliate": 4,
+      "ultima_revisione": "2025-10-03T11:00:39.279857",
       "categoria": "Generale"
     },
     {
       "tedesco": "fühlt sich",
       "italiano": "si sente",
       "priorita": false,
-      "corrette": 1,
+      "corrette": 0,
       "sbagliate": 4,
-      "ultima_revisione": "2025-10-05T10:00:11.316254",
+      "ultima_revisione": "2025-10-03T10:59:48.830292",
       "categoria": "Generale"
     },
     {
@@ -766,436 +766,22 @@
       "categoria": "verbi"
     },
     {
-      "tedesco": "schwimmen",
-      "italiano": "nuotare",
-      "priorita": false,
+      "tedesco": "bereit",
+      "italiano": "pronto",
+      "priorita": true,
       "corrette": 0,
       "sbagliate": 0,
       "ultima_revisione": null,
+      "categoria": "Generale"
+    },
+    {
+      "tedesco": "zahlen",
+      "italiano": "Pagare",
+      "priorita": true,
+      "corrette": 1,
+      "sbagliate": 0,
+      "ultima_revisione": "2025-10-04T22:34:48.532411",
       "categoria": "verbi"
-    },
-    {
-      "tedesco": "reisen",
-      "italiano": "viaggiare",
-      "priorita": false,
-      "corrette": 0,
-      "sbagliate": 0,
-      "ultima_revisione": null,
-      "categoria": "verbi"
-    },
-    {
-      "tedesco": "fliegen",
-      "italiano": "volare",
-      "priorita": false,
-      "corrette": 0,
-      "sbagliate": 0,
-      "ultima_revisione": null,
-      "categoria": "verbi"
-    },
-    {
-      "tedesco": "suchen",
-      "italiano": "cercare",
-      "priorita": false,
-      "corrette": 0,
-      "sbagliate": 0,
-      "ultima_revisione": null,
-      "categoria": "verbi"
-    },
-    {
-      "tedesco": "finden",
-      "italiano": "trovare",
-      "priorita": false,
-      "corrette": 0,
-      "sbagliate": 0,
-      "ultima_revisione": null,
-      "categoria": "verbi"
-    },
-    {
-      "tedesco": "vergessen",
-      "italiano": "dimenticare",
-      "priorita": false,
-      "corrette": 0,
-      "sbagliate": 0,
-      "ultima_revisione": null,
-      "categoria": "verbi"
-    },
-    {
-      "tedesco": "beginnen",
-      "italiano": "iniziare",
-      "priorita": false,
-      "corrette": 0,
-      "sbagliate": 0,
-      "ultima_revisione": null,
-      "categoria": "verbi"
-    },
-    {
-      "tedesco": "enden",
-      "italiano": "finire",
-      "priorita": false,
-      "corrette": 0,
-      "sbagliate": 0,
-      "ultima_revisione": null,
-      "categoria": "verbi"
-    },
-    {
-      "tedesco": "öffnen",
-      "italiano": "aprire",
-      "priorita": false,
-      "corrette": 0,
-      "sbagliate": 0,
-      "ultima_revisione": null,
-      "categoria": "verbi"
-    },
-    {
-      "tedesco": "schließen",
-      "italiano": "chiudere",
-      "priorita": false,
-      "corrette": 0,
-      "sbagliate": 0,
-      "ultima_revisione": null,
-      "categoria": "verbi"
-    },
-    {
-      "tedesco": "steigen",
-      "italiano": "salire",
-      "priorita": false,
-      "corrette": 0,
-      "sbagliate": 0,
-      "ultima_revisione": null,
-      "categoria": "verbi"
-    },
-    {
-      "tedesco": "fallen",
-      "italiano": "cadere",
-      "priorita": false,
-      "corrette": 0,
-      "sbagliate": 0,
-      "ultima_revisione": null,
-      "categoria": "verbi"
-    },
-    {
-      "tedesco": "laufen",
-      "italiano": "correre",
-      "priorita": false,
-      "corrette": 0,
-      "sbagliate": 0,
-      "ultima_revisione": null,
-      "categoria": "verbi"
-    },
-    {
-      "tedesco": "sitzen",
-      "italiano": "sedersi",
-      "priorita": false,
-      "corrette": 0,
-      "sbagliate": 0,
-      "ultima_revisione": null,
-      "categoria": "verbi"
-    },
-    {
-      "tedesco": "liegen",
-      "italiano": "stare sdraiato",
-      "priorita": false,
-      "corrette": 0,
-      "sbagliate": 0,
-      "ultima_revisione": null,
-      "categoria": "verbi"
-    },
-    {
-      "tedesco": "legen",
-      "italiano": "mettere in posizione orizzontale",
-      "priorita": false,
-      "corrette": 0,
-      "sbagliate": 0,
-      "ultima_revisione": null,
-      "categoria": "verbi"
-    },
-    {
-      "tedesco": "setzen",
-      "italiano": "mettere a sedere",
-      "priorita": false,
-      "corrette": 0,
-      "sbagliate": 0,
-      "ultima_revisione": null,
-      "categoria": "verbi"
-    },
-    {
-      "tedesco": "waschen",
-      "italiano": "lavare",
-      "priorita": false,
-      "corrette": 0,
-      "sbagliate": 0,
-      "ultima_revisione": null,
-      "categoria": "verbi"
-    },
-    {
-      "tedesco": "schneiden",
-      "italiano": "tagliare",
-      "priorita": false,
-      "corrette": 0,
-      "sbagliate": 0,
-      "ultima_revisione": null,
-      "categoria": "verbi"
-    },
-    {
-      "tedesco": "beschreiben",
-      "italiano": "descrivere",
-      "priorita": true,
-      "corrette": 0,
-      "sbagliate": 0,
-      "ultima_revisione": null,
-      "categoria": "verbi a2"
-    },
-    {
-      "tedesco": "verlieren",
-      "italiano": "perdere",
-      "priorita": true,
-      "corrette": 0,
-      "sbagliate": 0,
-      "ultima_revisione": null,
-      "categoria": "verbi a2"
-    },
-    {
-      "tedesco": "gewinnen",
-      "italiano": "vincere",
-      "priorita": true,
-      "corrette": 0,
-      "sbagliate": 0,
-      "ultima_revisione": null,
-      "categoria": "verbi a2"
-    },
-    {
-      "tedesco": "passieren",
-      "italiano": "accadere, succedere",
-      "priorita": true,
-      "corrette": 0,
-      "sbagliate": 0,
-      "ultima_revisione": null,
-      "categoria": "verbi a2"
-    },
-    {
-      "tedesco": "beenden",
-      "italiano": "terminare, concludere",
-      "priorita": true,
-      "corrette": 0,
-      "sbagliate": 0,
-      "ultima_revisione": null,
-      "categoria": "verbi a2"
-    },
-    {
-      "tedesco": "versuchen",
-      "italiano": "provare, tentare",
-      "priorita": true,
-      "corrette": 0,
-      "sbagliate": 0,
-      "ultima_revisione": null,
-      "categoria": "verbi a2"
-    },
-    {
-      "tedesco": "entscheiden",
-      "italiano": "decidere",
-      "priorita": true,
-      "corrette": 0,
-      "sbagliate": 0,
-      "ultima_revisione": null,
-      "categoria": "verbi a2"
-    },
-    {
-      "tedesco": "empfehlen",
-      "italiano": "consigliare",
-      "priorita": true,
-      "corrette": 0,
-      "sbagliate": 0,
-      "ultima_revisione": null,
-      "categoria": "verbi a2"
-    },
-    {
-      "tedesco": "verschicken",
-      "italiano": "spedire, inviare",
-      "priorita": true,
-      "corrette": 0,
-      "sbagliate": 0,
-      "ultima_revisione": null,
-      "categoria": "verbi a2"
-    },
-    {
-      "tedesco": "erkennen",
-      "italiano": "riconoscere",
-      "priorita": true,
-      "corrette": 0,
-      "sbagliate": 0,
-      "ultima_revisione": null,
-      "categoria": "verbi a2"
-    },
-    {
-      "tedesco": "versprechen",
-      "italiano": "promettere",
-      "priorita": true,
-      "corrette": 0,
-      "sbagliate": 0,
-      "ultima_revisione": null,
-      "categoria": "verbi a2"
-    },
-    {
-      "tedesco": "vergleichen",
-      "italiano": "confrontare",
-      "priorita": true,
-      "corrette": 0,
-      "sbagliate": 0,
-      "ultima_revisione": null,
-      "categoria": "verbi a2"
-    },
-    {
-      "tedesco": "besuchen",
-      "italiano": "visitare, frequentare",
-      "priorita": true,
-      "corrette": 0,
-      "sbagliate": 0,
-      "ultima_revisione": null,
-      "categoria": "verbi a2"
-    },
-    {
-      "tedesco": "bestehen",
-      "italiano": "superare (un esame), consistere in",
-      "priorita": true,
-      "corrette": 0,
-      "sbagliate": 0,
-      "ultima_revisione": null,
-      "categoria": "verbi a2"
-    },
-    {
-      "tedesco": "bedeuten",
-      "italiano": "significare",
-      "priorita": true,
-      "corrette": 0,
-      "sbagliate": 0,
-      "ultima_revisione": null,
-      "categoria": "verbi a2"
-    },
-    {
-      "tedesco": "erlauben",
-      "italiano": "permettere",
-      "priorita": true,
-      "corrette": 0,
-      "sbagliate": 0,
-      "ultima_revisione": null,
-      "categoria": "verbi a2"
-    },
-    {
-      "tedesco": "verbessern",
-      "italiano": "migliorare, correggere",
-      "priorita": true,
-      "corrette": 0,
-      "sbagliate": 0,
-      "ultima_revisione": null,
-      "categoria": "verbi a2"
-    },
-    {
-      "tedesco": "erreichen",
-      "italiano": "raggiungere",
-      "priorita": true,
-      "corrette": 0,
-      "sbagliate": 0,
-      "ultima_revisione": null,
-      "categoria": "verbi a2"
-    },
-    {
-      "tedesco": "entdecken",
-      "italiano": "scoprire",
-      "priorita": true,
-      "corrette": 0,
-      "sbagliate": 0,
-      "ultima_revisione": null,
-      "categoria": "verbi a2"
-    },
-    {
-      "tedesco": "erklären",
-      "italiano": "spiegare",
-      "priorita": true,
-      "corrette": 0,
-      "sbagliate": 0,
-      "ultima_revisione": null,
-      "categoria": "verbi a2"
-    },
-    {
-      "tedesco": "unternehmen",
-      "italiano": "intraprendere, fare (un’attività)",
-      "priorita": true,
-      "corrette": 0,
-      "sbagliate": 0,
-      "ultima_revisione": null,
-      "categoria": "verbi a2"
-    },
-    {
-      "tedesco": "vorstellen",
-      "italiano": "presentare, immaginare",
-      "priorita": true,
-      "corrette": 0,
-      "sbagliate": 0,
-      "ultima_revisione": null,
-      "categoria": "verbi a2"
-    },
-    {
-      "tedesco": "reduzieren",
-      "italiano": "ridurre",
-      "priorita": true,
-      "corrette": 0,
-      "sbagliate": 0,
-      "ultima_revisione": null,
-      "categoria": "verbi a2"
-    },
-    {
-      "tedesco": "wählen",
-      "italiano": "scegliere, votare",
-      "priorita": true,
-      "corrette": 0,
-      "sbagliate": 0,
-      "ultima_revisione": null,
-      "categoria": "verbi a2"
-    },
-    {
-      "tedesco": "unterschreiben",
-      "italiano": "firmare",
-      "priorita": true,
-      "corrette": 0,
-      "sbagliate": 0,
-      "ultima_revisione": null,
-      "categoria": "verbi a2"
-    },
-    {
-      "tedesco": "verbringen",
-      "italiano": "trascorrere (tempo)",
-      "priorita": true,
-      "corrette": 0,
-      "sbagliate": 0,
-      "ultima_revisione": null,
-      "categoria": "verbi a2"
-    },
-    {
-      "tedesco": "entschuldigen",
-      "italiano": "scusare",
-      "priorita": true,
-      "corrette": 0,
-      "sbagliate": 0,
-      "ultima_revisione": null,
-      "categoria": "verbi a2"
-    },
-    {
-      "tedesco": "anbieten",
-      "italiano": "offrire",
-      "priorita": true,
-      "corrette": 0,
-      "sbagliate": 0,
-      "ultima_revisione": null,
-      "categoria": "verbi a2"
-    },
-    {
-      "tedesco": "gehören",
-      "italiano": "appartenere",
-      "priorita": true,
-      "corrette": 0,
-      "sbagliate": 0,
-      "ultima_revisione": null,
-      "categoria": "verbi a2"
     }
   ]
 }

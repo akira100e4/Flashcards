@@ -53,17 +53,26 @@
             <div class="mode-selector">
                 <h3>Tipo di Studio</h3>
                 <label>
-                    <input type="radio" name="tipo_studio" value="tutte" checked>
+                    <input type="radio" name="tipo_studio" value="tutte" checked onchange="toggleCategoriaSelect()">
                     <span>📚 Tutte le flashcards</span>
                 </label>
                 <label>
-                    <input type="radio" name="tipo_studio" value="difficili">
-                    <span>🎯 Solo quelle difficili (&lt; 70%)</span>
+                    <input type="radio" name="tipo_studio" value="difficili" onchange="toggleCategoriaSelect()">
+                    <span>🎯 Solo quelle difficili (&lt;70%)</span>
                 </label>
                 <label>
-                    <input type="radio" name="tipo_studio" value="priorita">
+                    <input type="radio" name="tipo_studio" value="priorita" onchange="toggleCategoriaSelect()">
                     <span>⭐ Solo priorità</span>
                 </label>
+                <label>
+                    <input type="radio" name="tipo_studio" value="categoria" onchange="toggleCategoriaSelect()">
+                    <span>🏷️ Per categoria</span>
+                </label>
+                <div id="categoriaSelectContainer" style="display: none; margin-top: 12px; margin-left: 32px;">
+                    <select id="categoriaSelect" class="categoria-select">
+                        <option value="">Seleziona categoria...</option>
+                    </select>
+                </div>
             </div>
 
             <div class="action-buttons">
@@ -95,7 +104,7 @@
             <div class="flashcards-list" id="flashcardsList">
                 {% if flashcards %}
                     {% for card in flashcards %}
-                    <div class="flashcard-item" data-tedesco="{{ card.tedesco|lower }}" data-italiano="{{ card.italiano|lower }}" data-priorita="{{ card.priorita }}">
+                    <div class="flashcard-item" data-tedesco="{{ card.tedesco|lower }}" data-italiano="{{ card.italiano|lower }}" data-priorita="{{ card.priorita }}" data-categoria="{{ card.categoria }}">
                         <div class="card-content">
                             <span class="priority-icon">{% if card.priorita %}⭐{% endif %}</span>
                             <div class="card-text">
@@ -112,6 +121,7 @@
                                         🔊
                                     </button>
                                 </div>
+                                <span class="categoria-badge">🏷️ {{ card.categoria }}</span>
                             </div>
                             <div class="card-stats">
                                 {% if card.tentativi_totali > 0 %}
@@ -149,6 +159,20 @@
         <div class="modal-content">
             <span class="close" onclick="closeAddDialog()">&times;</span>
             <h2>Aggiungi Flashcards</h2>
+            
+            <div style="margin-bottom: 24px;">
+                <label for="categoriaInput" style="display: block; margin-bottom: 8px; font-weight: 600; color: var(--dark);">
+                    🏷️ Categoria
+                </label>
+                <input type="text" id="categoriaInput" placeholder="Es: Verbi, Aggettivi, Casa..." 
+                       style="width: 100%; padding: 12px; border: 2px solid var(--border); border-radius: 12px; font-size: 1rem;"
+                       list="categorie-esistenti">
+                <datalist id="categorie-esistenti"></datalist>
+                <small style="color: var(--gray); margin-top: 4px; display: block;">
+                    Lascia vuoto per usare "Generale"
+                </small>
+            </div>
+            
             <p>Incolla le tue flashcards nel formato:</p>
             <code>
                 * **weit→ Lontano**<br>
@@ -164,6 +188,41 @@
     </div>
 
     <script>
+        // Carica le categorie all'avvio
+        async function loadCategorie() {
+            try {
+                const response = await fetch('/api/categorie');
+                const data = await response.json();
+                
+                // Popola il select per lo studio
+                const categoriaSelect = document.getElementById('categoriaSelect');
+                categoriaSelect.innerHTML = '<option value="">Seleziona categoria...</option>';
+                data.categorie.forEach(cat => {
+                    const option = document.createElement('option');
+                    option.value = cat;
+                    option.textContent = cat;
+                    categoriaSelect.appendChild(option);
+                });
+                
+                // Popola il datalist per l'aggiunta
+                const datalist = document.getElementById('categorie-esistenti');
+                datalist.innerHTML = '';
+                data.categorie.forEach(cat => {
+                    const option = document.createElement('option');
+                    option.value = cat;
+                    datalist.appendChild(option);
+                });
+            } catch (error) {
+                console.error('Errore nel caricamento delle categorie:', error);
+            }
+        }
+
+        function toggleCategoriaSelect() {
+            const tipoStudio = document.querySelector('input[name="tipo_studio"]:checked').value;
+            const container = document.getElementById('categoriaSelectContainer');
+            container.style.display = tipoStudio === 'categoria' ? 'block' : 'none';
+        }
+
         function playWordAudio(lang, text, event) {
             event.stopPropagation();
             
@@ -186,16 +245,19 @@
         }
 
         function showAddDialog() {
+            loadCategorie();
             document.getElementById('addDialog').style.display = 'block';
         }
 
         function closeAddDialog() {
             document.getElementById('addDialog').style.display = 'none';
             document.getElementById('flashcardsText').value = '';
+            document.getElementById('categoriaInput').value = '';
         }
 
         async function addFlashcards() {
             const text = document.getElementById('flashcardsText').value;
+            const categoria = document.getElementById('categoriaInput').value.trim() || 'Generale';
             
             if (!text.trim()) {
                 alert('Inserisci del testo!');
@@ -206,7 +268,10 @@
                 const response = await fetch('/api/flashcards/add', {
                     method: 'POST',
                     headers: {'Content-Type': 'application/json'},
-                    body: JSON.stringify({text: text})
+                    body: JSON.stringify({
+                        text: text,
+                        categoria: categoria
+                    })
                 });
 
                 const data = await response.json();
@@ -261,6 +326,13 @@
         async function startStudy() {
             const modalita = document.querySelector('input[name="modalita"]:checked').value;
             const tipoStudio = document.querySelector('input[name="tipo_studio"]:checked').value;
+            const categoria = tipoStudio === 'categoria' ? document.getElementById('categoriaSelect').value : null;
+
+            // Validazione per categoria
+            if (tipoStudio === 'categoria' && !categoria) {
+                alert('Seleziona una categoria!');
+                return;
+            }
 
             try {
                 const response = await fetch('/api/study/start', {
@@ -268,7 +340,8 @@
                     headers: {'Content-Type': 'application/json'},
                     body: JSON.stringify({
                         modalita: modalita,
-                        tipo_studio: tipoStudio
+                        tipo_studio: tipoStudio,
+                        categoria: categoria
                     })
                 });
 
@@ -307,6 +380,11 @@
                 closeAddDialog();
             }
         }
+
+        // Carica le categorie all'avvio della pagina
+        window.addEventListener('load', function() {
+            loadCategorie();
+        });
     </script>
 </body>
 </html>

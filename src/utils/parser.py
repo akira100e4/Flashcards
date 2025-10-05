@@ -24,12 +24,12 @@ class FlashcardParser:
         return '**' in linea_originale
     
     @staticmethod
-    def estrai_coppia(linea: str) -> Tuple[str, str, bool]:
+    def estrai_coppia(linea: str, categoria: str = "Generale") -> Tuple[str, str, bool, str]:
         """
         Estrae la coppia tedesco-italiano da una linea
         
         Returns:
-            Tupla (tedesco, italiano, ha_priorita)
+            Tupla (tedesco, italiano, ha_priorita, categoria)
         """
         linea_originale = linea
         linea_pulita = FlashcardParser.pulisci_linea(linea)
@@ -52,10 +52,10 @@ class FlashcardParser:
         if not tedesco or not italiano:
             raise ValueError(f"Parola tedesca o italiana vuota nella linea: {linea}")
         
-        return tedesco, italiano, priorita
+        return tedesco, italiano, priorita, categoria
     
     @staticmethod
-    def parse_testo(testo: str) -> List[Flashcard]:
+    def parse_testo(testo: str, categoria: str = "Generale") -> List[Flashcard]:
         """
         Parse un testo con multiple flashcards
         
@@ -82,11 +82,12 @@ class FlashcardParser:
                 continue
             
             try:
-                tedesco, italiano, priorita = FlashcardParser.estrai_coppia(linea)
+                tedesco, italiano, priorita, cat = FlashcardParser.estrai_coppia(linea, categoria)
                 flashcard = Flashcard(
                     tedesco=tedesco,
                     italiano=italiano,
-                    priorita=priorita
+                    priorita=priorita,
+                    categoria=cat
                 )
                 flashcards.append(flashcard)
             except ValueError as e:

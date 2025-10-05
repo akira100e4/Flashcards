@@ -67,8 +67,9 @@ def add_flashcards():
     try:
         data = request.get_json()
         testo = data.get('text', '')
+        categoria = data.get('categoria', 'Generale')
         
-        nuove_cards = FlashcardParser.parse_testo(testo)
+        nuove_cards = FlashcardParser.parse_testo(testo, categoria)
         
         if not nuove_cards:
             return jsonify({'error': 'Nessuna flashcard valida trovata'}), 400
@@ -82,7 +83,7 @@ def add_flashcards():
         return jsonify({
             'success': True,
             'count': len(nuove_cards),
-            'message': f'Aggiunte {len(nuove_cards)} flashcards!'
+            'message': f'Aggiunte {len(nuove_cards)} flashcards alla categoria "{categoria}"!'
         })
     
     except Exception as e:
@@ -124,18 +125,33 @@ def toggle_priority(index):
         return jsonify({'error': str(e)}), 500
 
 
+@app.route('/api/categorie', methods=['GET'])
+def get_categorie():
+    """API per ottenere tutte le categorie"""
+    collection = get_collection()
+    categorie = list(collection.get_categorie())
+    return jsonify({'categorie': sorted(categorie)})
+
+
 @app.route('/api/study/start', methods=['POST'])
 def start_study():
     """API per iniziare una sessione di studio"""
     try:
         data = request.get_json()
         modalita = data.get('modalita', 'tedesco-italiano')
-        tipo_studio = data.get('tipo_studio', 'tutte')  # 'tutte', 'difficili', 'priorita'
+        tipo_studio = data.get('tipo_studio', 'tutte')  # 'tutte', 'difficili', 'priorita', 'categoria'
+        categoria = data.get('categoria', None)
         
         collection = get_collection()
         
         # Seleziona le flashcards in base al tipo di studio
-        if tipo_studio == 'difficili':
+        if tipo_studio == 'categoria' and categoria:
+            flashcards = collection.filtra_per_categoria(categoria)
+            if not flashcards:
+                return jsonify({'error': f'Nessuna flashcard trovata nella categoria "{categoria}"!'}), 400
+            import random
+            random.shuffle(flashcards)
+        elif tipo_studio == 'difficili':
             # Filtra le card con percentuale < 70% o mai studiate
             cards_difficili = [
                 card for card in collection 
@@ -160,12 +176,14 @@ def start_study():
             {
                 'tedesco': card.tedesco,
                 'italiano': card.italiano,
-                'priorita': card.priorita
+                'priorita': card.priorita,
+                'categoria': card.categoria
             }
             for card in flashcards
         ]
         session['modalita'] = modalita
         session['tipo_studio'] = tipo_studio
+        session['categoria'] = categoria
         session['indice'] = 0
         session['corrette'] = 0
         
@@ -302,7 +320,7 @@ def stats():
 
 if __name__ == '__main__':
     print("🚀 Avvio server Flask...")
-    print("📱 Apri il browser su: http://localhost:5001")
+    print("📱 Apri il browser su: http://localhost:5003")
     print("⌨️  Premi CTRL+C per fermare il server\n")
     app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
-    app.run(debug=True, host='0.0.0.0', port=5001)
+    app.run(debug=True, host='0.0.0.0', port=5003)
