@@ -1,13 +1,12 @@
 """
 Flashcards Tedesco-Italiano - Versione Web
-Server Flask per l'applicazione web
+Server Flask per l'applicazione web con supporto categorie
 """
 from flask import Flask, render_template, request, jsonify, session
 import sys
 import os
 import secrets
 
-# Aggiungi la directory root al path
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 from src.models.flashcard import FlashcardCollection
@@ -17,7 +16,6 @@ from src.utils.storage import Storage
 app = Flask(__name__)
 app.secret_key = secrets.token_hex(16)
 
-# Storage globale
 storage = Storage()
 
 
@@ -37,10 +35,12 @@ def index():
     collection = get_collection()
     stats = collection.get_statistiche_generali()
     flashcards = list(collection)
+    categorie = collection.get_categorie()
     
     return render_template('index.html', 
                          flashcards=flashcards,
-                         stats=stats)
+                         stats=stats,
+                         categorie=categorie)
 
 
 @app.route('/api/flashcards', methods=['GET'])
@@ -51,6 +51,7 @@ def get_flashcards():
         {
             'tedesco': card.tedesco,
             'italiano': card.italiano,
+            'categoria': card.categoria,
             'priorita': card.priorita,
             'corrette': card.corrette,
             'sbagliate': card.sbagliate,
@@ -61,15 +62,21 @@ def get_flashcards():
     return jsonify(flashcards)
 
 
+@app.route('/api/categorie', methods=['GET'])
+def get_categorie():
+    """API per ottenere tutte le categorie"""
+    collection = get_collection()
+    return jsonify(collection.get_categorie())
+
+
 @app.route('/api/flashcards/add', methods=['POST'])
 def add_flashcards():
     """API per aggiungere flashcards"""
     try:
         data = request.get_json()
         testo = data.get('text', '')
-        categoria = data.get('categoria', 'Generale')
         
-        nuove_cards = FlashcardParser.parse_testo(testo, categoria)
+        nuove_cards = FlashcardParser.parse_testo(testo)
         
         if not nuove_cards:
             return jsonify({'error': 'Nessuna flashcard valida trovata'}), 400
@@ -83,7 +90,7 @@ def add_flashcards():
         return jsonify({
             'success': True,
             'count': len(nuove_cards),
-            'message': f'Aggiunte {len(nuove_cards)} flashcards alla categoria "{categoria}"!'
+            'message': f'Aggiunte {len(nuove_cards)} flashcards!'
         })
     
     except Exception as e:
@@ -125,12 +132,25 @@ def toggle_priority(index):
         return jsonify({'error': str(e)}), 500
 
 
-@app.route('/api/categorie', methods=['GET'])
-def get_categorie():
-    """API per ottenere tutte le categorie"""
-    collection = get_collection()
-    categorie = list(collection.get_categorie())
-    return jsonify({'categorie': sorted(categorie)})
+@app.route('/api/flashcards/<int:index>/categoria', methods=['POST'])
+def update_categoria(index):
+    """API per aggiornare la categoria di una flashcard"""
+    try:
+        data = request.get_json()
+        nuova_categoria = data.get('categoria', 'Generale')
+        
+        collection = get_collection()
+        card = collection.get_flashcard(index)
+        
+        if card:
+            card.categoria = nuova_categoria
+            save_collection(collection)
+            return jsonify({'success': True, 'categoria': card.categoria})
+        else:
+            return jsonify({'error': 'Flashcard non trovata'}), 404
+    
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
 
 
 @app.route('/api/study/start', methods=['POST'])
@@ -139,51 +159,41 @@ def start_study():
     try:
         data = request.get_json()
         modalita = data.get('modalita', 'tedesco-italiano')
-        tipo_studio = data.get('tipo_studio', 'tutte')  # 'tutte', 'difficili', 'priorita', 'categoria'
-        categoria = data.get('categoria', None)
+        categoria = data.get('categoria', 'tutte')
+        difficolta = data.get('difficolta', 'tutte')
         
         collection = get_collection()
         
-        # Seleziona le flashcards in base al tipo di studio
-        if tipo_studio == 'categoria' and categoria:
+        # Filtra per categoria se richiesto
+        if categoria and categoria != 'tutte':
             flashcards = collection.filtra_per_categoria(categoria)
-            if not flashcards:
-                return jsonify({'error': f'Nessuna flashcard trovata nella categoria "{categoria}"!'}), 400
-            import random
-            random.shuffle(flashcards)
-        elif tipo_studio == 'difficili':
-            # Filtra le card con percentuale < 70% o mai studiate
-            cards_difficili = [
-                card for card in collection 
-                if card.tentativi_totali == 0 or card.percentuale_successo < 70
-            ]
-            if not cards_difficili:
-                return jsonify({'error': 'Nessuna flashcard difficile trovata! Sei bravissimo! 🌟'}), 400
-            flashcards = cards_difficili
-            # Ordina per difficoltà (più sbagliate prima)
-            flashcards.sort(key=lambda x: (x.tentativi_totali == 0, x.percentuale_successo))
-        elif tipo_studio == 'priorita':
-            flashcards = collection.filtra_per_priorita()
-            if not flashcards:
-                return jsonify({'error': 'Nessuna flashcard con priorità trovata!'}), 400
-            import random
-            random.shuffle(flashcards)
+            # Crea una sotto-collezione temporanea per applicare il filtro di difficoltà
+            temp_collection = FlashcardCollection()
+            for card in flashcards:
+                temp_collection.aggiungi_flashcard(card)
+            collection = temp_collection
+        
+        # Filtra per difficoltà
+        if difficolta and difficolta != 'tutte':
+            flashcards = collection.filtra_per_livello(difficolta)
         else:
-            flashcards = collection.get_flashcards_casuali()
+            flashcards = list(collection)
+        
+        # Mescola le flashcards
+        import random
+        random.shuffle(flashcards)
         
         # Salva la sessione
         session['flashcards'] = [
             {
                 'tedesco': card.tedesco,
                 'italiano': card.italiano,
-                'priorita': card.priorita,
-                'categoria': card.categoria
+                'categoria': card.categoria,
+                'priorita': card.priorita
             }
             for card in flashcards
         ]
         session['modalita'] = modalita
-        session['tipo_studio'] = tipo_studio
-        session['categoria'] = categoria
         session['indice'] = 0
         session['corrette'] = 0
         
@@ -204,13 +214,8 @@ def get_current_flashcard():
         indice = session.get('indice', 0)
         modalita = session.get('modalita', 'tedesco-italiano')
         
-        # Se la sessione è completata, restituisci i risultati
         if not flashcards or indice >= len(flashcards):
-            return jsonify({
-                'completed': True,
-                'corrette': session.get('corrette', 0),
-                'totale': len(flashcards) if flashcards else 0
-            })
+            return jsonify({'completed': True})
         
         card = flashcards[indice]
         
@@ -228,6 +233,7 @@ def get_current_flashcard():
         return jsonify({
             'domanda': domanda,
             'risposta': risposta,
+            'categoria': card['categoria'],
             'priorita': card['priorita'],
             'indice': indice,
             'totale': len(flashcards),
@@ -249,12 +255,10 @@ def register_answer():
         
         flashcards = session.get('flashcards', [])
         indice = session.get('indice', 0)
-        modalita = session.get('modalita', 'tedesco-italiano')
         
         if not flashcards or indice >= len(flashcards):
             return jsonify({'error': 'Sessione non valida'}), 400
         
-        # Trova e aggiorna la flashcard nella collezione
         collection = get_collection()
         card_data = flashcards[indice]
         
@@ -265,13 +269,11 @@ def register_answer():
         
         save_collection(collection)
         
-        # Aggiorna la sessione
         if corretta:
             session['corrette'] = session.get('corrette', 0) + 1
         
         session['indice'] = indice + 1
         
-        # Controlla se è l'ultima
         if session['indice'] >= len(flashcards):
             return jsonify({
                 'completed': True,
@@ -296,11 +298,13 @@ def stats():
     """Pagina statistiche"""
     collection = get_collection()
     stats = collection.get_statistiche_generali()
+    stats_categorie = collection.get_statistiche_per_categoria()
     
     flashcards = [
         {
             'tedesco': card.tedesco,
             'italiano': card.italiano,
+            'categoria': card.categoria,
             'priorita': card.priorita,
             'corrette': card.corrette,
             'sbagliate': card.sbagliate,
@@ -310,12 +314,13 @@ def stats():
         for card in collection
     ]
     
-    # Ordina per difficoltà (più difficili prima)
     flashcards.sort(key=lambda x: (x['totale'] == 0, x['percentuale']))
     
     return render_template('stats.html', 
                          flashcards=flashcards,
-                         stats=stats)
+                         stats=stats,
+                         stats_categorie=stats_categorie,
+                         categorie=collection.get_categorie())
 
 
 if __name__ == '__main__':

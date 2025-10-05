@@ -5,6 +5,86 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>🇩🇪 Flashcards Tedesco-Italiano 🇮🇹</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        .category-badge {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 15px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-right: 10px;
+        }
+
+        .category-selector {
+            margin-top: 15px;
+        }
+
+        .category-selector label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .category-selector select {
+            width: 100%;
+            padding: 10px 15px;
+            border: 2px solid var(--light-gray);
+            border-radius: 10px;
+            font-size: 1rem;
+            cursor: pointer;
+            background: white;
+        }
+
+        .category-selector select:focus {
+            outline: none;
+            border-color: var(--secondary);
+        }
+
+        /* Selezione multipla */
+        .bulk-actions {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: var(--dark);
+            color: white;
+            padding: 20px;
+            box-shadow: 0 -5px 20px rgba(0,0,0,0.3);
+            z-index: 999;
+        }
+
+        .bulk-actions-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            gap: 20px;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .bulk-actions span {
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+
+        .flashcard-item.selectable {
+            cursor: pointer;
+        }
+
+        .flashcard-item.selected {
+            background: #e3f2fd;
+            border-color: var(--secondary);
+            transform: scale(1.02);
+        }
+
+        .selection-checkbox {
+            margin-right: 15px;
+            transform: scale(1.8);
+            cursor: pointer;
+            accent-color: var(--secondary);
+        }
+    </style>
 </head>
 <body>
     <div class="container">
@@ -39,40 +119,40 @@
         <!-- Controlli principali -->
         <div class="main-controls">
             <div class="mode-selector">
-                <h3>Modalità di Traduzione</h3>
+                <h3>Modalità di Studio</h3>
                 <label>
                     <input type="radio" name="modalita" value="tedesco-italiano" checked>
-                    <span>🇩🇪 Tedesco → Italiano 🇮🇹</span>
+                    <span>Tedesco → Italiano</span>
                 </label>
                 <label>
                     <input type="radio" name="modalita" value="italiano-tedesco">
-                    <span>🇮🇹 Italiano → Tedesco 🇩🇪</span>
+                    <span>Italiano → Tedesco</span>
                 </label>
             </div>
 
-            <div class="mode-selector">
-                <h3>Tipo di Studio</h3>
-                <label>
-                    <input type="radio" name="tipo_studio" value="tutte" checked onchange="toggleCategoriaSelect()">
-                    <span>📚 Tutte le flashcards</span>
-                </label>
-                <label>
-                    <input type="radio" name="tipo_studio" value="difficili" onchange="toggleCategoriaSelect()">
-                    <span>🎯 Solo quelle difficili (&lt;70%)</span>
-                </label>
-                <label>
-                    <input type="radio" name="tipo_studio" value="priorita" onchange="toggleCategoriaSelect()">
-                    <span>⭐ Solo priorità</span>
-                </label>
-                <label>
-                    <input type="radio" name="tipo_studio" value="categoria" onchange="toggleCategoriaSelect()">
-                    <span>🏷️ Per categoria</span>
-                </label>
-                <div id="categoriaSelectContainer" style="display: none; margin-top: 12px; margin-left: 32px;">
-                    <select id="categoriaSelect" class="categoria-select">
-                        <option value="">Seleziona categoria...</option>
-                    </select>
-                </div>
+            <div class="category-selector">
+                <label for="studyCategory">Categoria da studiare:</label>
+                <select id="studyCategory">
+                    <option value="tutte">Tutte le categorie</option>
+                    {% for categoria in categorie %}
+                    <option value="{{ categoria }}">{{ categoria }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="category-selector">
+                <label for="difficultyFilter">Filtra per difficoltà:</label>
+                <select id="difficultyFilter" onchange="updateStudyCount()">
+                    <option value="tutte">Tutte le flashcards</option>
+                    <option value="difficili">Solo le più difficili (&lt; 50%)</option>
+                    <option value="medie">Difficoltà media (50-79%)</option>
+                    <option value="facili">Le più facili (≥ 80%)</option>
+                    <option value="non-studiate">Non ancora studiate</option>
+                </select>
+            </div>
+
+            <div id="studyCount" class="study-count" style="margin-top: 15px; padding: 10px; background: var(--light-gray); border-radius: 10px; text-align: center; font-weight: 600; color: var(--dark);">
+                Flashcards da studiare: <span id="countValue">{{ stats.totale_flashcards }}</span>
             </div>
 
             <div class="action-buttons">
@@ -84,6 +164,31 @@
                 </button>
                 <button class="btn btn-accent" onclick="showAddDialog()">
                     ➕ Aggiungi Flashcards
+                </button>
+                <button class="btn btn-secondary" onclick="toggleSelectionMode()" id="selectionBtn">
+                    ☑️ Seleziona per Azioni
+                </button>
+            </div>
+        </div>
+
+        <!-- Pannello azioni multiple -->
+        <div id="bulkActions" class="bulk-actions" style="display: none;">
+            <div class="bulk-actions-content">
+                <button class="btn btn-secondary" onclick="selectAll()">
+                    ☑️ Seleziona Tutte
+                </button>
+                <button class="btn btn-secondary" onclick="deselectAll()">
+                    ☐ Deseleziona Tutte
+                </button>
+                <span id="selectedCount" style="margin: 0 20px;">0 selezionate</span>
+                <button class="btn btn-primary" onclick="bulkChangeCategory()">
+                    📂 Cambia Categoria
+                </button>
+                <button class="btn btn-danger" onclick="bulkDelete()">
+                    🗑️ Elimina Selezionate
+                </button>
+                <button class="btn btn-secondary" onclick="toggleSelectionMode()">
+                    ✗ Annulla
                 </button>
             </div>
         </div>
@@ -98,15 +203,28 @@
                         <input type="checkbox" id="priorityFilter" onchange="filterFlashcards()">
                         Solo priorità ⭐
                     </label>
+                    <select id="categoryFilter" onchange="filterFlashcards()">
+                        <option value="">Tutte le categorie</option>
+                        {% for categoria in categorie %}
+                        <option value="{{ categoria }}">{{ categoria }}</option>
+                        {% endfor %}
+                    </select>
                 </div>
             </div>
 
             <div class="flashcards-list" id="flashcardsList">
                 {% if flashcards %}
                     {% for card in flashcards %}
-                    <div class="flashcard-item" data-tedesco="{{ card.tedesco|lower }}" data-italiano="{{ card.italiano|lower }}" data-priorita="{{ card.priorita }}" data-categoria="{{ card.categoria }}">
+                    <div class="flashcard-item" 
+                         data-tedesco="{{ card.tedesco|lower }}" 
+                         data-italiano="{{ card.italiano|lower }}" 
+                         data-categoria="{{ card.categoria }}"
+                         data-priorita="{{ card.priorita }}"
+                         data-index="{{ loop.index0 }}">
+                        <input type="checkbox" class="selection-checkbox" onchange="updateSelectionCount()">
                         <div class="card-content">
                             <span class="priority-icon">{% if card.priorita %}⭐{% endif %}</span>
+                            <span class="category-badge">{{ card.categoria }}</span>
                             <div class="card-text">
                                 <div class="word-with-audio">
                                     <strong>{{ card.tedesco }}</strong>
@@ -121,7 +239,6 @@
                                         🔊
                                     </button>
                                 </div>
-                                <span class="categoria-badge">🏷️ {{ card.categoria }}</span>
                             </div>
                             <div class="card-stats">
                                 {% if card.tentativi_totali > 0 %}
@@ -137,6 +254,9 @@
                         <div class="card-actions">
                             <button class="btn-icon" onclick="togglePriority({{ loop.index0 }})" title="Toggle priorità">
                                 ⭐
+                            </button>
+                            <button class="btn-icon" onclick="editCategory({{ loop.index0 }})" title="Modifica categoria">
+                                📂
                             </button>
                             <button class="btn-icon btn-danger" onclick="deleteFlashcard({{ loop.index0 }})" title="Elimina">
                                 🗑️
@@ -160,26 +280,42 @@
             <span class="close" onclick="closeAddDialog()">&times;</span>
             <h2>Aggiungi Flashcards</h2>
             
-            <div style="margin-bottom: 24px;">
-                <label for="categoriaInput" style="display: block; margin-bottom: 8px; font-weight: 600; color: var(--dark);">
-                    🏷️ Categoria
-                </label>
-                <input type="text" id="categoriaInput" placeholder="Es: Verbi, Aggettivi, Casa..." 
-                       style="width: 100%; padding: 12px; border: 2px solid var(--border); border-radius: 12px; font-size: 1rem;"
-                       list="categorie-esistenti">
-                <datalist id="categorie-esistenti"></datalist>
-                <small style="color: var(--gray); margin-top: 4px; display: block;">
-                    Lascia vuoto per usare "Generale"
-                </small>
+            <div style="background: var(--light-gray); padding: 20px; border-radius: 15px; margin-bottom: 20px;">
+                <h3 style="margin-bottom: 15px; color: var(--dark);">📂 Categoria per tutte le flashcards:</h3>
+                
+                <div style="display: flex; gap: 10px; margin-bottom: 10px;">
+                    <label style="display: flex; align-items: center; gap: 8px;">
+                        <input type="radio" name="categoryType" value="existing" checked onchange="toggleCategoryInput()">
+                        <span>Categoria esistente:</span>
+                    </label>
+                    <select id="existingCategory" style="flex: 1; padding: 10px; border: 2px solid var(--light-gray); border-radius: 10px;">
+                        <option value="Generale">Generale</option>
+                        {% for categoria in categorie %}
+                        {% if categoria != "Generale" %}
+                        <option value="{{ categoria }}">{{ categoria }}</option>
+                        {% endif %}
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div style="display: flex; gap: 10px; align-items: center;">
+                    <label style="display: flex; align-items: center; gap: 8px;">
+                        <input type="radio" name="categoryType" value="new" onchange="toggleCategoryInput()">
+                        <span>Nuova categoria:</span>
+                    </label>
+                    <input type="text" id="newCategoryName" placeholder="Scrivi il nome della nuova categoria" 
+                           disabled
+                           style="flex: 1; padding: 10px; border: 2px solid var(--light-gray); border-radius: 10px;">
+                </div>
             </div>
-            
-            <p>Incolla le tue flashcards nel formato:</p>
+
+            <p><strong>Formato flashcards:</strong></p>
             <code>
-                * **weit→ Lontano**<br>
+                * **weit → Lontano**<br>
                 * üben → esercitare<br>
                 Nachmittag → pomeriggio
             </code>
-            <textarea id="flashcardsText" rows="15" placeholder="Incolla qui le tue flashcards..."></textarea>
+            <textarea id="flashcardsText" rows="12" placeholder="Incolla qui le tue flashcards..."></textarea>
             <div class="modal-actions">
                 <button class="btn btn-primary" onclick="addFlashcards()">✓ Aggiungi</button>
                 <button class="btn btn-secondary" onclick="closeAddDialog()">✗ Annulla</button>
@@ -188,40 +324,166 @@
     </div>
 
     <script>
-        // Carica le categorie all'avvio
-        async function loadCategorie() {
+        // Stato selezione multipla
+        let selectionMode = false;
+
+        // Dati delle flashcards per il conteggio
+        const flashcardsData = [
+            {% for card in flashcards %}
+            {
+                categoria: "{{ card.categoria }}",
+                percentuale: {{ card.percentuale_successo }},
+                tentativi: {{ card.tentativi_totali }}
+            }{% if not loop.last %},{% endif %}
+            {% endfor %}
+        ];
+
+        function toggleSelectionMode() {
+            selectionMode = !selectionMode;
+            const bulkActions = document.getElementById('bulkActions');
+            const selectionBtn = document.getElementById('selectionBtn');
+
+            if (selectionMode) {
+                bulkActions.style.display = 'block';
+                selectionBtn.textContent = '✗ Annulla Selezione';
+                selectionBtn.classList.remove('btn-secondary');
+                selectionBtn.classList.add('btn-danger');
+            } else {
+                const checkboxes = document.querySelectorAll('.selection-checkbox');
+                checkboxes.forEach(cb => cb.checked = false);
+                bulkActions.style.display = 'none';
+                selectionBtn.textContent = '☑️ Seleziona per Azioni';
+                selectionBtn.classList.remove('btn-danger');
+                selectionBtn.classList.add('btn-secondary');
+            }
+            updateSelectionCount();
+        }
+
+        async function bulkDelete() {
+            const checkboxes = document.querySelectorAll('.selection-checkbox:checked');
+            
+            if (checkboxes.length === 0) {
+                alert('Seleziona almeno una flashcard!');
+                return;
+            }
+
+            if (!confirm(`Sei sicuro di voler eliminare ${checkboxes.length} flashcards?`)) {
+                return;
+            }
+
             try {
-                const response = await fetch('/api/categorie');
-                const data = await response.json();
-                
-                // Popola il select per lo studio
-                const categoriaSelect = document.getElementById('categoriaSelect');
-                categoriaSelect.innerHTML = '<option value="">Seleziona categoria...</option>';
-                data.categorie.forEach(cat => {
-                    const option = document.createElement('option');
-                    option.value = cat;
-                    option.textContent = cat;
-                    categoriaSelect.appendChild(option);
+                // Raccogli gli indici e ordinali dal più alto al più basso
+                // così non si sfasano gli indici durante l'eliminazione
+                const indices = [];
+                checkboxes.forEach(checkbox => {
+                    const item = checkbox.closest('.flashcard-item');
+                    indices.push(parseInt(item.dataset.index));
                 });
-                
-                // Popola il datalist per l'aggiunta
-                const datalist = document.getElementById('categorie-esistenti');
-                datalist.innerHTML = '';
-                data.categorie.forEach(cat => {
-                    const option = document.createElement('option');
-                    option.value = cat;
-                    datalist.appendChild(option);
-                });
+                indices.sort((a, b) => b - a); // Ordina decrescente
+
+                // Elimina uno alla volta partendo dal più alto
+                for (const index of indices) {
+                    await fetch(`/api/flashcards/${index}/delete`, {
+                        method: 'DELETE'
+                    });
+                }
+
+                location.reload();
             } catch (error) {
-                console.error('Errore nel caricamento delle categorie:', error);
+                alert('Errore durante l\'eliminazione: ' + error);
             }
         }
 
-        function toggleCategoriaSelect() {
-            const tipoStudio = document.querySelector('input[name="tipo_studio"]:checked').value;
-            const container = document.getElementById('categoriaSelectContainer');
-            container.style.display = tipoStudio === 'categoria' ? 'block' : 'none';
+        function selectAll() {
+            const checkboxes = document.querySelectorAll('.selection-checkbox');
+            checkboxes.forEach(cb => cb.checked = true);
+            updateSelectionCount();
         }
+
+        function deselectAll() {
+            const checkboxes = document.querySelectorAll('.selection-checkbox');
+            checkboxes.forEach(cb => cb.checked = false);
+            updateSelectionCount();
+        }
+
+        function updateSelectionCount() {
+            const checkboxes = document.querySelectorAll('.selection-checkbox:checked');
+            const count = checkboxes.length;
+            
+            document.getElementById('selectedCount').textContent = `${count} selezionate`;
+            
+            // Mostra/nascondi la barra solo se ci sono selezioni
+            const bulkActions = document.getElementById('bulkActions');
+            if (count > 0) {
+                bulkActions.style.display = 'block';
+            } else if (!selectionMode) {
+                bulkActions.style.display = 'none';
+            }
+        }
+
+        async function bulkChangeCategory() {
+            const checkboxes = document.querySelectorAll('.selection-checkbox:checked');
+            
+            if (checkboxes.length === 0) {
+                alert('Seleziona almeno una flashcard!');
+                return;
+            }
+
+            const nuovaCategoria = prompt('Inserisci la nuova categoria per le flashcards selezionate:');
+            
+            if (nuovaCategoria === null) return;
+            
+            const categoria = nuovaCategoria.trim() || 'Generale';
+
+            try {
+                const promises = [];
+                checkboxes.forEach(checkbox => {
+                    const item = checkbox.closest('.flashcard-item');
+                    const index = item.dataset.index;
+                    
+                    promises.push(
+                        fetch(`/api/flashcards/${index}/categoria`, {
+                            method: 'POST',
+                            headers: {'Content-Type': 'application/json'},
+                            body: JSON.stringify({categoria: categoria})
+                        })
+                    );
+                });
+
+                await Promise.all(promises);
+                location.reload();
+            } catch (error) {
+                alert('Errore durante l\'aggiornamento: ' + error);
+            }
+        }
+
+        function updateStudyCount() {
+            const categoria = document.getElementById('studyCategory').value;
+            const difficolta = document.getElementById('difficultyFilter').value;
+            
+            let filtered = flashcardsData;
+            
+            // Filtra per categoria
+            if (categoria !== 'tutte') {
+                filtered = filtered.filter(c => c.categoria === categoria);
+            }
+            
+            // Filtra per difficoltà
+            if (difficolta === 'difficili') {
+                filtered = filtered.filter(c => c.tentativi > 0 && c.percentuale < 50);
+            } else if (difficolta === 'medie') {
+                filtered = filtered.filter(c => c.tentativi > 0 && c.percentuale >= 50 && c.percentuale < 80);
+            } else if (difficolta === 'facili') {
+                filtered = filtered.filter(c => c.tentativi > 0 && c.percentuale >= 80);
+            } else if (difficolta === 'non-studiate') {
+                filtered = filtered.filter(c => c.tentativi === 0);
+            }
+            
+            document.getElementById('countValue').textContent = filtered.length;
+        }
+
+        // Aggiorna il conteggio quando cambia la categoria
+        document.getElementById('studyCategory').addEventListener('change', updateStudyCount);
 
         function playWordAudio(lang, text, event) {
             event.stopPropagation();
@@ -238,29 +500,62 @@
             utterance.rate = 0.9;
             utterance.pitch = 1.0;
             utterance.volume = 1.0;
+
             utterance.onerror = function(error) {
                 console.error('Errore sintesi vocale:', error);
             };
+
             speechSynthesis.speak(utterance);
         }
 
         function showAddDialog() {
-            loadCategorie();
             document.getElementById('addDialog').style.display = 'block';
         }
 
         function closeAddDialog() {
             document.getElementById('addDialog').style.display = 'none';
             document.getElementById('flashcardsText').value = '';
-            document.getElementById('categoriaInput').value = '';
+            document.querySelector('input[name="categoryType"][value="existing"]').checked = true;
+            document.getElementById('existingCategory').value = 'Generale';
+            document.getElementById('newCategoryName').value = '';
+            document.getElementById('newCategoryName').disabled = true;
+            document.getElementById('existingCategory').disabled = false;
+        }
+
+        function toggleCategoryInput() {
+            const isNew = document.querySelector('input[name="categoryType"][value="new"]').checked;
+            const newInput = document.getElementById('newCategoryName');
+            const existingSelect = document.getElementById('existingCategory');
+            
+            if (isNew) {
+                newInput.disabled = false;
+                newInput.focus();
+                existingSelect.disabled = true;
+            } else {
+                newInput.disabled = true;
+                newInput.value = '';
+                existingSelect.disabled = false;
+            }
         }
 
         async function addFlashcards() {
             const text = document.getElementById('flashcardsText').value;
-            const categoria = document.getElementById('categoriaInput').value.trim() || 'Generale';
+            const isNew = document.querySelector('input[name="categoryType"][value="new"]').checked;
+            let categoria;
+            
+            if (isNew) {
+                categoria = document.getElementById('newCategoryName').value.trim();
+                if (!categoria) {
+                    alert('Scrivi il nome della nuova categoria!');
+                    document.getElementById('newCategoryName').focus();
+                    return;
+                }
+            } else {
+                categoria = document.getElementById('existingCategory').value;
+            }
             
             if (!text.trim()) {
-                alert('Inserisci del testo!');
+                alert('Inserisci le flashcards!');
                 return;
             }
 
@@ -323,16 +618,34 @@
             }
         }
 
+        async function editCategory(index) {
+            const nuovaCategoria = prompt('Inserisci la nuova categoria:');
+            
+            if (nuovaCategoria === null) return;
+            
+            const categoria = nuovaCategoria.trim() || 'Generale';
+
+            try {
+                const response = await fetch(`/api/flashcards/${index}/categoria`, {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({categoria: categoria})
+                });
+
+                if (response.ok) {
+                    location.reload();
+                } else {
+                    alert('Errore durante l\'aggiornamento della categoria');
+                }
+            } catch (error) {
+                alert('Errore di rete: ' + error);
+            }
+        }
+
         async function startStudy() {
             const modalita = document.querySelector('input[name="modalita"]:checked').value;
-            const tipoStudio = document.querySelector('input[name="tipo_studio"]:checked').value;
-            const categoria = tipoStudio === 'categoria' ? document.getElementById('categoriaSelect').value : null;
-
-            // Validazione per categoria
-            if (tipoStudio === 'categoria' && !categoria) {
-                alert('Seleziona una categoria!');
-                return;
-            }
+            const categoria = document.getElementById('studyCategory').value;
+            const difficolta = document.getElementById('difficultyFilter').value;
 
             try {
                 const response = await fetch('/api/study/start', {
@@ -340,17 +653,21 @@
                     headers: {'Content-Type': 'application/json'},
                     body: JSON.stringify({
                         modalita: modalita,
-                        tipo_studio: tipoStudio,
-                        categoria: categoria
+                        categoria: categoria,
+                        difficolta: difficolta
                     })
                 });
 
                 const data = await response.json();
 
                 if (response.ok) {
-                    location.href = '/study';
+                    if (data.total === 0) {
+                        alert('Nessuna flashcard trovata per questa selezione!');
+                    } else {
+                        location.href = '/study';
+                    }
                 } else {
-                    alert(data.error || 'Errore durante l\'avvio dello studio');
+                    alert('Errore durante l\'avvio dello studio');
                 }
             } catch (error) {
                 alert('Errore di rete: ' + error);
@@ -360,17 +677,20 @@
         function filterFlashcards() {
             const searchTerm = document.getElementById('searchInput').value.toLowerCase();
             const priorityOnly = document.getElementById('priorityFilter').checked;
+            const categoryFilter = document.getElementById('categoryFilter').value;
             const items = document.querySelectorAll('.flashcard-item');
 
             items.forEach(item => {
                 const tedesco = item.dataset.tedesco;
                 const italiano = item.dataset.italiano;
                 const priorita = item.dataset.priorita === 'True';
+                const categoria = item.dataset.categoria;
 
                 const matchesSearch = tedesco.includes(searchTerm) || italiano.includes(searchTerm);
                 const matchesPriority = !priorityOnly || priorita;
+                const matchesCategory = !categoryFilter || categoria === categoryFilter;
 
-                item.style.display = matchesSearch && matchesPriority ? 'flex' : 'none';
+                item.style.display = matchesSearch && matchesPriority && matchesCategory ? 'flex' : 'none';
             });
         }
 
@@ -380,11 +700,6 @@
                 closeAddDialog();
             }
         }
-
-        // Carica le categorie all'avvio della pagina
-        window.addEventListener('load', function() {
-            loadCategorie();
-        });
     </script>
 </body>
 </html>

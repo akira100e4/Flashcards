@@ -12,9 +12,7 @@ class FlashcardParser:
     @staticmethod
     def pulisci_linea(linea: str) -> str:
         """Rimuove bullet points, asterischi e spazi extra"""
-        # Rimuove bullet points all'inizio
         linea = re.sub(r'^\s*[*\-•]\s*', '', linea)
-        # Rimuove spazi multipli
         linea = re.sub(r'\s+', ' ', linea)
         return linea.strip()
     
@@ -24,12 +22,12 @@ class FlashcardParser:
         return '**' in linea_originale
     
     @staticmethod
-    def estrai_coppia(linea: str, categoria: str = "Generale") -> Tuple[str, str, bool, str]:
+    def estrai_coppia(linea: str) -> Tuple[str, str, bool]:
         """
         Estrae la coppia tedesco-italiano da una linea
         
         Returns:
-            Tupla (tedesco, italiano, ha_priorita, categoria)
+            Tupla (tedesco, italiano, ha_priorita)
         """
         linea_originale = linea
         linea_pulita = FlashcardParser.pulisci_linea(linea)
@@ -52,7 +50,7 @@ class FlashcardParser:
         if not tedesco or not italiano:
             raise ValueError(f"Parola tedesca o italiana vuota nella linea: {linea}")
         
-        return tedesco, italiano, priorita, categoria
+        return tedesco, italiano, priorita
     
     @staticmethod
     def parse_testo(testo: str, categoria: str = "Generale") -> List[Flashcard]:
@@ -63,6 +61,10 @@ class FlashcardParser:
         * **weit→ Lontano**
         * üben → esercitare
         Nachmittag → pomeriggio
+        
+        Args:
+            testo: Il testo da parsare
+            categoria: La categoria da assegnare a tutte le flashcards
         
         Returns:
             Lista di oggetti Flashcard
@@ -82,12 +84,12 @@ class FlashcardParser:
                 continue
             
             try:
-                tedesco, italiano, priorita, cat = FlashcardParser.estrai_coppia(linea, categoria)
+                tedesco, italiano, priorita = FlashcardParser.estrai_coppia(linea)
                 flashcard = Flashcard(
                     tedesco=tedesco,
                     italiano=italiano,
-                    priorita=priorita,
-                    categoria=cat
+                    categoria=categoria,  # Usa la categoria passata come parametro
+                    priorita=priorita
                 )
                 flashcards.append(flashcard)
             except ValueError as e:

@@ -3,1199 +3,1064 @@
     {
       "tedesco": "weit",
       "italiano": "Lontano",
+      "categoria": "Generale",
       "priorita": true,
-      "corrette": 0,
-      "sbagliate": 6,
-      "ultima_revisione": "2025-10-05T09:59:44.820776",
-      "categoria": "Generale"
+      "corrette": 3,
+      "sbagliate": 7,
+      "ultima_revisione": "2025-10-05T10:25:48.854986"
     },
     {
       "tedesco": "üben",
       "italiano": "esercitare",
+      "categoria": "verbi",
       "priorita": true,
       "corrette": 0,
       "sbagliate": 4,
-      "ultima_revisione": "2025-10-05T09:59:46.862651",
-      "categoria": "Generale"
+      "ultima_revisione": "2025-10-05T09:59:46.862651"
     },
     {
       "tedesco": "verkauft",
       "italiano": "vende",
+      "categoria": "verbi",
       "priorita": true,
       "corrette": 2,
       "sbagliate": 1,
-      "ultima_revisione": "2025-10-03T11:02:31.476387",
-      "categoria": "Generale"
+      "ultima_revisione": "2025-10-03T11:02:31.476387"
     },
     {
       "tedesco": "Leute",
       "italiano": "persone",
+      "categoria": "Generale",
       "priorita": true,
-      "corrette": 3,
+      "corrette": 4,
       "sbagliate": 0,
-      "ultima_revisione": "2025-10-03T11:03:14.855477",
-      "categoria": "Generale"
+      "ultima_revisione": "2025-10-05T10:24:12.483835"
     },
     {
       "tedesco": "Kunden",
       "italiano": "clienti",
+      "categoria": "Generale",
       "priorita": true,
-      "corrette": 2,
+      "corrette": 3,
       "sbagliate": 2,
-      "ultima_revisione": "2025-10-03T11:00:57.553874",
-      "categoria": "Generale"
+      "ultima_revisione": "2025-10-05T10:23:09.628102"
     },
     {
       "tedesco": "schwierig",
       "italiano": "difficile",
+      "categoria": "Generale",
       "priorita": true,
-      "corrette": 2,
+      "corrette": 3,
       "sbagliate": 1,
-      "ultima_revisione": "2025-10-03T11:00:36.217767",
-      "categoria": "Generale"
+      "ultima_revisione": "2025-10-05T10:24:31.334515"
     },
     {
       "tedesco": "erzählen",
       "italiano": "raccontare",
+      "categoria": "verbi",
       "priorita": true,
       "corrette": 3,
       "sbagliate": 1,
-      "ultima_revisione": "2025-10-03T10:59:26.331336",
-      "categoria": "Generale"
+      "ultima_revisione": "2025-10-03T10:59:26.331336"
     },
     {
       "tedesco": "Nachrichten",
       "italiano": "Notizie",
+      "categoria": "Generale",
       "priorita": true,
-      "corrette": 3,
+      "corrette": 4,
       "sbagliate": 0,
-      "ultima_revisione": "2025-10-03T11:01:15.494075",
-      "categoria": "Generale"
+      "ultima_revisione": "2025-10-05T10:24:44.057446"
     },
     {
       "tedesco": "vorvereiten",
       "italiano": "preparare",
+      "categoria": "verbi",
       "priorita": true,
       "corrette": 0,
-      "sbagliate": 5,
-      "ultima_revisione": "2025-10-05T09:59:51.633216",
-      "categoria": "Generale"
+      "sbagliate": 6,
+      "ultima_revisione": "2025-10-05T10:18:53.216569"
     },
     {
       "tedesco": "anziehen",
       "italiano": "vestirsi",
+      "categoria": "verbi",
       "priorita": true,
       "corrette": 1,
       "sbagliate": 3,
-      "ultima_revisione": "2025-10-03T10:58:44.052066",
-      "categoria": "Generale"
+      "ultima_revisione": "2025-10-03T10:58:44.052066"
     },
     {
       "tedesco": "aufmerksam",
       "italiano": "attentamente",
+      "categoria": "Generale",
       "priorita": true,
-      "corrette": 4,
+      "corrette": 7,
       "sbagliate": 5,
-      "ultima_revisione": "2025-10-03T11:03:54.347386",
-      "categoria": "Generale"
+      "ultima_revisione": "2025-10-05T10:23:49.160196"
     },
     {
       "tedesco": "stellen",
       "italiano": "mettere/porre",
+      "categoria": "verbi",
       "priorita": true,
       "corrette": 3,
-      "sbagliate": 1,
-      "ultima_revisione": "2025-10-03T11:01:45.908597",
-      "categoria": "Generale"
+      "sbagliate": 2,
+      "ultima_revisione": "2025-10-05T10:18:50.660161"
     },
     {
       "tedesco": "dort",
       "italiano": "lì",
+      "categoria": "Generale",
       "priorita": true,
-      "corrette": 3,
+      "corrette": 4,
       "sbagliate": 0,
-      "ultima_revisione": "2025-10-03T10:58:48.491227",
-      "categoria": "Generale"
+      "ultima_revisione": "2025-10-05T10:23:54.671628"
     },
     {
       "tedesco": "treffen",
       "italiano": "incontrare",
+      "categoria": "verbi",
       "priorita": true,
       "corrette": 2,
       "sbagliate": 2,
-      "ultima_revisione": "2025-10-03T11:04:15.677361",
-      "categoria": "Generale"
+      "ultima_revisione": "2025-10-03T11:04:15.677361"
     },
     {
       "tedesco": "danach",
       "italiano": "Dopodiché",
+      "categoria": "Generale",
       "priorita": true,
-      "corrette": 3,
+      "corrette": 4,
       "sbagliate": 0,
-      "ultima_revisione": "2025-10-03T11:03:13.478419",
-      "categoria": "Generale"
+      "ultima_revisione": "2025-10-05T10:23:15.303615"
     },
     {
       "tedesco": "bergen",
       "italiano": "montagne",
+      "categoria": "Generale",
       "priorita": true,
-      "corrette": 3,
+      "corrette": 4,
       "sbagliate": 0,
-      "ultima_revisione": "2025-10-03T11:04:03.134590",
-      "categoria": "Generale"
+      "ultima_revisione": "2025-10-05T10:23:10.718461"
     },
     {
       "tedesco": "träume",
       "italiano": "sogno",
+      "categoria": "Generale",
       "priorita": true,
-      "corrette": 3,
+      "corrette": 4,
       "sbagliate": 0,
-      "ultima_revisione": "2025-10-03T11:03:59.465970",
-      "categoria": "Generale"
+      "ultima_revisione": "2025-10-05T10:23:16.698289"
     },
     {
       "tedesco": "Zukunft",
       "italiano": "futuro",
+      "categoria": "Generale",
       "priorita": true,
-      "corrette": 2,
+      "corrette": 3,
       "sbagliate": 2,
-      "ultima_revisione": "2025-10-03T11:03:05.587872",
-      "categoria": "Generale"
+      "ultima_revisione": "2025-10-05T10:23:02.506353"
     },
     {
       "tedesco": "froh",
       "italiano": "felice",
+      "categoria": "Generale",
       "priorita": true,
-      "corrette": 2,
+      "corrette": 3,
       "sbagliate": 0,
-      "ultima_revisione": "2025-10-03T11:04:06.706153",
-      "categoria": "Generale"
+      "ultima_revisione": "2025-10-05T10:24:03.217514"
     },
     {
       "tedesco": "zufrieden",
       "italiano": "soddisfatto",
+      "categoria": "Generale",
       "priorita": true,
-      "corrette": 1,
+      "corrette": 4,
       "sbagliate": 4,
-      "ultima_revisione": "2025-10-03T11:02:11.982172",
-      "categoria": "Generale"
+      "ultima_revisione": "2025-10-05T10:25:14.956803"
     },
     {
       "tedesco": "seiten",
       "italiano": "pagine",
+      "categoria": "Generale",
       "priorita": true,
-      "corrette": 0,
-      "sbagliate": 4,
-      "ultima_revisione": "2025-10-05T09:59:54.041251",
-      "categoria": "Generale"
+      "corrette": 4,
+      "sbagliate": 5,
+      "ultima_revisione": "2025-10-05T10:25:53.094124"
     },
     {
       "tedesco": "schlafen",
       "italiano": "dormire",
+      "categoria": "verbi",
       "priorita": true,
       "corrette": 3,
       "sbagliate": 1,
-      "ultima_revisione": "2025-10-03T11:01:59.809750",
-      "categoria": "Generale"
+      "ultima_revisione": "2025-10-03T11:01:59.809750"
     },
     {
       "tedesco": "möglichkeiten",
       "italiano": "possibilità",
+      "categoria": "Generale",
       "priorita": true,
-      "corrette": 2,
+      "corrette": 3,
       "sbagliate": 2,
-      "ultima_revisione": "2025-10-03T11:01:37.241594",
-      "categoria": "Generale"
+      "ultima_revisione": "2025-10-05T10:23:29.980104"
     },
     {
       "tedesco": "Gesicht",
       "italiano": "volto, faccia",
+      "categoria": "Generale",
       "priorita": true,
-      "corrette": 1,
+      "corrette": 3,
       "sbagliate": 3,
-      "ultima_revisione": "2025-10-03T10:58:52.778253",
-      "categoria": "Generale"
+      "ultima_revisione": "2025-10-05T10:24:55.185371"
     },
     {
       "tedesco": "Zahnbürste",
       "italiano": "spazzolino da denti",
+      "categoria": "Generale",
       "priorita": true,
-      "corrette": 4,
+      "corrette": 6,
       "sbagliate": 0,
-      "ultima_revisione": "2025-10-03T11:04:05.694601",
-      "categoria": "Generale"
+      "ultima_revisione": "2025-10-05T10:23:11.784735"
     },
     {
       "tedesco": "Haare kämmen",
       "italiano": "pettinarsi i capelli",
+      "categoria": "verbi",
       "priorita": true,
       "corrette": 3,
       "sbagliate": 1,
-      "ultima_revisione": "2025-10-03T11:00:59.030319",
-      "categoria": "Generale"
+      "ultima_revisione": "2025-10-03T11:00:59.030319"
     },
     {
       "tedesco": "Kleidung",
       "italiano": "vestiti",
+      "categoria": "Generale",
       "priorita": true,
-      "corrette": 3,
+      "corrette": 4,
       "sbagliate": 0,
-      "ultima_revisione": "2025-10-03T10:59:51.421999",
-      "categoria": "Generale"
+      "ultima_revisione": "2025-10-05T10:23:36.402826"
     },
     {
       "tedesco": "überlegen",
       "italiano": "riflettere, pensare a cosa fare",
+      "categoria": "verbi",
       "priorita": true,
       "corrette": 1,
       "sbagliate": 2,
-      "ultima_revisione": "2025-10-03T10:59:21.977760",
-      "categoria": "Generale"
+      "ultima_revisione": "2025-10-03T10:59:21.977760"
     },
     {
       "tedesco": "tragen",
       "italiano": "portare, indossare",
+      "categoria": "verbi",
       "priorita": true,
       "corrette": 4,
-      "sbagliate": 4,
-      "ultima_revisione": "2025-10-04T22:35:06.915319",
-      "categoria": "Generale"
+      "sbagliate": 6,
+      "ultima_revisione": "2025-10-05T10:18:38.074231"
     },
     {
       "tedesco": "Hose",
       "italiano": "pantaloni",
+      "categoria": "Generale",
       "priorita": true,
-      "corrette": 3,
+      "corrette": 4,
       "sbagliate": 2,
-      "ultima_revisione": "2025-10-03T10:58:25.822789",
-      "categoria": "Generale"
+      "ultima_revisione": "2025-10-05T10:24:04.325557"
     },
     {
       "tedesco": "deshalb",
       "italiano": "perciò, quindi",
+      "categoria": "Generale",
       "priorita": true,
-      "corrette": 0,
-      "sbagliate": 4,
-      "ultima_revisione": "2025-10-05T09:59:55.833858",
-      "categoria": "Generale"
+      "corrette": 1,
+      "sbagliate": 8,
+      "ultima_revisione": "2025-10-05T10:26:00.275944"
     },
     {
       "tedesco": "während",
       "italiano": "mentre",
+      "categoria": "Generale",
       "priorita": true,
-      "corrette": 0,
-      "sbagliate": 4,
-      "ultima_revisione": "2025-10-05T09:59:57.877302",
-      "categoria": "Generale"
+      "corrette": 4,
+      "sbagliate": 5,
+      "ultima_revisione": "2025-10-05T10:25:56.391577"
     },
     {
       "tedesco": "räumen (aufräumen)",
       "italiano": "mettere in ordine",
+      "categoria": "verbi",
       "priorita": true,
       "corrette": 2,
       "sbagliate": 1,
-      "ultima_revisione": "2025-10-03T11:04:22.918565",
-      "categoria": "Generale"
+      "ultima_revisione": "2025-10-03T11:04:22.918565"
     },
     {
       "tedesco": "verlassen",
       "italiano": "lasciare, uscire da",
+      "categoria": "verbi",
       "priorita": true,
       "corrette": 0,
       "sbagliate": 5,
-      "ultima_revisione": "2025-10-05T10:00:00.472159",
-      "categoria": "Generale"
+      "ultima_revisione": "2025-10-05T10:00:00.472159"
     },
     {
       "tedesco": "draußen",
       "italiano": "fuori",
+      "categoria": "Generale",
       "priorita": true,
-      "corrette": 2,
+      "corrette": 3,
       "sbagliate": 2,
-      "ultima_revisione": "2025-10-03T11:02:16.655886",
-      "categoria": "Generale"
+      "ultima_revisione": "2025-10-05T10:24:36.418993"
     },
     {
       "tedesco": "der Himmel",
       "italiano": "il cielo",
+      "categoria": "Generale",
       "priorita": true,
-      "corrette": 1,
+      "corrette": 3,
       "sbagliate": 2,
-      "ultima_revisione": "2025-10-03T11:00:52.850663",
-      "categoria": "Generale"
+      "ultima_revisione": "2025-10-05T10:23:17.857916"
     },
     {
       "tedesco": "Bushaltestelle",
       "italiano": "fermata dell’autobus",
+      "categoria": "Generale",
       "priorita": true,
-      "corrette": 2,
+      "corrette": 3,
       "sbagliate": 0,
-      "ultima_revisione": "2025-10-03T10:59:34.887823",
-      "categoria": "Generale"
+      "ultima_revisione": "2025-10-05T10:24:00.177760"
     },
     {
       "tedesco": "warten",
       "italiano": "aspettare",
+      "categoria": "verbi",
       "priorita": true,
       "corrette": 1,
-      "sbagliate": 1,
-      "ultima_revisione": "2025-10-03T11:01:25.992273",
-      "categoria": "Generale"
+      "sbagliate": 2,
+      "ultima_revisione": "2025-10-05T10:18:47.728329"
     },
     {
       "tedesco": "manche",
       "italiano": "alcuni",
+      "categoria": "Generale",
       "priorita": true,
       "corrette": 2,
-      "sbagliate": 0,
-      "ultima_revisione": "2025-10-03T11:03:10.019524",
-      "categoria": "Generale"
+      "sbagliate": 1,
+      "ultima_revisione": "2025-10-05T10:23:57.277863"
     },
     {
       "tedesco": "andere",
       "italiano": "altri",
+      "categoria": "Generale",
       "priorita": true,
-      "corrette": 2,
+      "corrette": 4,
       "sbagliate": 1,
-      "ultima_revisione": "2025-10-03T10:59:02.560286",
-      "categoria": "Generale"
+      "ultima_revisione": "2025-10-05T10:23:58.509324"
     },
     {
       "tedesco": "wach werden",
       "italiano": "svegliarsi",
+      "categoria": "verbi",
       "priorita": false,
       "corrette": 1,
       "sbagliate": 2,
-      "ultima_revisione": "2025-10-03T11:03:47.819760",
-      "categoria": "Generale"
+      "ultima_revisione": "2025-10-03T11:03:47.819760"
     },
     {
       "tedesco": "Wohnzimmer",
       "italiano": "salotto",
+      "categoria": "Generale",
       "priorita": false,
-      "corrette": 4,
+      "corrette": 5,
       "sbagliate": 0,
-      "ultima_revisione": "2025-10-03T11:02:46.349791",
-      "categoria": "Generale"
+      "ultima_revisione": "2025-10-05T10:23:00.978392"
     },
     {
       "tedesco": "entfernt",
       "italiano": "distante",
+      "categoria": "Generale",
       "priorita": false,
-      "corrette": 0,
-      "sbagliate": 4,
-      "ultima_revisione": "2025-10-05T10:00:04.554434",
-      "categoria": "Generale"
+      "corrette": 2,
+      "sbagliate": 7,
+      "ultima_revisione": "2025-10-05T10:25:51.472451"
     },
     {
       "tedesco": "Das klingt toll",
       "italiano": "sembra fantasico",
+      "categoria": "Generale",
       "priorita": false,
-      "corrette": 2,
+      "corrette": 3,
       "sbagliate": 1,
-      "ultima_revisione": "2025-10-03T11:03:58.115444",
-      "categoria": "Generale"
+      "ultima_revisione": "2025-10-05T10:23:40.489003"
     },
     {
       "tedesco": "Tafel",
       "italiano": "lavagna",
+      "categoria": "Generale",
       "priorita": false,
-      "corrette": 2,
+      "corrette": 4,
       "sbagliate": 0,
-      "ultima_revisione": "2025-10-03T11:04:31.752964",
-      "categoria": "Generale"
+      "ultima_revisione": "2025-10-05T10:24:41.607838"
     },
     {
       "tedesco": "wartet auf",
       "italiano": "sta aspettando / essere in attesa",
+      "categoria": "verbi",
       "priorita": false,
       "corrette": 0,
       "sbagliate": 5,
-      "ultima_revisione": "2025-10-05T10:00:08.077850",
-      "categoria": "Generale"
+      "ultima_revisione": "2025-10-05T10:00:08.077850"
     },
     {
       "tedesco": "fühlt sich",
       "italiano": "si sente",
+      "categoria": "verbi",
       "priorita": false,
       "corrette": 1,
       "sbagliate": 4,
-      "ultima_revisione": "2025-10-05T10:00:11.316254",
-      "categoria": "Generale"
+      "ultima_revisione": "2025-10-05T10:00:11.316254"
     },
     {
       "tedesco": "er weiß",
       "italiano": "lo sa",
+      "categoria": "Generale",
       "priorita": false,
-      "corrette": 3,
+      "corrette": 4,
       "sbagliate": 1,
-      "ultima_revisione": "2025-10-03T11:01:10.604097",
-      "categoria": "Generale"
+      "ultima_revisione": "2025-10-05T10:24:01.656208"
     },
     {
       "tedesco": "erklären",
       "italiano": "spiegare",
+      "categoria": "verbi a2",
       "priorita": false,
       "corrette": 2,
       "sbagliate": 2,
-      "ultima_revisione": "2025-10-03T11:03:35.776054",
-      "categoria": "Generale"
+      "ultima_revisione": "2025-10-03T11:03:35.776054"
     },
     {
       "tedesco": "schauen",
       "italiano": "vedere / dare un’occhiata / controllare",
+      "categoria": "verbi a2",
       "priorita": false,
       "corrette": 0,
-      "sbagliate": 3,
-      "ultima_revisione": "2025-10-03T11:03:44.038298",
-      "categoria": "Generale"
+      "sbagliate": 4,
+      "ultima_revisione": "2025-10-05T10:19:16.547208"
     },
     {
       "tedesco": "aufmerksam",
       "italiano": "attentamente",
+      "categoria": "Generale",
       "priorita": false,
       "corrette": 0,
       "sbagliate": 0,
-      "ultima_revisione": null,
-      "categoria": "Generale"
+      "ultima_revisione": null
     },
     {
       "tedesco": "völgeln",
       "italiano": "uccelli",
+      "categoria": "Generale",
       "priorita": false,
-      "corrette": 1,
+      "corrette": 3,
       "sbagliate": 3,
-      "ultima_revisione": "2025-10-03T11:00:13.234225",
-      "categoria": "Generale"
+      "ultima_revisione": "2025-10-05T10:24:13.830437"
     },
     {
       "tedesco": "gleich",
       "italiano": "uguale",
+      "categoria": "Generale",
       "priorita": false,
-      "corrette": 4,
+      "corrette": 5,
       "sbagliate": 0,
-      "ultima_revisione": "2025-10-03T11:01:57.078111",
-      "categoria": "Generale"
+      "ultima_revisione": "2025-10-05T10:23:34.239815"
     },
     {
       "tedesco": "wichtig",
       "italiano": "essenziale / importante",
+      "categoria": "Generale",
       "priorita": false,
-      "corrette": 3,
+      "corrette": 4,
       "sbagliate": 0,
-      "ultima_revisione": "2025-10-03T11:00:16.572443",
-      "categoria": "Generale"
+      "ultima_revisione": "2025-10-05T10:23:06.484370"
     },
     {
       "tedesco": "holen",
       "italiano": "prendere",
+      "categoria": "verbi",
       "priorita": false,
       "corrette": 1,
       "sbagliate": 1,
-      "ultima_revisione": "2025-10-03T11:00:23.799267",
-      "categoria": "Generale"
+      "ultima_revisione": "2025-10-03T11:00:23.799267"
     },
     {
       "tedesco": "stolz",
       "italiano": "orgoglioso",
+      "categoria": "Generale",
       "priorita": false,
-      "corrette": 1,
-      "sbagliate": 3,
-      "ultima_revisione": "2025-10-03T11:04:09.383681",
-      "categoria": "Generale"
+      "corrette": 4,
+      "sbagliate": 5,
+      "ultima_revisione": "2025-10-05T10:25:57.858894"
     },
     {
       "tedesco": "geschichten",
       "italiano": "storie",
+      "categoria": "Generale",
       "priorita": false,
-      "corrette": 2,
+      "corrette": 4,
       "sbagliate": 1,
-      "ultima_revisione": "2025-10-03T11:01:07.002994",
-      "categoria": "Generale"
+      "ultima_revisione": "2025-10-05T10:24:33.097050"
     },
     {
       "tedesco": "aussehen",
       "italiano": "sembrare, avere l’aspetto",
+      "categoria": "verbi",
       "priorita": false,
-      "corrette": 2,
+      "corrette": 3,
       "sbagliate": 2,
-      "ultima_revisione": "2025-10-04T22:35:04.909670",
-      "categoria": "verbi"
+      "ultima_revisione": "2025-10-05T10:12:06.295035"
     },
     {
       "tedesco": "bekommen",
       "italiano": "ricevere, ottenere",
+      "categoria": "verbi",
       "priorita": false,
-      "corrette": 0,
+      "corrette": 3,
       "sbagliate": 4,
-      "ultima_revisione": "2025-10-04T22:36:26.116753",
-      "categoria": "verbi"
+      "ultima_revisione": "2025-10-05T10:18:05.929531"
     },
     {
       "tedesco": "bleiben",
       "italiano": "restare",
+      "categoria": "verbi",
       "priorita": false,
-      "corrette": 4,
+      "corrette": 5,
       "sbagliate": 0,
-      "ultima_revisione": "2025-10-04T22:36:46.711076",
-      "categoria": "verbi"
+      "ultima_revisione": "2025-10-05T10:11:42.360239"
     },
     {
       "tedesco": "bringen",
       "italiano": "portare",
+      "categoria": "verbi",
       "priorita": false,
-      "corrette": 3,
+      "corrette": 4,
       "sbagliate": 1,
-      "ultima_revisione": "2025-10-04T22:36:48.425189",
-      "categoria": "verbi"
+      "ultima_revisione": "2025-10-05T10:09:59.742619"
     },
     {
       "tedesco": "denken",
       "italiano": "pensare",
+      "categoria": "verbi",
       "priorita": false,
-      "corrette": 4,
+      "corrette": 5,
       "sbagliate": 0,
-      "ultima_revisione": "2025-10-04T22:35:30.882607",
-      "categoria": "verbi"
+      "ultima_revisione": "2025-10-05T10:10:07.350066"
     },
     {
       "tedesco": "dürfen",
       "italiano": "potere, avere il permesso",
+      "categoria": "verbi",
       "priorita": false,
-      "corrette": 3,
+      "corrette": 4,
       "sbagliate": 1,
-      "ultima_revisione": "2025-10-04T22:35:02.310556",
-      "categoria": "verbi"
+      "ultima_revisione": "2025-10-05T10:12:02.273263"
     },
     {
       "tedesco": "geben",
       "italiano": "dare",
+      "categoria": "verbi",
       "priorita": false,
-      "corrette": 1,
+      "corrette": 3,
       "sbagliate": 3,
-      "ultima_revisione": "2025-10-04T22:36:04.782998",
-      "categoria": "verbi"
+      "ultima_revisione": "2025-10-05T10:17:44.880384"
     },
     {
       "tedesco": "glauben",
       "italiano": "credere",
+      "categoria": "verbi",
       "priorita": false,
-      "corrette": 1,
+      "corrette": 3,
       "sbagliate": 3,
-      "ultima_revisione": "2025-10-04T22:36:52.541817",
-      "categoria": "verbi"
+      "ultima_revisione": "2025-10-05T10:17:43.052956"
     },
     {
       "tedesco": "halten",
       "italiano": "tenere, fermare",
+      "categoria": "verbi",
       "priorita": false,
-      "corrette": 0,
-      "sbagliate": 4,
-      "ultima_revisione": "2025-10-04T22:35:20.795980",
-      "categoria": "verbi"
+      "corrette": 2,
+      "sbagliate": 5,
+      "ultima_revisione": "2025-10-05T10:18:07.483640"
     },
     {
       "tedesco": "kennen",
       "italiano": "conoscere",
+      "categoria": "verbi",
       "priorita": false,
-      "corrette": 1,
+      "corrette": 3,
       "sbagliate": 3,
-      "ultima_revisione": "2025-10-04T22:36:41.163789",
-      "categoria": "verbi"
+      "ultima_revisione": "2025-10-05T10:17:40.624726"
     },
     {
       "tedesco": "können",
       "italiano": "potere, essere capace",
+      "categoria": "verbi",
       "priorita": false,
-      "corrette": 4,
+      "corrette": 5,
       "sbagliate": 0,
-      "ultima_revisione": "2025-10-04T22:36:50.323636",
-      "categoria": "verbi"
+      "ultima_revisione": "2025-10-05T10:11:14.620039"
     },
     {
       "tedesco": "lassen",
       "italiano": "lasciare, permettere",
+      "categoria": "verbi",
       "priorita": false,
-      "corrette": 2,
+      "corrette": 3,
       "sbagliate": 2,
-      "ultima_revisione": "2025-10-04T22:35:10.498142",
-      "categoria": "verbi"
+      "ultima_revisione": "2025-10-05T10:11:16.855551"
     },
     {
       "tedesco": "leben",
       "italiano": "vivere",
+      "categoria": "verbi",
       "priorita": false,
-      "corrette": 4,
+      "corrette": 5,
       "sbagliate": 0,
-      "ultima_revisione": "2025-10-04T22:35:29.745230",
-      "categoria": "verbi"
+      "ultima_revisione": "2025-10-05T10:11:11.237716"
     },
     {
       "tedesco": "lieben",
       "italiano": "amare",
+      "categoria": "verbi",
       "priorita": false,
-      "corrette": 3,
+      "corrette": 4,
       "sbagliate": 1,
-      "ultima_revisione": "2025-10-04T22:36:27.765085",
-      "categoria": "verbi"
+      "ultima_revisione": "2025-10-05T10:12:00.397328"
     },
     {
       "tedesco": "müssen",
       "italiano": "dovere (necessità)",
+      "categoria": "verbi",
       "priorita": false,
-      "corrette": 2,
+      "corrette": 3,
       "sbagliate": 2,
-      "ultima_revisione": "2025-10-04T22:36:09.520201",
-      "categoria": "verbi"
+      "ultima_revisione": "2025-10-05T10:11:07.163734"
     },
     {
       "tedesco": "nehmen",
       "italiano": "prendere",
+      "categoria": "verbi",
       "priorita": false,
-      "corrette": 2,
+      "corrette": 3,
       "sbagliate": 2,
-      "ultima_revisione": "2025-10-04T22:35:57.397726",
-      "categoria": "verbi"
+      "ultima_revisione": "2025-10-05T10:10:51.090157"
     },
     {
       "tedesco": "sagen",
       "italiano": "dire",
+      "categoria": "verbi",
       "priorita": false,
-      "corrette": 2,
-      "sbagliate": 2,
-      "ultima_revisione": "2025-10-04T22:36:44.646325",
-      "categoria": "verbi"
+      "corrette": 3,
+      "sbagliate": 3,
+      "ultima_revisione": "2025-10-05T10:17:49.461966"
     },
     {
       "tedesco": "schreiben",
       "italiano": "scrivere",
+      "categoria": "verbi",
       "priorita": false,
-      "corrette": 4,
+      "corrette": 5,
       "sbagliate": 0,
-      "ultima_revisione": "2025-10-04T22:34:51.104630",
-      "categoria": "verbi"
+      "ultima_revisione": "2025-10-05T10:09:54.681174"
     },
     {
       "tedesco": "spielen",
       "italiano": "giocare, suonare (uno strumento)",
+      "categoria": "verbi",
       "priorita": false,
-      "corrette": 4,
+      "corrette": 5,
       "sbagliate": 0,
-      "ultima_revisione": "2025-10-04T22:35:32.066333",
-      "categoria": "verbi"
+      "ultima_revisione": "2025-10-05T10:11:31.133015"
     },
     {
       "tedesco": "stehen",
       "italiano": "stare in piedi",
+      "categoria": "verbi",
       "priorita": false,
-      "corrette": 2,
+      "corrette": 3,
       "sbagliate": 2,
-      "ultima_revisione": "2025-10-04T22:36:06.961758",
-      "categoria": "verbi"
+      "ultima_revisione": "2025-10-05T10:11:19.304875"
     },
     {
       "tedesco": "stellen",
       "italiano": "mettere, posizionare",
+      "categoria": "verbi",
       "priorita": false,
-      "corrette": 1,
-      "sbagliate": 3,
-      "ultima_revisione": "2025-10-04T22:35:51.598339",
-      "categoria": "verbi"
+      "corrette": 3,
+      "sbagliate": 4,
+      "ultima_revisione": "2025-10-05T10:18:13.022442"
     },
     {
       "tedesco": "tragen",
       "italiano": "portare, indossare",
+      "categoria": "verbi",
       "priorita": false,
       "corrette": 0,
       "sbagliate": 0,
-      "ultima_revisione": null,
-      "categoria": "verbi"
+      "ultima_revisione": null
     },
     {
       "tedesco": "tun",
       "italiano": "fare",
+      "categoria": "verbi",
       "priorita": false,
-      "corrette": 4,
+      "corrette": 5,
       "sbagliate": 0,
-      "ultima_revisione": "2025-10-04T22:36:36.266814",
-      "categoria": "verbi"
+      "ultima_revisione": "2025-10-05T10:11:48.773452"
     },
     {
       "tedesco": "verstehen",
       "italiano": "capire",
+      "categoria": "verbi",
       "priorita": false,
-      "corrette": 3,
+      "corrette": 4,
       "sbagliate": 1,
-      "ultima_revisione": "2025-10-04T22:35:25.794807",
-      "categoria": "verbi"
+      "ultima_revisione": "2025-10-05T10:10:20.530827"
     },
     {
       "tedesco": "werden",
       "italiano": "diventare",
+      "categoria": "verbi",
       "priorita": false,
-      "corrette": 0,
-      "sbagliate": 4,
-      "ultima_revisione": "2025-10-04T22:36:01.969859",
-      "categoria": "verbi"
+      "corrette": 2,
+      "sbagliate": 5,
+      "ultima_revisione": "2025-10-05T10:18:17.574234"
     },
     {
       "tedesco": "wissen",
       "italiano": "sapere (conoscenza di fatti)",
+      "categoria": "verbi",
       "priorita": false,
-      "corrette": 0,
+      "corrette": 3,
       "sbagliate": 4,
-      "ultima_revisione": "2025-10-04T22:34:59.891246",
-      "categoria": "verbi"
+      "ultima_revisione": "2025-10-05T10:18:15.738161"
     },
     {
       "tedesco": "wollen",
       "italiano": "volere",
+      "categoria": "verbi",
       "priorita": false,
-      "corrette": 0,
+      "corrette": 3,
       "sbagliate": 4,
-      "ultima_revisione": "2025-10-04T22:36:34.982680",
-      "categoria": "verbi"
+      "ultima_revisione": "2025-10-05T10:18:04.735848"
     },
     {
       "tedesco": "zeigen",
       "italiano": "mostrare",
+      "categoria": "verbi",
       "priorita": false,
-      "corrette": 1,
+      "corrette": 3,
       "sbagliate": 3,
-      "ultima_revisione": "2025-10-04T22:35:46.916019",
-      "categoria": "verbi"
+      "ultima_revisione": "2025-10-05T10:17:51.861963"
     },
     {
       "tedesco": "schwimmen",
       "italiano": "nuotare",
+      "categoria": "verbi",
       "priorita": false,
-      "corrette": 0,
+      "corrette": 1,
       "sbagliate": 0,
-      "ultima_revisione": null,
-      "categoria": "verbi"
+      "ultima_revisione": "2025-10-05T10:11:43.965996"
     },
     {
       "tedesco": "reisen",
       "italiano": "viaggiare",
+      "categoria": "verbi",
       "priorita": false,
-      "corrette": 0,
+      "corrette": 1,
       "sbagliate": 0,
-      "ultima_revisione": null,
-      "categoria": "verbi"
+      "ultima_revisione": "2025-10-05T10:10:17.987048"
     },
     {
       "tedesco": "fliegen",
       "italiano": "volare",
+      "categoria": "verbi",
       "priorita": false,
-      "corrette": 0,
+      "corrette": 1,
       "sbagliate": 0,
-      "ultima_revisione": null,
-      "categoria": "verbi"
+      "ultima_revisione": "2025-10-05T10:11:27.527604"
     },
     {
       "tedesco": "suchen",
       "italiano": "cercare",
+      "categoria": "verbi",
       "priorita": false,
-      "corrette": 0,
+      "corrette": 1,
       "sbagliate": 0,
-      "ultima_revisione": null,
-      "categoria": "verbi"
+      "ultima_revisione": "2025-10-05T10:10:53.566644"
     },
     {
       "tedesco": "finden",
       "italiano": "trovare",
+      "categoria": "verbi",
       "priorita": false,
-      "corrette": 0,
+      "corrette": 1,
       "sbagliate": 0,
-      "ultima_revisione": null,
-      "categoria": "verbi"
+      "ultima_revisione": "2025-10-05T10:11:29.147769"
     },
     {
       "tedesco": "vergessen",
       "italiano": "dimenticare",
+      "categoria": "verbi",
       "priorita": false,
-      "corrette": 0,
+      "corrette": 1,
       "sbagliate": 0,
-      "ultima_revisione": null,
-      "categoria": "verbi"
+      "ultima_revisione": "2025-10-05T10:11:53.518031"
     },
     {
       "tedesco": "beginnen",
       "italiano": "iniziare",
+      "categoria": "verbi",
       "priorita": false,
-      "corrette": 0,
+      "corrette": 1,
       "sbagliate": 0,
-      "ultima_revisione": null,
-      "categoria": "verbi"
+      "ultima_revisione": "2025-10-05T10:10:10.129709"
     },
     {
       "tedesco": "enden",
       "italiano": "finire",
+      "categoria": "verbi",
       "priorita": false,
-      "corrette": 0,
+      "corrette": 1,
       "sbagliate": 0,
-      "ultima_revisione": null,
-      "categoria": "verbi"
+      "ultima_revisione": "2025-10-05T10:09:49.175767"
     },
     {
       "tedesco": "öffnen",
       "italiano": "aprire",
+      "categoria": "verbi",
       "priorita": false,
-      "corrette": 0,
+      "corrette": 1,
       "sbagliate": 0,
-      "ultima_revisione": null,
-      "categoria": "verbi"
+      "ultima_revisione": "2025-10-05T10:11:36.144867"
     },
     {
       "tedesco": "schließen",
       "italiano": "chiudere",
+      "categoria": "verbi",
       "priorita": false,
-      "corrette": 0,
-      "sbagliate": 0,
-      "ultima_revisione": null,
-      "categoria": "verbi"
+      "corrette": 1,
+      "sbagliate": 1,
+      "ultima_revisione": "2025-10-05T10:17:16.462724"
     },
     {
       "tedesco": "steigen",
       "italiano": "salire",
+      "categoria": "verbi",
       "priorita": false,
-      "corrette": 0,
-      "sbagliate": 0,
-      "ultima_revisione": null,
-      "categoria": "verbi"
+      "corrette": 1,
+      "sbagliate": 2,
+      "ultima_revisione": "2025-10-05T10:18:10.997804"
     },
     {
       "tedesco": "fallen",
       "italiano": "cadere",
+      "categoria": "verbi",
       "priorita": false,
-      "corrette": 0,
+      "corrette": 1,
       "sbagliate": 0,
-      "ultima_revisione": null,
-      "categoria": "verbi"
+      "ultima_revisione": "2025-10-05T10:09:58.523268"
     },
     {
       "tedesco": "laufen",
       "italiano": "correre",
+      "categoria": "verbi",
       "priorita": false,
-      "corrette": 0,
+      "corrette": 1,
       "sbagliate": 0,
-      "ultima_revisione": null,
-      "categoria": "verbi"
+      "ultima_revisione": "2025-10-05T10:10:49.911277"
     },
     {
       "tedesco": "sitzen",
       "italiano": "sedersi",
+      "categoria": "verbi",
       "priorita": false,
-      "corrette": 0,
+      "corrette": 1,
       "sbagliate": 0,
-      "ultima_revisione": null,
-      "categoria": "verbi"
+      "ultima_revisione": "2025-10-05T10:11:38.919080"
     },
     {
       "tedesco": "liegen",
       "italiano": "stare sdraiato",
+      "categoria": "verbi",
       "priorita": false,
-      "corrette": 0,
+      "corrette": 1,
       "sbagliate": 0,
-      "ultima_revisione": null,
-      "categoria": "verbi"
+      "ultima_revisione": "2025-10-05T10:10:29.529982"
     },
     {
       "tedesco": "legen",
       "italiano": "mettere in posizione orizzontale",
+      "categoria": "verbi",
       "priorita": false,
-      "corrette": 0,
-      "sbagliate": 0,
-      "ultima_revisione": null,
-      "categoria": "verbi"
+      "corrette": 1,
+      "sbagliate": 1,
+      "ultima_revisione": "2025-10-05T10:17:29.411206"
     },
     {
       "tedesco": "setzen",
       "italiano": "mettere a sedere",
+      "categoria": "verbi",
       "priorita": false,
-      "corrette": 0,
+      "corrette": 1,
       "sbagliate": 0,
-      "ultima_revisione": null,
-      "categoria": "verbi"
+      "ultima_revisione": "2025-10-05T10:09:51.124404"
     },
     {
       "tedesco": "waschen",
       "italiano": "lavare",
+      "categoria": "verbi",
       "priorita": false,
-      "corrette": 0,
-      "sbagliate": 0,
-      "ultima_revisione": null,
-      "categoria": "verbi"
+      "corrette": 1,
+      "sbagliate": 1,
+      "ultima_revisione": "2025-10-05T10:17:54.183744"
     },
     {
       "tedesco": "schneiden",
       "italiano": "tagliare",
+      "categoria": "verbi",
       "priorita": false,
-      "corrette": 0,
-      "sbagliate": 0,
-      "ultima_revisione": null,
-      "categoria": "verbi"
-    },
-    {
-      "tedesco": "beschreiben",
-      "italiano": "descrivere",
-      "priorita": true,
-      "corrette": 0,
-      "sbagliate": 0,
-      "ultima_revisione": null,
-      "categoria": "verbi a2"
-    },
-    {
-      "tedesco": "verlieren",
-      "italiano": "perdere",
-      "priorita": true,
-      "corrette": 0,
-      "sbagliate": 0,
-      "ultima_revisione": null,
-      "categoria": "verbi a2"
-    },
-    {
-      "tedesco": "gewinnen",
-      "italiano": "vincere",
-      "priorita": true,
-      "corrette": 0,
-      "sbagliate": 0,
-      "ultima_revisione": null,
-      "categoria": "verbi a2"
-    },
-    {
-      "tedesco": "passieren",
-      "italiano": "accadere, succedere",
-      "priorita": true,
-      "corrette": 0,
-      "sbagliate": 0,
-      "ultima_revisione": null,
-      "categoria": "verbi a2"
-    },
-    {
-      "tedesco": "beenden",
-      "italiano": "terminare, concludere",
-      "priorita": true,
-      "corrette": 0,
-      "sbagliate": 0,
-      "ultima_revisione": null,
-      "categoria": "verbi a2"
-    },
-    {
-      "tedesco": "versuchen",
-      "italiano": "provare, tentare",
-      "priorita": true,
-      "corrette": 0,
-      "sbagliate": 0,
-      "ultima_revisione": null,
-      "categoria": "verbi a2"
-    },
-    {
-      "tedesco": "entscheiden",
-      "italiano": "decidere",
-      "priorita": true,
-      "corrette": 0,
-      "sbagliate": 0,
-      "ultima_revisione": null,
-      "categoria": "verbi a2"
-    },
-    {
-      "tedesco": "empfehlen",
-      "italiano": "consigliare",
-      "priorita": true,
-      "corrette": 0,
-      "sbagliate": 0,
-      "ultima_revisione": null,
-      "categoria": "verbi a2"
-    },
-    {
-      "tedesco": "verschicken",
-      "italiano": "spedire, inviare",
-      "priorita": true,
-      "corrette": 0,
-      "sbagliate": 0,
-      "ultima_revisione": null,
-      "categoria": "verbi a2"
-    },
-    {
-      "tedesco": "erkennen",
-      "italiano": "riconoscere",
-      "priorita": true,
-      "corrette": 0,
-      "sbagliate": 0,
-      "ultima_revisione": null,
-      "categoria": "verbi a2"
-    },
-    {
-      "tedesco": "versprechen",
-      "italiano": "promettere",
-      "priorita": true,
-      "corrette": 0,
-      "sbagliate": 0,
-      "ultima_revisione": null,
-      "categoria": "verbi a2"
-    },
-    {
-      "tedesco": "vergleichen",
-      "italiano": "confrontare",
-      "priorita": true,
-      "corrette": 0,
-      "sbagliate": 0,
-      "ultima_revisione": null,
-      "categoria": "verbi a2"
-    },
-    {
-      "tedesco": "besuchen",
-      "italiano": "visitare, frequentare",
-      "priorita": true,
-      "corrette": 0,
-      "sbagliate": 0,
-      "ultima_revisione": null,
-      "categoria": "verbi a2"
-    },
-    {
-      "tedesco": "bestehen",
-      "italiano": "superare (un esame), consistere in",
-      "priorita": true,
-      "corrette": 0,
-      "sbagliate": 0,
-      "ultima_revisione": null,
-      "categoria": "verbi a2"
-    },
-    {
-      "tedesco": "bedeuten",
-      "italiano": "significare",
-      "priorita": true,
-      "corrette": 0,
-      "sbagliate": 0,
-      "ultima_revisione": null,
-      "categoria": "verbi a2"
+      "corrette": 1,
+      "sbagliate": 1,
+      "ultima_revisione": "2025-10-05T10:17:31.282476"
     },
     {
       "tedesco": "erlauben",
       "italiano": "permettere",
+      "categoria": "verbi a2",
       "priorita": true,
       "corrette": 0,
       "sbagliate": 0,
-      "ultima_revisione": null,
-      "categoria": "verbi a2"
+      "ultima_revisione": null
     },
     {
       "tedesco": "verbessern",
       "italiano": "migliorare, correggere",
+      "categoria": "verbi a2",
       "priorita": true,
       "corrette": 0,
       "sbagliate": 0,
-      "ultima_revisione": null,
-      "categoria": "verbi a2"
+      "ultima_revisione": null
     },
     {
       "tedesco": "erreichen",
       "italiano": "raggiungere",
+      "categoria": "verbi a2",
       "priorita": true,
       "corrette": 0,
       "sbagliate": 0,
-      "ultima_revisione": null,
-      "categoria": "verbi a2"
+      "ultima_revisione": null
     },
     {
       "tedesco": "entdecken",
       "italiano": "scoprire",
+      "categoria": "verbi a2",
       "priorita": true,
       "corrette": 0,
       "sbagliate": 0,
-      "ultima_revisione": null,
-      "categoria": "verbi a2"
+      "ultima_revisione": null
     },
     {
       "tedesco": "erklären",
       "italiano": "spiegare",
+      "categoria": "verbi a2",
       "priorita": true,
       "corrette": 0,
       "sbagliate": 0,
-      "ultima_revisione": null,
-      "categoria": "verbi a2"
+      "ultima_revisione": null
     },
     {
       "tedesco": "unternehmen",
       "italiano": "intraprendere, fare (un’attività)",
+      "categoria": "verbi a2",
       "priorita": true,
       "corrette": 0,
       "sbagliate": 0,
-      "ultima_revisione": null,
-      "categoria": "verbi a2"
+      "ultima_revisione": null
     },
     {
       "tedesco": "vorstellen",
       "italiano": "presentare, immaginare",
+      "categoria": "verbi a2",
       "priorita": true,
       "corrette": 0,
       "sbagliate": 0,
-      "ultima_revisione": null,
-      "categoria": "verbi a2"
+      "ultima_revisione": null
     },
     {
       "tedesco": "reduzieren",
       "italiano": "ridurre",
+      "categoria": "verbi a2",
       "priorita": true,
       "corrette": 0,
       "sbagliate": 0,
-      "ultima_revisione": null,
-      "categoria": "verbi a2"
+      "ultima_revisione": null
     },
     {
       "tedesco": "wählen",
       "italiano": "scegliere, votare",
+      "categoria": "verbi a2",
       "priorita": true,
       "corrette": 0,
       "sbagliate": 0,
-      "ultima_revisione": null,
-      "categoria": "verbi a2"
+      "ultima_revisione": null
     },
     {
       "tedesco": "unterschreiben",
       "italiano": "firmare",
+      "categoria": "verbi a2",
       "priorita": true,
       "corrette": 0,
       "sbagliate": 0,
-      "ultima_revisione": null,
-      "categoria": "verbi a2"
+      "ultima_revisione": null
     },
     {
       "tedesco": "verbringen",
       "italiano": "trascorrere (tempo)",
+      "categoria": "verbi a2",
       "priorita": true,
       "corrette": 0,
       "sbagliate": 0,
-      "ultima_revisione": null,
-      "categoria": "verbi a2"
+      "ultima_revisione": null
     },
     {
       "tedesco": "entschuldigen",
       "italiano": "scusare",
+      "categoria": "verbi a2",
       "priorita": true,
       "corrette": 0,
       "sbagliate": 0,
-      "ultima_revisione": null,
-      "categoria": "verbi a2"
+      "ultima_revisione": null
     },
     {
       "tedesco": "anbieten",
       "italiano": "offrire",
+      "categoria": "verbi a2",
       "priorita": true,
       "corrette": 0,
       "sbagliate": 0,
-      "ultima_revisione": null,
-      "categoria": "verbi a2"
+      "ultima_revisione": null
     },
     {
       "tedesco": "gehören",
       "italiano": "appartenere",
+      "categoria": "verbi a2",
       "priorita": true,
       "corrette": 0,
       "sbagliate": 0,
-      "ultima_revisione": null,
-      "categoria": "verbi a2"
+      "ultima_revisione": null
     }
   ]
 }

@@ -1,8 +1,8 @@
 """
-Modulo per la gestione delle flashcards e delle collezioni
+Modulo per la gestione delle flashcards e delle collezioni con categorie
 """
 from datetime import datetime
-from typing import List, Optional, Set
+from typing import List, Optional, Dict
 import random
 
 
@@ -13,19 +13,19 @@ class Flashcard:
         self,
         tedesco: str,
         italiano: str,
+        categoria: str = "Generale",
         priorita: bool = False,
         corrette: int = 0,
         sbagliate: int = 0,
-        ultima_revisione: Optional[str] = None,
-        categoria: str = "Generale"
+        ultima_revisione: Optional[str] = None
     ):
         self.tedesco = tedesco.strip()
         self.italiano = italiano.strip()
+        self.categoria = categoria.strip()
         self.priorita = priorita
         self.corrette = corrette
         self.sbagliate = sbagliate
         self.ultima_revisione = ultima_revisione
-        self.categoria = categoria.strip()
     
     @property
     def tentativi_totali(self) -> int:
@@ -52,11 +52,11 @@ class Flashcard:
         return {
             'tedesco': self.tedesco,
             'italiano': self.italiano,
+            'categoria': self.categoria,
             'priorita': self.priorita,
             'corrette': self.corrette,
             'sbagliate': self.sbagliate,
-            'ultima_revisione': self.ultima_revisione,
-            'categoria': self.categoria
+            'ultima_revisione': self.ultima_revisione
         }
     
     @classmethod
@@ -65,16 +65,16 @@ class Flashcard:
         return cls(
             tedesco=data['tedesco'],
             italiano=data['italiano'],
+            categoria=data.get('categoria', 'Generale'),
             priorita=data.get('priorita', False),
             corrette=data.get('corrette', 0),
             sbagliate=data.get('sbagliate', 0),
-            ultima_revisione=data.get('ultima_revisione'),
-            categoria=data.get('categoria', 'Generale')
+            ultima_revisione=data.get('ultima_revisione')
         )
     
     def __repr__(self) -> str:
         star = "⭐ " if self.priorita else ""
-        return f"{star}{self.tedesco} → {self.italiano} [{self.categoria}]"
+        return f"{star}[{self.categoria}] {self.tedesco} → {self.italiano}"
 
 
 class FlashcardCollection:
@@ -98,6 +98,15 @@ class FlashcardCollection:
             return self.flashcards[indice]
         return None
     
+    def get_categorie(self) -> List[str]:
+        """Ritorna la lista di tutte le categorie presenti"""
+        categorie = set(card.categoria for card in self.flashcards)
+        return sorted(list(categorie))
+    
+    def filtra_per_categoria(self, categoria: str) -> List[Flashcard]:
+        """Ritorna le flashcards di una specifica categoria"""
+        return [card for card in self.flashcards if card.categoria == categoria]
+    
     def cerca(self, termine: str) -> List[Flashcard]:
         """Cerca flashcards che contengono il termine"""
         termine = termine.lower()
@@ -110,20 +119,33 @@ class FlashcardCollection:
         """Ritorna solo le flashcards con priorità"""
         return [card for card in self.flashcards if card.priorita]
     
-    def filtra_per_categoria(self, categoria: str) -> List[Flashcard]:
-        """Ritorna le flashcards di una specifica categoria"""
-        return [card for card in self.flashcards if card.categoria == categoria]
-    
-    def get_categorie(self) -> Set[str]:
-        """Ritorna tutte le categorie presenti"""
-        return set(card.categoria for card in self.flashcards)
-    
     def filtra_per_difficolta(self, soglia: float = 50.0) -> List[Flashcard]:
         """Ritorna le flashcards con percentuale di successo sotto la soglia"""
         return [
             card for card in self.flashcards
             if card.tentativi_totali > 0 and card.percentuale_successo < soglia
         ]
+    
+    def filtra_per_livello(self, livello: str) -> List[Flashcard]:
+        """
+        Filtra le flashcards per livello di difficoltà
+        
+        Args:
+            livello: 'difficili', 'medie', 'facili', 'non-studiate'
+        
+        Returns:
+            Lista di flashcards filtrate
+        """
+        if livello == 'difficili':
+            return [c for c in self.flashcards if c.tentativi_totali > 0 and c.percentuale_successo < 50]
+        elif livello == 'medie':
+            return [c for c in self.flashcards if c.tentativi_totali > 0 and 50 <= c.percentuale_successo < 80]
+        elif livello == 'facili':
+            return [c for c in self.flashcards if c.tentativi_totali > 0 and c.percentuale_successo >= 80]
+        elif livello == 'non-studiate':
+            return [c for c in self.flashcards if c.tentativi_totali == 0]
+        else:
+            return list(self.flashcards)
     
     def get_flashcards_casuali(self, numero: Optional[int] = None) -> List[Flashcard]:
         """Ritorna le flashcards in ordine casuale"""
@@ -140,14 +162,12 @@ class FlashcardCollection:
                 'totale_flashcards': 0,
                 'con_priorita': 0,
                 'totale_tentativi': 0,
-                'percentuale_media': 0.0,
-                'categorie': []
+                'percentuale_media': 0.0
             }
         
         con_priorita = len(self.filtra_per_priorita())
         totale_tentativi = sum(card.tentativi_totali for card in self.flashcards)
         
-        # Calcola percentuale media solo per card con tentativi
         cards_con_tentativi = [card for card in self.flashcards if card.tentativi_totali > 0]
         if cards_con_tentativi:
             percentuale_media = sum(
@@ -156,16 +176,49 @@ class FlashcardCollection:
         else:
             percentuale_media = 0.0
         
-        # Statistiche per categoria
-        categorie = list(self.get_categorie())
-        
         return {
             'totale_flashcards': len(self.flashcards),
             'con_priorita': con_priorita,
             'totale_tentativi': totale_tentativi,
-            'percentuale_media': percentuale_media,
-            'categorie': sorted(categorie)
+            'percentuale_media': percentuale_media
         }
+    
+    def get_statistiche_per_categoria(self) -> Dict[str, dict]:
+        """Calcola statistiche per ogni categoria"""
+        categorie = self.get_categorie()
+        stats_categorie = {}
+        
+        for categoria in categorie:
+            cards = self.filtra_per_categoria(categoria)
+            
+            totale = len(cards)
+            con_priorita = len([c for c in cards if c.priorita])
+            totale_tentativi = sum(c.tentativi_totali for c in cards)
+            
+            cards_con_tentativi = [c for c in cards if c.tentativi_totali > 0]
+            if cards_con_tentativi:
+                percentuale_media = sum(
+                    c.percentuale_successo for c in cards_con_tentativi
+                ) / len(cards_con_tentativi)
+                corrette_totali = sum(c.corrette for c in cards_con_tentativi)
+                sbagliate_totali = sum(c.sbagliate for c in cards_con_tentativi)
+            else:
+                percentuale_media = 0.0
+                corrette_totali = 0
+                sbagliate_totali = 0
+            
+            stats_categorie[categoria] = {
+                'totale_flashcards': totale,
+                'con_priorita': con_priorita,
+                'totale_tentativi': totale_tentativi,
+                'percentuale_media': percentuale_media,
+                'corrette_totali': corrette_totali,
+                'sbagliate_totali': sbagliate_totali,
+                'studiate': len(cards_con_tentativi),
+                'non_studiate': totale - len(cards_con_tentativi)
+            }
+        
+        return stats_categorie
     
     def ordina_per_difficolta(self, crescente: bool = True):
         """Ordina le flashcards per percentuale di successo"""
