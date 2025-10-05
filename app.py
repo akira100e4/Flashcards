@@ -1,12 +1,14 @@
 """
 Flashcards Tedesco-Italiano - Versione Web
-Server Flask per l'applicazione web con supporto categorie
+Server Flask per l'applicazione web
 """
 from flask import Flask, render_template, request, jsonify, session
 import sys
 import os
 import secrets
+from pathlib import Path
 
+# Aggiungi la directory root al path
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 from src.models.flashcard import FlashcardCollection
@@ -14,8 +16,19 @@ from src.utils.parser import FlashcardParser
 from src.utils.storage import Storage
 
 app = Flask(__name__)
-app.secret_key = secrets.token_hex(16)
 
+# FIX: Secret key persistente
+secret_file = Path('data/secret.key')
+if secret_file.exists():
+    app.secret_key = secret_file.read_text()
+else:
+    secret_file.parent.mkdir(parents=True, exist_ok=True)
+    new_secret = secrets.token_hex(32)  # 32 bytes = 256 bit
+    secret_file.write_text(new_secret)
+    app.secret_key = new_secret
+    print("✅ Nuova secret key generata e salvata")
+
+# Storage globale
 storage = Storage()
 
 
@@ -26,47 +39,44 @@ def get_collection():
 
 def save_collection(collection):
     """Salva la collezione"""
-    storage.salva(collection)
+    return storage.salva(collection)
 
 
 @app.route('/')
 def index():
     """Pagina principale"""
-    collection = get_collection()
-    stats = collection.get_statistiche_generali()
-    flashcards = list(collection)
-    categorie = collection.get_categorie()
-    
-    return render_template('index.html', 
-                         flashcards=flashcards,
-                         stats=stats,
-                         categorie=categorie)
+    try:
+        collection = get_collection()
+        stats = collection.get_statistiche_generali()
+        flashcards = list(collection)
+        
+        return render_template('index.html', 
+                             flashcards=flashcards,
+                             stats=stats)
+    except Exception as e:
+        print(f"❌ Errore nella pagina principale: {e}")
+        return f"Errore: {e}", 500
 
 
 @app.route('/api/flashcards', methods=['GET'])
 def get_flashcards():
     """API per ottenere tutte le flashcards"""
-    collection = get_collection()
-    flashcards = [
-        {
-            'tedesco': card.tedesco,
-            'italiano': card.italiano,
-            'categoria': card.categoria,
-            'priorita': card.priorita,
-            'corrette': card.corrette,
-            'sbagliate': card.sbagliate,
-            'percentuale': card.percentuale_successo
-        }
-        for card in collection
-    ]
-    return jsonify(flashcards)
-
-
-@app.route('/api/categorie', methods=['GET'])
-def get_categorie():
-    """API per ottenere tutte le categorie"""
-    collection = get_collection()
-    return jsonify(collection.get_categorie())
+    try:
+        collection = get_collection()
+        flashcards = [
+            {
+                'tedesco': card.tedesco,
+                'italiano': card.italiano,
+                'priorita': card.priorita,
+                'corrette': card.corrette,
+                'sbagliate': card.sbagliate,
+                'percentuale': card.percentuale_successo
+            }
+            for card in collection
+        ]
+        return jsonify(flashcards)
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
 
 
 @app.route('/api/flashcards/add', methods=['POST'])
@@ -75,6 +85,9 @@ def add_flashcards():
     try:
         data = request.get_json()
         testo = data.get('text', '')
+        
+        if not testo.strip():
+            return jsonify({'error': 'Testo vuoto'}), 400
         
         nuove_cards = FlashcardParser.parse_testo(testo)
         
@@ -85,15 +98,17 @@ def add_flashcards():
         for card in nuove_cards:
             collection.aggiungi_flashcard(card)
         
-        save_collection(collection)
-        
-        return jsonify({
-            'success': True,
-            'count': len(nuove_cards),
-            'message': f'Aggiunte {len(nuove_cards)} flashcards!'
-        })
+        if save_collection(collection):
+            return jsonify({
+                'success': True,
+                'count': len(nuove_cards),
+                'message': f'Aggiunte {len(nuove_cards)} flashcard{"s" if len(nuove_cards) > 1 else ""}!'
+            })
+        else:
+            return jsonify({'error': 'Errore nel salvataggio'}), 500
     
     except Exception as e:
+        print(f"❌ Errore nell'aggiunta flashcards: {e}")
         return jsonify({'error': str(e)}), 500
 
 
@@ -105,12 +120,15 @@ def delete_flashcard(index):
         
         if 0 <= index < len(collection):
             collection.rimuovi_flashcard(index)
-            save_collection(collection)
-            return jsonify({'success': True})
+            if save_collection(collection):
+                return jsonify({'success': True})
+            else:
+                return jsonify({'error': 'Errore nel salvataggio'}), 500
         else:
             return jsonify({'error': 'Indice non valido'}), 400
     
     except Exception as e:
+        print(f"❌ Errore nell'eliminazione: {e}")
         return jsonify({'error': str(e)}), 500
 
 
@@ -123,33 +141,15 @@ def toggle_priority(index):
         
         if card:
             card.priorita = not card.priorita
-            save_collection(collection)
-            return jsonify({'success': True, 'priorita': card.priorita})
+            if save_collection(collection):
+                return jsonify({'success': True, 'priorita': card.priorita})
+            else:
+                return jsonify({'error': 'Errore nel salvataggio'}), 500
         else:
             return jsonify({'error': 'Flashcard non trovata'}), 404
     
     except Exception as e:
-        return jsonify({'error': str(e)}), 500
-
-
-@app.route('/api/flashcards/<int:index>/categoria', methods=['POST'])
-def update_categoria(index):
-    """API per aggiornare la categoria di una flashcard"""
-    try:
-        data = request.get_json()
-        nuova_categoria = data.get('categoria', 'Generale')
-        
-        collection = get_collection()
-        card = collection.get_flashcard(index)
-        
-        if card:
-            card.categoria = nuova_categoria
-            save_collection(collection)
-            return jsonify({'success': True, 'categoria': card.categoria})
-        else:
-            return jsonify({'error': 'Flashcard non trovata'}), 404
-    
-    except Exception as e:
+        print(f"❌ Errore nel cambio priorità: {e}")
         return jsonify({'error': str(e)}), 500
 
 
@@ -159,36 +159,19 @@ def start_study():
     try:
         data = request.get_json()
         modalita = data.get('modalita', 'tedesco-italiano')
-        categoria = data.get('categoria', 'tutte')
-        difficolta = data.get('difficolta', 'tutte')
         
         collection = get_collection()
         
-        # Filtra per categoria se richiesto
-        if categoria and categoria != 'tutte':
-            flashcards = collection.filtra_per_categoria(categoria)
-            # Crea una sotto-collezione temporanea per applicare il filtro di difficoltà
-            temp_collection = FlashcardCollection()
-            for card in flashcards:
-                temp_collection.aggiungi_flashcard(card)
-            collection = temp_collection
+        if len(collection) == 0:
+            return jsonify({'error': 'Nessuna flashcard disponibile'}), 400
         
-        # Filtra per difficoltà
-        if difficolta and difficolta != 'tutte':
-            flashcards = collection.filtra_per_livello(difficolta)
-        else:
-            flashcards = list(collection)
-        
-        # Mescola le flashcards
-        import random
-        random.shuffle(flashcards)
+        flashcards = collection.get_flashcards_casuali()
         
         # Salva la sessione
         session['flashcards'] = [
             {
                 'tedesco': card.tedesco,
                 'italiano': card.italiano,
-                'categoria': card.categoria,
                 'priorita': card.priorita
             }
             for card in flashcards
@@ -196,6 +179,8 @@ def start_study():
         session['modalita'] = modalita
         session['indice'] = 0
         session['corrette'] = 0
+        session['sbagliate'] = 0
+        session.modified = True
         
         return jsonify({
             'success': True,
@@ -203,6 +188,7 @@ def start_study():
         })
     
     except Exception as e:
+        print(f"❌ Errore nell'avvio studio: {e}")
         return jsonify({'error': str(e)}), 500
 
 
@@ -233,16 +219,17 @@ def get_current_flashcard():
         return jsonify({
             'domanda': domanda,
             'risposta': risposta,
-            'categoria': card['categoria'],
             'priorita': card['priorita'],
             'indice': indice,
             'totale': len(flashcards),
             'corrette': session.get('corrette', 0),
+            'sbagliate': session.get('sbagliate', 0),
             'lingua_domanda': lingua_domanda,
             'lingua_risposta': lingua_risposta
         })
     
     except Exception as e:
+        print(f"❌ Errore nel recupero flashcard corrente: {e}")
         return jsonify({'error': str(e)}), 500
 
 
@@ -259,73 +246,114 @@ def register_answer():
         if not flashcards or indice >= len(flashcards):
             return jsonify({'error': 'Sessione non valida'}), 400
         
+        # Trova e aggiorna la flashcard nella collezione
         collection = get_collection()
         card_data = flashcards[indice]
         
+        card_trovata = False
         for card in collection:
             if card.tedesco == card_data['tedesco'] and card.italiano == card_data['italiano']:
                 card.registra_risposta(corretta)
+                card_trovata = True
                 break
         
-        save_collection(collection)
+        if card_trovata:
+            save_collection(collection)
+        else:
+            print(f"⚠️ Attenzione: card non trovata nella collezione")
         
+        # Aggiorna la sessione
         if corretta:
             session['corrette'] = session.get('corrette', 0) + 1
+        else:
+            session['sbagliate'] = session.get('sbagliate', 0) + 1
         
         session['indice'] = indice + 1
+        session.modified = True
         
+        # Controlla se è l'ultima
         if session['indice'] >= len(flashcards):
             return jsonify({
                 'completed': True,
                 'corrette': session['corrette'],
+                'sbagliate': session['sbagliate'],
                 'totale': len(flashcards)
             })
         
         return jsonify({'success': True})
     
     except Exception as e:
+        print(f"❌ Errore nella registrazione risposta: {e}")
         return jsonify({'error': str(e)}), 500
 
 
 @app.route('/study')
 def study():
     """Pagina di studio"""
-    return render_template('study.html')
+    try:
+        # Verifica che ci sia una sessione attiva
+        if 'flashcards' not in session:
+            return render_template('index.html', error='Inizia una sessione di studio dalla home'), 400
+        
+        return render_template('study.html')
+    except Exception as e:
+        print(f"❌ Errore nella pagina studio: {e}")
+        return f"Errore: {e}", 500
 
 
 @app.route('/stats')
 def stats():
     """Pagina statistiche"""
-    collection = get_collection()
-    stats = collection.get_statistiche_generali()
-    stats_categorie = collection.get_statistiche_per_categoria()
-    
-    flashcards = [
-        {
-            'tedesco': card.tedesco,
-            'italiano': card.italiano,
-            'categoria': card.categoria,
-            'priorita': card.priorita,
-            'corrette': card.corrette,
-            'sbagliate': card.sbagliate,
-            'totale': card.tentativi_totali,
-            'percentuale': card.percentuale_successo
-        }
-        for card in collection
-    ]
-    
-    flashcards.sort(key=lambda x: (x['totale'] == 0, x['percentuale']))
-    
-    return render_template('stats.html', 
-                         flashcards=flashcards,
-                         stats=stats,
-                         stats_categorie=stats_categorie,
-                         categorie=collection.get_categorie())
+    try:
+        collection = get_collection()
+        stats = collection.get_statistiche_generali()
+        
+        flashcards = [
+            {
+                'tedesco': card.tedesco,
+                'italiano': card.italiano,
+                'priorita': card.priorita,
+                'corrette': card.corrette,
+                'sbagliate': card.sbagliate,
+                'totale': card.tentativi_totali,
+                'percentuale': card.percentuale_successo
+            }
+            for card in collection
+        ]
+        
+        # Ordina per difficoltà (più difficili prima)
+        flashcards.sort(key=lambda x: (x['totale'] == 0, x['percentuale']))
+        
+        return render_template('stats.html', 
+                             flashcards=flashcards,
+                             stats=stats)
+    except Exception as e:
+        print(f"❌ Errore nella pagina statistiche: {e}")
+        return f"Errore: {e}", 500
+
+
+# Error handlers
+@app.errorhandler(404)
+def not_found(error):
+    return jsonify({'error': 'Risorsa non trovata'}), 404
+
+
+@app.errorhandler(500)
+def internal_error(error):
+    return jsonify({'error': 'Errore interno del server'}), 500
 
 
 if __name__ == '__main__':
-    print("🚀 Avvio server Flask...")
+    print("\n" + "="*60)
+    print("🚀 Avvio Flashcards Tedesco-Italiano")
+    print("="*60)
     print("📱 Apri il browser su: http://localhost:5003")
-    print("⌨️  Premi CTRL+C per fermare il server\n")
-    app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
+    print("📱 Oppure: http://127.0.0.1:5003")
+    print("⌨️  Premi CTRL+C per fermare il server")
+    print("="*60 + "\n")
+    
+    # Configurazione per sviluppo
+    app.config['TEMPLATES_AUTO_RELOAD'] = True
+    
+    # Avvia il server
     app.run(debug=True, host='0.0.0.0', port=5003)

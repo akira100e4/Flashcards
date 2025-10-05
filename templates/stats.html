@@ -6,101 +6,59 @@
     <title>📊 Statistiche</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <style>
-        /* Stili per le categorie */
+        .category-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: white;
+            margin-right: 10px;
+        }
+        
         .category-stats-section {
-            margin: 40px 0;
-        }
-
-        .category-stats-section h2 {
-            color: var(--dark);
-            margin-bottom: 20px;
-        }
-
-        .category-stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 20px;
             margin-bottom: 40px;
         }
-
+        
         .category-stat-card {
-            background: var(--white);
-            border: 2px solid var(--light-gray);
+            background: var(--light-gray);
+            padding: 25px;
             border-radius: 15px;
-            padding: 20px;
-            transition: all 0.3s;
+            margin-bottom: 20px;
         }
-
-        .category-stat-card:hover {
-            border-color: var(--secondary);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-            transform: translateY(-3px);
-        }
-
-        .category-stat-card h3 {
-            color: var(--dark);
-            margin-bottom: 15px;
-            padding-bottom: 10px;
-            border-bottom: 2px solid var(--light-gray);
-        }
-
-        .category-details {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        .category-stat-row {
+        
+        .category-stat-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 5px 0;
+            margin-bottom: 15px;
         }
-
-        .category-stat-row span {
-            color: var(--gray);
-        }
-
-        .category-stat-row strong {
-            font-size: 1.1rem;
-        }
-
-        .category-badge {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 4px 12px;
-            border-radius: 15px;
-            font-size: 0.85rem;
-            font-weight: 600;
-            margin-right: 10px;
-        }
-
-        .stats-filters {
-            display: flex;
-            gap: 15px;
-            align-items: center;
-            flex-wrap: wrap;
-            margin-bottom: 30px;
-        }
-
-        .stats-filters label {
-            font-weight: 600;
+        
+        .category-stat-title {
+            font-size: 1.5rem;
+            font-weight: bold;
             color: var(--dark);
         }
-
-        .stats-filters select {
-            padding: 10px 15px;
-            border: 2px solid var(--light-gray);
-            border-radius: 10px;
-            font-size: 1rem;
-            cursor: pointer;
-            background: white;
-            transition: border-color 0.3s;
+        
+        .category-mini-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
         }
-
-        .stats-filters select:focus {
-            outline: none;
-            border-color: var(--secondary);
+        
+        .category-mini-stat {
+            text-align: center;
+        }
+        
+        .category-mini-stat-value {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--primary);
+        }
+        
+        .category-mini-stat-label {
+            font-size: 0.9rem;
+            color: var(--gray);
         }
     </style>
 </head>
@@ -119,6 +77,11 @@
                 <div class="stat-label">Totale Flashcards</div>
             </div>
             <div class="stat-card">
+                <div class="stat-icon">🏷️</div>
+                <div class="stat-value">{{ stats.totale_categorie }}</div>
+                <div class="stat-label">Categorie</div>
+            </div>
+            <div class="stat-card">
                 <div class="stat-icon">⭐</div>
                 <div class="stat-value">{{ stats.con_priorita }}</div>
                 <div class="stat-label">Con Priorità</div>
@@ -130,7 +93,7 @@
             </div>
             <div class="stat-card">
                 <div class="stat-icon">📈</div>
-                <div class="stat-value">{{ "%.1f"|format(stats.percentuale_media) }}%</div>
+                <div class="stat-value">{{ "%.1f"|format(stats.percentuale_media or 0) }}%</div>
                 <div class="stat-label">Media Successo</div>
             </div>
         </div>
@@ -140,117 +103,52 @@
         <div class="general-progress">
             <h3>Livello di Preparazione Generale</h3>
             <div class="progress-bar-container">
-                <div class="progress-bar-fill {% if stats.percentuale_media >= 80 %}excellent{% elif stats.percentuale_media >= 60 %}good{% else %}needs-work{% endif %}" 
-                     style="width: {{ stats.percentuale_media }}%">
-                    <span class="progress-percentage">{{ "%.1f"|format(stats.percentuale_media) }}%</span>
+                {% set perc_media = stats.percentuale_media or 0 %}
+                <div class="progress-bar-fill {% if perc_media >= 80 %}excellent{% elif perc_media >= 60 %}good{% else %}needs-work{% endif %}" 
+                     style="width: {{ perc_media }}%">
+                    <span class="progress-percentage">{{ "%.1f"|format(perc_media) }}%</span>
                 </div>
             </div>
         </div>
         {% endif %}
 
-        <!-- Distribuzione per difficoltà -->
-        <div class="difficulty-distribution">
-            <h3>📊 Distribuzione per Difficoltà</h3>
-            <div class="difficulty-stats-grid">
-                <div class="difficulty-stat-card non-studiate">
-                    <div class="difficulty-icon">📝</div>
-                    <div class="difficulty-count">
-                        {{ flashcards | selectattr('totale', 'equalto', 0) | list | length }}
-                    </div>
-                    <div class="difficulty-label">Non studiate</div>
-                </div>
-                <div class="difficulty-stat-card difficili">
-                    <div class="difficulty-icon">😰</div>
-                    <div class="difficulty-count">
-                        {{ flashcards | selectattr('totale', 'gt', 0) | selectattr('percentuale', 'lt', 50) | list | length }}
-                    </div>
-                    <div class="difficulty-label">Difficili (&lt;50%)</div>
-                </div>
-                <div class="difficulty-stat-card medie">
-                    <div class="difficulty-icon">🤔</div>
-                    <div class="difficulty-count">
-                        {{ flashcards | selectattr('totale', 'gt', 0) | selectattr('percentuale', 'ge', 50) | selectattr('percentuale', 'lt', 80) | list | length }}
-                    </div>
-                    <div class="difficulty-label">Medie (50-79%)</div>
-                </div>
-                <div class="difficulty-stat-card facili">
-                    <div class="difficulty-icon">✅</div>
-                    <div class="difficulty-count">
-                        {{ flashcards | selectattr('totale', 'gt', 0) | selectattr('percentuale', 'ge', 80) | list | length }}
-                    </div>
-                    <div class="difficulty-label">Facili (≥80%)</div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Statistiche per Categoria -->
-        {% if stats_categorie %}
+        <!-- Statistiche per categoria -->
+        {% if categorie_stats %}
         <div class="category-stats-section">
             <h2>📂 Statistiche per Categoria</h2>
-            <div class="category-stats-grid">
-                {% for categoria, cat_stats in stats_categorie.items() %}
-                <div class="category-stat-card">
-                    <h3>{{ categoria }}</h3>
-                    <div class="category-details">
-                        <div class="category-stat-row">
-                            <span>Flashcards:</span>
-                            <strong>{{ cat_stats.totale_flashcards }}</strong>
+            {% for categoria, stats_cat in categorie_stats.items() %}
+            <div class="category-stat-card">
+                <div class="category-stat-header">
+                    <span class="category-stat-title">{{ categoria }}</span>
+                </div>
+                <div class="category-mini-stats">
+                    <div class="category-mini-stat">
+                        <div class="category-mini-stat-value">{{ stats_cat.totale }}</div>
+                        <div class="category-mini-stat-label">Flashcards</div>
+                    </div>
+                    <div class="category-mini-stat">
+                        <div class="category-mini-stat-value">{{ stats_cat.con_priorita }}</div>
+                        <div class="category-mini-stat-label">Priorità</div>
+                    </div>
+                    <div class="category-mini-stat">
+                        <div class="category-mini-stat-value">{{ stats_cat.totale_tentativi }}</div>
+                        <div class="category-mini-stat-label">Tentativi</div>
+                    </div>
+                    <div class="category-mini-stat">
+                        {% set perc_cat = stats_cat.percentuale_media or 0 %}
+                        <div class="category-mini-stat-value" style="color: {{ 'var(--primary)' if perc_cat >= 80 else 'var(--warning)' if perc_cat >= 60 else 'var(--danger)' }}">
+                            {{ "%.1f"|format(perc_cat) }}%
                         </div>
-                        <div class="category-stat-row">
-                            <span>Studiate:</span>
-                            <strong class="success">{{ cat_stats.studiate }}</strong>
-                        </div>
-                        <div class="category-stat-row">
-                            <span>Non studiate:</span>
-                            <strong class="warning">{{ cat_stats.non_studiate }}</strong>
-                        </div>
-                        {% if cat_stats.totale_tentativi > 0 %}
-                        <div class="category-stat-row">
-                            <span>Tentativi:</span>
-                            <strong>{{ cat_stats.totale_tentativi }}</strong>
-                        </div>
-                        <div class="category-stat-row">
-                            <span>Corrette:</span>
-                            <strong class="success">{{ cat_stats.corrette_totali }}</strong>
-                        </div>
-                        <div class="category-stat-row">
-                            <span>Sbagliate:</span>
-                            <strong class="error">{{ cat_stats.sbagliate_totali }}</strong>
-                        </div>
-                        <div class="category-stat-row">
-                            <span>Successo:</span>
-                            <strong class="{% if cat_stats.percentuale_media >= 80 %}success{% elif cat_stats.percentuale_media >= 60 %}warning{% else %}error{% endif %}">
-                                {{ "%.1f"|format(cat_stats.percentuale_media) }}%
-                            </strong>
-                        </div>
-                        <div class="mini-progress">
-                            <div class="mini-progress-fill {% if cat_stats.percentuale_media >= 80 %}excellent{% elif cat_stats.percentuale_media >= 60 %}good{% else %}needs-work{% endif %}" 
-                                 style="width: {{ cat_stats.percentuale_media }}%"></div>
-                        </div>
-                        {% else %}
-                        <div class="category-stat-row">
-                            <span class="warning">Nessuna flashcard studiata in questa categoria</span>
-                        </div>
-                        {% endif %}
+                        <div class="category-mini-stat-label">Successo</div>
                     </div>
                 </div>
-                {% endfor %}
             </div>
+            {% endfor %}
         </div>
         {% endif %}
 
         <!-- Filtri -->
         <div class="stats-filters">
-            <label>
-                Categoria:
-            </label>
-            <select id="categoryFilter" onchange="filterByCategory()">
-                <option value="tutte">Tutte le categorie</option>
-                {% for categoria in categorie %}
-                <option value="{{ categoria }}">{{ categoria }}</option>
-                {% endfor %}
-            </select>
-            
             <label>
                 Ordina per:
             </label>
@@ -259,6 +157,7 @@
                 <option value="easiest">Più facili</option>
                 <option value="most-studied">Più studiate</option>
                 <option value="alphabetical">Alfabetico</option>
+                <option value="category">Per Categoria</option>
             </select>
         </div>
 
@@ -268,15 +167,16 @@
             <div class="stats-list" id="statsList">
                 {% if flashcards %}
                     {% for card in flashcards %}
-                    <div class="stat-item {% if card.totale > 0 %}{% if card.percentuale >= 80 %}excellent{% elif card.percentuale >= 60 %}good{% else %}needs-work{% endif %}{% else %}not-studied{% endif %}"
+                    {% set card_perc = card.percentuale or 0 %}
+                    <div class="stat-item {% if card.totale > 0 %}{% if card_perc >= 80 %}excellent{% elif card_perc >= 60 %}good{% else %}needs-work{% endif %}{% else %}not-studied{% endif %}"
                          data-tedesco="{{ card.tedesco }}"
-                         data-categoria="{{ card.categoria }}"
-                         data-percentage="{{ card.percentuale }}"
+                         data-categoria="{{ card.categoria or 'Senza categoria' }}"
+                         data-percentage="{{ card_perc }}"
                          data-total="{{ card.totale }}">
                         <div class="stat-item-header">
                             <span class="priority-icon">{% if card.priorita %}⭐{% endif %}</span>
+                            <span class="category-badge" data-categoria="{{ card.categoria or 'Senza categoria' }}">{{ card.categoria or 'Senza categoria' }}</span>
                             <div class="stat-item-words">
-                                <span class="category-badge">{{ card.categoria }}</span>
                                 <strong>{{ card.tedesco }}</strong>
                                 <span class="arrow">→</span>
                                 <span>{{ card.italiano }}</span>
@@ -297,15 +197,15 @@
                             </div>
                             <div class="stat-detail">
                                 <span class="stat-label">Successo:</span>
-                                <span class="stat-value {% if card.totale > 0 %}{% if card.percentuale >= 80 %}success{% elif card.percentuale >= 60 %}warning{% else %}error{% endif %}{% endif %}">
-                                    {% if card.totale > 0 %}{{ "%.1f"|format(card.percentuale) }}%{% else %}-{% endif %}
+                                <span class="stat-value {% if card.totale > 0 %}{% if card_perc >= 80 %}success{% elif card_perc >= 60 %}warning{% else %}error{% endif %}{% endif %}">
+                                    {% if card.totale > 0 %}{{ "%.1f"|format(card_perc) }}%{% else %}-{% endif %}
                                 </span>
                             </div>
                         </div>
                         {% if card.totale > 0 %}
                         <div class="mini-progress">
-                            <div class="mini-progress-fill {% if card.percentuale >= 80 %}excellent{% elif card.percentuale >= 60 %}good{% else %}needs-work{% endif %}" 
-                                 style="width: {{ card.percentuale }}%"></div>
+                            <div class="mini-progress-fill {% if card_perc >= 80 %}excellent{% elif card_perc >= 60 %}good{% else %}needs-work{% endif %}" 
+                                 style="width: {{ card_perc }}%"></div>
                         </div>
                         {% endif %}
                     </div>
@@ -321,18 +221,26 @@
     </div>
 
     <script>
-        function filterByCategory() {
-            const categoria = document.getElementById('categoryFilter').value;
-            const items = document.querySelectorAll('.stat-item');
-
-            items.forEach(item => {
-                if (categoria === 'tutte' || item.dataset.categoria === categoria) {
-                    item.style.display = 'block';
-                } else {
-                    item.style.display = 'none';
-                }
-            });
+        // Colori per le categorie
+        const categoryColors = {};
+        
+        function getCategoryColor(categoria) {
+            if (!categoryColors[categoria]) {
+                const colors = [
+                    '#3498db', '#9b59b6', '#e74c3c', '#f39c12', '#27ae60',
+                    '#16a085', '#2980b9', '#8e44ad', '#c0392b', '#d35400'
+                ];
+                const hash = categoria.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
+                categoryColors[categoria] = colors[hash % colors.length];
+            }
+            return categoryColors[categoria];
         }
+        
+        // Applica colori alle categorie
+        document.querySelectorAll('.category-badge').forEach(badge => {
+            const categoria = badge.dataset.categoria || badge.textContent.trim();
+            badge.style.background = getCategoryColor(categoria);
+        });
 
         function sortFlashcards() {
             const sortBy = document.getElementById('sortSelect').value;
@@ -361,6 +269,11 @@
                         return parseInt(b.dataset.total) - parseInt(a.dataset.total);
                     
                     case 'alphabetical':
+                        return a.dataset.tedesco.localeCompare(b.dataset.tedesco);
+                    
+                    case 'category':
+                        const catCompare = a.dataset.categoria.localeCompare(b.dataset.categoria);
+                        if (catCompare !== 0) return catCompare;
                         return a.dataset.tedesco.localeCompare(b.dataset.tedesco);
                     
                     default:
