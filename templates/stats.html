@@ -21,8 +21,8 @@
                 <div class="stat-label">Totale Flashcards</div>
             </div>
             <div class="stat-card">
-                <div class="stat-icon">📂</div>
-                <div class="stat-value">{{ stats.totale_categorie }}</div>
+                <div class="stat-icon">📁</div>
+                <div class="stat-value">{{ stats.num_categorie }}</div>
                 <div class="stat-label">Categorie</div>
             </div>
             <div class="stat-card">
@@ -56,27 +56,38 @@
         {% endif %}
 
         <!-- Statistiche per categoria -->
-        {% if categorie_stats %}
-        <div class="categories-section">
-            <h3>📂 Progresso per Categoria</h3>
-            <div class="categories-grid">
-                {% for cat, stat in categorie_stats.items() %}
-                <div class="category-card">
-                    <div class="category-name">{{ cat }}</div>
-                    <div class="category-stats">
-                        <span>{{ stat.totale }} cards</span>
-                        <span>{{ stat.studiate }} studiate</span>
+        {% if stats_per_categoria %}
+        <div class="flashcards-section">
+            <h2>📁 Statistiche per Categoria</h2>
+            <div class="category-stats-grid">
+                {% for cat, cat_stats in stats_per_categoria.items() %}
+                <div class="category-stat-card {% if cat_stats.percentuale_media >= 80 %}excellent{% elif cat_stats.percentuale_media >= 60 %}good{% elif cat_stats.studiate > 0 %}needs-work{% else %}not-studied{% endif %}">
+                    <div class="category-stat-header">
+                        <h3>{{ cat }}</h3>
+                        <span class="category-count">{{ cat_stats.totale }} flashcards</span>
                     </div>
-                    {% if stat.studiate > 0 %}
-                    <div style="margin-top: 10px;">
-                        <div class="mini-progress">
-                            <div class="mini-progress-fill {% if stat.percentuale_media >= 80 %}excellent{% elif stat.percentuale_media >= 60 %}good{% else %}needs-work{% endif %}" 
-                                 style="width: {{ stat.percentuale_media }}%"></div>
+                    <div class="category-stat-data">
+                        <div class="stat-detail">
+                            <span class="stat-label">Studiate:</span>
+                            <span class="stat-value">{{ cat_stats.studiate }}/{{ cat_stats.totale }}</span>
                         </div>
-                        <div style="text-align: center; margin-top: 5px; font-size: 0.9rem;" 
-                             class="{% if stat.percentuale_media >= 80 %}success{% elif stat.percentuale_media >= 60 %}warning{% else %}error{% endif %}">
-                            {{ "%.0f"|format(stat.percentuale_media) }}%
+                        <div class="stat-detail">
+                            <span class="stat-label">Con priorità:</span>
+                            <span class="stat-value">{{ cat_stats.con_priorita }}</span>
                         </div>
+                        {% if cat_stats.studiate > 0 %}
+                        <div class="stat-detail">
+                            <span class="stat-label">Successo medio:</span>
+                            <span class="stat-value {% if cat_stats.percentuale_media >= 80 %}success{% elif cat_stats.percentuale_media >= 60 %}warning{% else %}error{% endif %}">
+                                {{ "%.1f"|format(cat_stats.percentuale_media) }}%
+                            </span>
+                        </div>
+                        {% endif %}
+                    </div>
+                    {% if cat_stats.studiate > 0 %}
+                    <div class="mini-progress">
+                        <div class="mini-progress-fill {% if cat_stats.percentuale_media >= 80 %}excellent{% elif cat_stats.percentuale_media >= 60 %}good{% else %}needs-work{% endif %}" 
+                             style="width: {{ cat_stats.percentuale_media }}%"></div>
                     </div>
                     {% endif %}
                 </div>
@@ -87,11 +98,11 @@
 
         <!-- Filtri -->
         <div class="stats-filters">
-            <label>Categoria:</label>
+            <label>Filtra per categoria:</label>
             <select id="categoryFilter" onchange="filterByCategory()">
                 <option value="">Tutte le categorie</option>
-                {% for categoria in categorie %}
-                <option value="{{ categoria }}">{{ categoria }}</option>
+                {% for cat in categorie %}
+                <option value="{{ cat }}">{{ cat }}</option>
                 {% endfor %}
             </select>
             
@@ -112,12 +123,12 @@
                     {% for card in flashcards %}
                     <div class="stat-item {% if card.totale > 0 %}{% if card.percentuale >= 80 %}excellent{% elif card.percentuale >= 60 %}good{% else %}needs-work{% endif %}{% else %}not-studied{% endif %}"
                          data-tedesco="{{ card.tedesco }}"
-                         data-categoria="{{ card.categoria }}"
                          data-percentage="{{ card.percentuale }}"
-                         data-total="{{ card.totale }}">
+                         data-total="{{ card.totale }}"
+                         data-categoria="{{ card.categoria }}">
                         <div class="stat-item-header">
                             <span class="priority-icon">{% if card.priorita %}⭐{% endif %}</span>
-                            <span class="category-badge">{{ card.categoria }}</span>
+                            <span class="category-badge-small">{{ card.categoria }}</span>
                             <div class="stat-item-words">
                                 <strong>{{ card.tedesco }}</strong>
                                 <span class="arrow">→</span>
@@ -165,7 +176,7 @@
     <script>
         function filterByCategory() {
             const categoryFilter = document.getElementById('categoryFilter').value;
-            const items = Array.from(document.querySelectorAll('.stat-item'));
+            const items = document.querySelectorAll('.stat-item');
 
             items.forEach(item => {
                 const categoria = item.dataset.categoria;
@@ -211,5 +222,87 @@
             items.forEach(item => list.appendChild(item));
         }
     </script>
+
+    <style>
+        .category-stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .category-stat-card {
+            background: white;
+            border: 2px solid var(--light-gray);
+            border-radius: 15px;
+            padding: 20px;
+            transition: all 0.3s;
+        }
+
+        .category-stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .category-stat-card.excellent {
+            border-color: var(--primary);
+            background: linear-gradient(135deg, #d5f4e6 0%, #ffffff 100%);
+        }
+
+        .category-stat-card.good {
+            border-color: var(--warning);
+            background: linear-gradient(135deg, #fff3cd 0%, #ffffff 100%);
+        }
+
+        .category-stat-card.needs-work {
+            border-color: var(--danger);
+            background: linear-gradient(135deg, #f8d7da 0%, #ffffff 100%);
+        }
+
+        .category-stat-card.not-studied {
+            border-color: var(--gray);
+            opacity: 0.7;
+        }
+
+        .category-stat-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--light-gray);
+        }
+
+        .category-stat-header h3 {
+            margin: 0;
+            color: var(--dark);
+        }
+
+        .category-count {
+            background: var(--light-gray);
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        .category-stat-data {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .category-badge-small {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 4px 10px;
+            border-radius: 10px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-right: 10px;
+        }
+    </style>
 </body>
 </html>

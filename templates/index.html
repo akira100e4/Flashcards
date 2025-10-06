@@ -20,8 +20,8 @@
                 <div class="stat-label">Flashcards</div>
             </div>
             <div class="stat-card">
-                <div class="stat-icon">📂</div>
-                <div class="stat-value">{{ stats.totale_categorie }}</div>
+                <div class="stat-icon">📁</div>
+                <div class="stat-value">{{ stats.num_categorie }}</div>
                 <div class="stat-label">Categorie</div>
             </div>
             <div class="stat-card">
@@ -55,6 +55,26 @@
                 </label>
             </div>
 
+            <!-- Selettore categorie per lo studio -->
+            {% if categorie %}
+            <div class="mode-selector">
+                <h3>📁 Categorie da Studiare</h3>
+                <div style="max-height: 200px; overflow-y: auto; padding: 10px; background: white; border-radius: 8px;">
+                    <label style="font-weight: bold; border-bottom: 2px solid #ddd; padding-bottom: 5px; margin-bottom: 10px;">
+                        <input type="checkbox" id="selectAllCategories" onchange="toggleAllCategories()" checked>
+                        <span>Tutte le categorie</span>
+                    </label>
+                    {% for cat in categorie %}
+                    <label class="category-checkbox">
+                        <input type="checkbox" name="categoria" value="{{ cat }}" checked onchange="updateCategorySelection()">
+                        <span>{{ cat }}</span>
+                        <span style="color: #888; font-size: 0.9em;">({{ stats_per_categoria[cat].totale }})</span>
+                    </label>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+
             <div class="action-buttons">
                 <button class="btn btn-primary btn-large" onclick="startStudy()" {% if stats.totale_flashcards == 0 %}disabled{% endif %}>
                     🎯 INIZIA STUDIO
@@ -68,22 +88,18 @@
             </div>
         </div>
 
-
-
         <!-- Lista flashcards -->
         <div class="flashcards-section">
             <div class="section-header">
                 <h2>Le tue Flashcards</h2>
                 <div class="search-box">
                     <input type="text" id="searchInput" placeholder="🔍 Cerca..." onkeyup="filterFlashcards()">
-                    
                     <select id="categoryFilter" onchange="filterFlashcards()">
                         <option value="">Tutte le categorie</option>
-                        {% for categoria in categorie %}
-                        <option value="{{ categoria }}">{{ categoria }}</option>
+                        {% for cat in categorie %}
+                        <option value="{{ cat }}">{{ cat }}</option>
                         {% endfor %}
                     </select>
-                    
                     <label>
                         <input type="checkbox" id="priorityFilter" onchange="filterFlashcards()">
                         Solo priorità ⭐
@@ -97,12 +113,12 @@
                     <div class="flashcard-item" 
                          data-tedesco="{{ card.tedesco|lower }}" 
                          data-italiano="{{ card.italiano|lower }}" 
-                         data-categoria="{{ card.categoria }}"
-                         data-priorita="{{ card.priorita }}">
+                         data-priorita="{{ card.priorita }}"
+                         data-categoria="{{ card.categoria }}">
                         <div class="card-content">
                             <span class="priority-icon">{% if card.priorita %}⭐{% endif %}</span>
                             <div class="card-text">
-                                <span class="category-badge">{{ card.categoria }}</span>
+                                <span class="category-badge">📁 {{ card.categoria }}</span>
                                 <div class="word-with-audio">
                                     <strong>{{ card.tedesco }}</strong>
                                     <button class="audio-btn-small" onclick="playWordAudio('de', '{{ card.tedesco }}', event)" title="Ascolta tedesco">
@@ -155,14 +171,19 @@
             <h2>Aggiungi Flashcards</h2>
             <p>Incolla le tue flashcards nel formato:</p>
             <code>
-                [Verbi] **gehen → andare**<br>
-                [Sostantivi] Haus → casa<br>
-                * weit → Lontano
+                # Verbi<br>
+                * **gehen → andare**<br>
+                * kommen → venire<br>
+                <br>
+                # Casa<br>
+                * Haus → casa<br>
+                * Zimmer → stanza
             </code>
-            <p style="margin-top: 10px; font-size: 0.9rem; color: #7f8c8d;">
-                💡 Usa [Categoria] prima della parola per organizzare le flashcards<br>
-                💡 Usa ** per marcare come priorità
-            </p>
+            <p style="margin-top: 15px; color: #666;">Oppure usa il formato inline:</p>
+            <code>
+                * [Verbi] gehen → andare<br>
+                * [Casa] Haus → casa
+            </code>
             <textarea id="flashcardsText" rows="15" placeholder="Incolla qui le tue flashcards..."></textarea>
             <div class="modal-actions">
                 <button class="btn btn-primary" onclick="addFlashcards()">✓ Aggiungi</button>
@@ -181,7 +202,6 @@
             }
 
             speechSynthesis.cancel();
-
             const langCode = lang === 'de' ? 'de-DE' : 'it-IT';
             const utterance = new SpeechSynthesisUtterance(text);
             utterance.lang = langCode;
@@ -194,6 +214,18 @@
             };
 
             speechSynthesis.speak(utterance);
+        }
+
+        function toggleAllCategories() {
+            const selectAll = document.getElementById('selectAllCategories');
+            const checkboxes = document.querySelectorAll('input[name="categoria"]');
+            checkboxes.forEach(cb => cb.checked = selectAll.checked);
+        }
+
+        function updateCategorySelection() {
+            const checkboxes = document.querySelectorAll('input[name="categoria"]');
+            const allChecked = Array.from(checkboxes).every(cb => cb.checked);
+            document.getElementById('selectAllCategories').checked = allChecked;
         }
 
         function showAddDialog() {
@@ -271,18 +303,30 @@
 
         async function startStudy() {
             const modalita = document.querySelector('input[name="modalita"]:checked').value;
+            const categorieSelezionate = Array.from(document.querySelectorAll('input[name="categoria"]:checked'))
+                .map(cb => cb.value);
+
+            if (categorieSelezionate.length === 0) {
+                alert('Seleziona almeno una categoria!');
+                return;
+            }
 
             try {
                 const response = await fetch('/api/study/start', {
                     method: 'POST',
                     headers: {'Content-Type': 'application/json'},
-                    body: JSON.stringify({modalita: modalita})
+                    body: JSON.stringify({
+                        modalita: modalita,
+                        categorie: categorieSelezionate
+                    })
                 });
+
+                const data = await response.json();
 
                 if (response.ok) {
                     location.href = '/study';
                 } else {
-                    alert('Errore durante l\'avvio dello studio');
+                    alert('Errore: ' + data.error);
                 }
             } catch (error) {
                 alert('Errore di rete: ' + error);
@@ -291,21 +335,21 @@
 
         function filterFlashcards() {
             const searchTerm = document.getElementById('searchInput').value.toLowerCase();
-            const categoryFilter = document.getElementById('categoryFilter').value;
             const priorityOnly = document.getElementById('priorityFilter').checked;
+            const categoriaFiltro = document.getElementById('categoryFilter').value;
             const items = document.querySelectorAll('.flashcard-item');
 
             items.forEach(item => {
                 const tedesco = item.dataset.tedesco;
                 const italiano = item.dataset.italiano;
-                const categoria = item.dataset.categoria;
                 const priorita = item.dataset.priorita === 'True';
+                const categoria = item.dataset.categoria;
 
                 const matchesSearch = tedesco.includes(searchTerm) || italiano.includes(searchTerm);
-                const matchesCategory = !categoryFilter || categoria === categoryFilter;
                 const matchesPriority = !priorityOnly || priorita;
+                const matchesCategory = !categoriaFiltro || categoria === categoriaFiltro;
 
-                item.style.display = matchesSearch && matchesCategory && matchesPriority ? 'flex' : 'none';
+                item.style.display = matchesSearch && matchesPriority && matchesCategory ? 'flex' : 'none';
             });
         }
 
@@ -316,5 +360,43 @@
             }
         }
     </script>
+
+    <style>
+        .category-badge {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-right: 12px;
+        }
+
+        .category-checkbox {
+            display: block !important;
+            margin: 8px 0 !important;
+            padding: 8px;
+            border-radius: 6px;
+            transition: background 0.2s;
+        }
+
+        .category-checkbox:hover {
+            background: #f5f5f5;
+        }
+
+        #categoryFilter {
+            padding: 10px 15px;
+            border: 2px solid var(--light-gray);
+            border-radius: 10px;
+            font-size: 1rem;
+            cursor: pointer;
+            background: white;
+        }
+
+        #categoryFilter:focus {
+            outline: none;
+            border-color: var(--secondary);
+        }
+    </style>
 </body>
 </html>

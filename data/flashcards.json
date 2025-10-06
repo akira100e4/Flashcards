@@ -86,27 +86,27 @@
       "italiano": "soddisfatto",
       "categoria": "Aggettivi",
       "priorita": true,
-      "corrette": 4,
+      "corrette": 5,
       "sbagliate": 5,
-      "ultima_revisione": "2025-10-05T10:25:14.956803"
+      "ultima_revisione": "2025-10-06T12:34:53.038541"
     },
     {
       "tedesco": "Vögel",
       "italiano": "uccelli",
       "categoria": "Animali",
       "priorita": false,
-      "corrette": 3,
+      "corrette": 4,
       "sbagliate": 4,
-      "ultima_revisione": "2025-10-05T10:24:13.830437"
+      "ultima_revisione": "2025-10-06T12:35:58.791148"
     },
     {
       "tedesco": "aufmerksam",
       "italiano": "attentamente",
       "categoria": "Avverbi",
       "priorita": true,
-      "corrette": 8,
+      "corrette": 9,
       "sbagliate": 6,
-      "ultima_revisione": "2025-10-05T10:23:49.160196"
+      "ultima_revisione": "2025-10-06T12:35:21.350906"
     },
     {
       "tedesco": "danach",
@@ -176,9 +176,9 @@
       "italiano": "volto, faccia",
       "categoria": "Corpo",
       "priorita": true,
-      "corrette": 3,
+      "corrette": 4,
       "sbagliate": 4,
-      "ultima_revisione": "2025-10-05T10:24:55.185371"
+      "ultima_revisione": "2025-10-06T12:35:05.252788"
     },
     {
       "tedesco": "Das klingt toll",
@@ -248,9 +248,9 @@
       "italiano": "giochi da tavolo",
       "categoria": "Generale",
       "priorita": false,
-      "corrette": 0,
+      "corrette": 1,
       "sbagliate": 0,
-      "ultima_revisione": null
+      "ultima_revisione": "2025-10-06T12:34:32.509844"
     },
     {
       "tedesco": "Bäume",
@@ -294,8 +294,8 @@
       "categoria": "Generale",
       "priorita": false,
       "corrette": 0,
-      "sbagliate": 0,
-      "ultima_revisione": null
+      "sbagliate": 1,
+      "ultima_revisione": "2025-10-06T12:35:31.866656"
     },
     {
       "tedesco": "Essen",
@@ -312,8 +312,8 @@
       "categoria": "Generale",
       "priorita": false,
       "corrette": 0,
-      "sbagliate": 0,
-      "ultima_revisione": null
+      "sbagliate": 1,
+      "ultima_revisione": "2025-10-06T12:34:22.327678"
     },
     {
       "tedesco": "Felder",
@@ -329,9 +329,9 @@
       "italiano": "giardino",
       "categoria": "Generale",
       "priorita": false,
-      "corrette": 0,
+      "corrette": 1,
       "sbagliate": 0,
-      "ultima_revisione": null
+      "ultima_revisione": "2025-10-06T12:34:25.480996"
     },
     {
       "tedesco": "gemütlich",
@@ -375,8 +375,8 @@
       "categoria": "Generale",
       "priorita": false,
       "corrette": 0,
-      "sbagliate": 0,
-      "ultima_revisione": null
+      "sbagliate": 1,
+      "ultima_revisione": "2025-10-06T12:35:01.594478"
     },
     {
       "tedesco": "lecker",
@@ -384,8 +384,8 @@
       "categoria": "Generale",
       "priorita": false,
       "corrette": 0,
-      "sbagliate": 0,
-      "ultima_revisione": null
+      "sbagliate": 1,
+      "ultima_revisione": "2025-10-06T12:36:08.774700"
     },
     {
       "tedesco": "lustig",
@@ -393,8 +393,8 @@
       "categoria": "Generale",
       "priorita": false,
       "corrette": 0,
-      "sbagliate": 0,
-      "ultima_revisione": null
+      "sbagliate": 1,
+      "ultima_revisione": "2025-10-06T12:35:53.110911"
     },
     {
       "tedesco": "Marmelade",
@@ -465,8 +465,8 @@
       "categoria": "Generale",
       "priorita": false,
       "corrette": 0,
-      "sbagliate": 0,
-      "ultima_revisione": null
+      "sbagliate": 1,
+      "ultima_revisione": "2025-10-06T12:35:10.633939"
     },
     {
       "tedesco": "selbstgemacht",
@@ -635,9 +635,9 @@
       "italiano": "clienti",
       "categoria": "Sostantivi",
       "priorita": true,
-      "corrette": 3,
+      "corrette": 4,
       "sbagliate": 2,
-      "ultima_revisione": "2025-10-05T10:23:09.628102"
+      "ultima_revisione": "2025-10-06T12:35:55.939943"
     },
     {
       "tedesco": "Leute",
@@ -788,18 +788,18 @@
       "italiano": "raccontare",
       "categoria": "Verbi",
       "priorita": true,
-      "corrette": 3,
+      "corrette": 4,
       "sbagliate": 2,
-      "ultima_revisione": "2025-10-03T10:59:26.331336"
+      "ultima_revisione": "2025-10-06T12:36:02.228090"
     },
     {
       "tedesco": "fallen",
       "italiano": "cadere",
       "categoria": "Verbi",
       "priorita": false,
-      "corrette": 2,
+      "corrette": 3,
       "sbagliate": 0,
-      "ultima_revisione": "2025-10-06T12:23:20.235750"
+      "ultima_revisione": "2025-10-06T12:35:33.951056"
     },
     {
       "tedesco": "finden",
@@ -905,9 +905,9 @@
       "italiano": "correre",
       "categoria": "Verbi",
       "priorita": false,
-      "corrette": 1,
+      "corrette": 2,
       "sbagliate": 0,
-      "ultima_revisione": "2025-10-05T10:10:49.911277"
+      "ultima_revisione": "2025-10-06T12:34:56.178831"
     },
     {
       "tedesco": "leben",
@@ -959,9 +959,9 @@
       "italiano": "prendere",
       "categoria": "Verbi",
       "priorita": false,
-      "corrette": 3,
+      "corrette": 4,
       "sbagliate": 2,
-      "ultima_revisione": "2025-10-05T10:10:51.090157"
+      "ultima_revisione": "2025-10-06T12:34:36.025611"
     },
     {
       "tedesco": "reisen",
@@ -977,9 +977,9 @@
       "italiano": "mettere in ordine",
       "categoria": "Verbi",
       "priorita": true,
-      "corrette": 2,
+      "corrette": 3,
       "sbagliate": 1,
-      "ultima_revisione": "2025-10-03T11:04:22.918565"
+      "ultima_revisione": "2025-10-06T12:35:45.611738"
     },
     {
       "tedesco": "sagen",
@@ -1022,9 +1022,9 @@
       "italiano": "scrivere",
       "categoria": "Verbi",
       "priorita": false,
-      "corrette": 5,
+      "corrette": 6,
       "sbagliate": 0,
-      "ultima_revisione": "2025-10-05T10:09:54.681174"
+      "ultima_revisione": "2025-10-06T12:36:04.390703"
     },
     {
       "tedesco": "schwimmen",
@@ -1049,18 +1049,18 @@
       "italiano": "sedersi",
       "categoria": "Verbi",
       "priorita": false,
-      "corrette": 1,
+      "corrette": 2,
       "sbagliate": 0,
-      "ultima_revisione": "2025-10-05T10:11:38.919080"
+      "ultima_revisione": "2025-10-06T12:34:40.843935"
     },
     {
       "tedesco": "spielen",
       "italiano": "giocare, suonare (uno strumento)",
       "categoria": "Verbi",
       "priorita": false,
-      "corrette": 5,
+      "corrette": 6,
       "sbagliate": 0,
-      "ultima_revisione": "2025-10-05T10:11:31.133015"
+      "ultima_revisione": "2025-10-06T12:35:23.819364"
     },
     {
       "tedesco": "stehen",
@@ -1211,9 +1211,9 @@
       "italiano": "diventare",
       "categoria": "Verbi",
       "priorita": false,
-      "corrette": 2,
+      "corrette": 3,
       "sbagliate": 5,
-      "ultima_revisione": "2025-10-05T10:18:17.574234"
+      "ultima_revisione": "2025-10-06T12:34:44.723169"
     },
     {
       "tedesco": "wissen",
@@ -1329,8 +1329,8 @@
       "categoria": "Verbi A2",
       "priorita": true,
       "corrette": 0,
-      "sbagliate": 0,
-      "ultima_revisione": null
+      "sbagliate": 1,
+      "ultima_revisione": "2025-10-06T12:35:15.004765"
     },
     {
       "tedesco": "reduzieren",

@@ -3,102 +3,59 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>📚 Modalità Studio</title>
+    <title>📚 Studio - Flashcards</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
-<body>
-    <div class="study-page">
-        <div class="study-container">
-            <!-- Barra progresso -->
-            <div class="progress-bar">
-                <div class="progress-fill" id="progressBar" style="width: 0%"></div>
+<body class="study-page">
+    <div class="study-container">
+        <!-- Progress bar -->
+        <div class="progress-bar">
+            <div class="progress-fill" id="progressBar"></div>
+        </div>
+        <div class="progress-text">
+            <span id="progressText">Caricamento...</span>
+        </div>
+
+        <!-- Card display -->
+        <div class="card-display">
+            <div class="card-type" id="cardType"></div>
+            <div class="category-badge-large" id="categoryBadge" style="display: none;"></div>
+            
+            <div class="card-question-container" id="questionContainer">
+                <div class="card-question" id="cardQuestion"></div>
+                <button class="audio-btn" id="questionAudioBtn" onclick="playQuestionAudio()" style="display: none;">
+                    🔊
+                </button>
             </div>
             
-            <div class="progress-text" id="progressText">Caricamento...</div>
-
-            <!-- Card display -->
-            <div class="card-display" id="cardDisplay">
-                <div class="card-type" id="cardType"></div>
-                <div class="category-badge" id="categoryBadge" style="margin-bottom: 20px;"></div>
-                
-                <div class="card-question-container" id="questionContainer">
-                    <div class="card-question" id="cardQuestion"></div>
-                    <button class="audio-btn" id="questionAudioBtn" onclick="playQuestionAudio()" style="display: none;">
-                        🔊
-                    </button>
-                </div>
-
-                <div class="card-separator" id="separator" style="display: none;"></div>
-
-                <div class="card-answer-container" id="answerContainer" style="display: none;">
+            <div id="answerSection" style="display: none;">
+                <div class="card-separator"></div>
+                <div class="card-answer-container">
                     <div class="card-answer" id="cardAnswer"></div>
                     <button class="audio-btn" id="answerAudioBtn" onclick="playAnswerAudio()" style="display: none;">
                         🔊
                     </button>
                 </div>
             </div>
-
-            <!-- Controlli -->
-            <div class="study-controls">
-                <button class="btn btn-primary btn-large" id="showAnswerBtn" onclick="showAnswer()">
-                    👁️ Mostra Risposta
-                </button>
-
-                <div class="answer-buttons" id="answerButtons" style="display: none;">
-                    <button class="btn btn-danger" onclick="registerAnswer(false)">
-                        ❌ Sbagliata
-                    </button>
-                    <button class="btn btn-success" onclick="registerAnswer(true)">
-                        ✅ Corretta
-                    </button>
-                </div>
-
-                <button class="btn btn-secondary" onclick="location.href='/'">
-                    ← Torna alla Home
-                </button>
-
-                <div class="study-shortcuts">
-                    Scorciatoie: <strong>Spazio</strong> = Mostra risposta | 
-                    <strong>←</strong> = Sbagliata | <strong>→</strong> = Corretta
-                </div>
-            </div>
         </div>
-    </div>
 
-    <!-- Summary screen (nascosto inizialmente) -->
-    <div class="summary-screen" id="summaryScreen" style="display: none;">
-        <div class="summary-content">
-            <h1>🎉 Sessione Completata!</h1>
+        <!-- Controls -->
+        <div class="study-controls">
+            <button class="btn btn-secondary btn-large" id="showAnswerBtn" onclick="showAnswer()">
+                👁️ Mostra Risposta
+            </button>
             
-            <div class="summary-stats">
-                <h2>I tuoi risultati</h2>
-                <div class="result-item">
-                    <span>Risposte corrette:</span>
-                    <strong id="correctCount">0</strong>
-                </div>
-                <div class="result-item">
-                    <span>Risposte sbagliate:</span>
-                    <strong id="wrongCount" style="color: #e74c3c;">0</strong>
-                </div>
-                <div class="result-item">
-                    <span>Totale:</span>
-                    <strong id="totalCount">0</strong>
-                </div>
-                <div class="result-item">
-                    <span>Percentuale:</span>
-                    <strong id="percentage">0%</strong>
-                </div>
+            <div class="answer-buttons" id="answerButtons" style="display: none;">
+                <button class="btn btn-danger btn-large" onclick="registerAnswer(false)">
+                    ❌ Sbagliata
+                </button>
+                <button class="btn btn-success btn-large" onclick="registerAnswer(true)">
+                    ✅ Corretta
+                </button>
             </div>
-
-            <div class="motivational-message" id="motivationalMsg"></div>
-
-            <div style="display: flex; gap: 20px; justify-content: center; margin-top: 30px;">
-                <button class="btn btn-primary btn-large" onclick="location.href='/'">
-                    🏠 Home
-                </button>
-                <button class="btn btn-secondary btn-large" onclick="location.href='/stats'">
-                    📊 Statistiche
-                </button>
+            
+            <div class="study-shortcuts">
+                <p>⌨️ Scorciatoie: <strong>Spazio</strong> = Mostra risposta | <strong>1</strong> = Sbagliata | <strong>2</strong> = Corretta</p>
             </div>
         </div>
     </div>
@@ -107,69 +64,64 @@
         let currentCard = null;
         let answerShown = false;
 
-        // Carica la prima flashcard
         async function loadCurrentCard() {
             try {
                 const response = await fetch('/api/study/current');
                 const data = await response.json();
 
                 if (data.completed) {
-                    showSummary(data.corrette, data.totale);
+                    window.location.href = '/';
                     return;
                 }
 
                 currentCard = data;
                 answerShown = false;
 
-                // Aggiorna UI
-                document.getElementById('progressText').textContent = 
-                    `Flashcard ${data.indice + 1} di ${data.totale}`;
-                
+                // Update progress
                 const progress = ((data.indice) / data.totale) * 100;
                 document.getElementById('progressBar').style.width = progress + '%';
+                document.getElementById('progressText').textContent = 
+                    `Carta ${data.indice + 1} di ${data.totale} • Corrette: ${data.corrette}`;
 
+                // Update card type
+                const isGermanToItalian = data.lingua_domanda === 'de';
                 document.getElementById('cardType').textContent = 
-                    data.lingua_domanda === 'de' ? '🇩🇪 Tedesco → 🇮🇹 Italiano' : '🇮🇹 Italiano → 🇩🇪 Tedesco';
-                
-                document.getElementById('categoryBadge').textContent = data.categoria;
+                    isGermanToItalian ? '🇩🇪 Tedesco → Italiano 🇮🇹' : '🇮🇹 Italiano → Tedesco 🇩🇪';
+
+                // Show category badge
+                const categoryBadge = document.getElementById('categoryBadge');
+                if (data.categoria) {
+                    categoryBadge.textContent = '📁 ' + data.categoria;
+                    categoryBadge.style.display = 'block';
+                }
+
+                // Update question
                 document.getElementById('cardQuestion').textContent = data.domanda;
-
-                // Mostra pulsante audio per la domanda
-                document.getElementById('questionAudioBtn').style.display = 'flex';
-
-                // Nascondi risposta
-                document.getElementById('separator').style.display = 'none';
-                document.getElementById('answerContainer').style.display = 'none';
                 document.getElementById('cardAnswer').textContent = data.risposta;
 
-                // Mostra pulsante "Mostra Risposta"
+                // Setup audio buttons
+                document.getElementById('questionAudioBtn').style.display = 'flex';
+                document.getElementById('answerAudioBtn').style.display = 'flex';
+
+                // Hide answer
+                document.getElementById('answerSection').style.display = 'none';
                 document.getElementById('showAnswerBtn').style.display = 'block';
                 document.getElementById('answerButtons').style.display = 'none';
 
             } catch (error) {
-                console.error('Errore:', error);
+                console.error('Errore nel caricamento della card:', error);
                 alert('Errore nel caricamento della flashcard');
             }
         }
 
         function showAnswer() {
-            if (!currentCard || answerShown) return;
-
-            answerShown = true;
-
-            // Mostra risposta
-            document.getElementById('separator').style.display = 'block';
-            document.getElementById('answerContainer').style.display = 'flex';
-            document.getElementById('answerAudioBtn').style.display = 'flex';
-
-            // Nascondi pulsante "Mostra Risposta" e mostra pulsanti di valutazione
+            document.getElementById('answerSection').style.display = 'block';
             document.getElementById('showAnswerBtn').style.display = 'none';
             document.getElementById('answerButtons').style.display = 'flex';
+            answerShown = true;
         }
 
         async function registerAnswer(correct) {
-            if (!answerShown) return;
-
             try {
                 const response = await fetch('/api/study/answer', {
                     method: 'POST',
@@ -180,13 +132,28 @@
                 const data = await response.json();
 
                 if (data.completed) {
-                    showSummary(data.corrette, data.totale);
+                    // Show summary
+                    const percentage = (data.corrette / data.totale * 100).toFixed(1);
+                    let message = `Sessione completata!\n\n`;
+                    message += `Corrette: ${data.corrette}/${data.totale} (${percentage}%)\n\n`;
+                    
+                    if (percentage >= 90) {
+                        message += '🌟 Eccellente! Sei un campione!';
+                    } else if (percentage >= 70) {
+                        message += '👍 Ottimo lavoro! Continua così!';
+                    } else if (percentage >= 50) {
+                        message += '💪 Buon inizio! Continua a esercitarti!';
+                    } else {
+                        message += '📚 Non arrenderti! La pratica rende perfetti!';
+                    }
+                    
+                    alert(message);
+                    window.location.href = '/';
                 } else {
                     loadCurrentCard();
                 }
-
             } catch (error) {
-                console.error('Errore:', error);
+                console.error('Errore nella registrazione della risposta:', error);
                 alert('Errore nella registrazione della risposta');
             }
         }
@@ -208,7 +175,6 @@
             }
 
             speechSynthesis.cancel();
-
             const langCode = lang === 'de' ? 'de-DE' : 'it-IT';
             const utterance = new SpeechSynthesisUtterance(text);
             utterance.lang = langCode;
@@ -223,48 +189,40 @@
             speechSynthesis.speak(utterance);
         }
 
-        function showSummary(correct, total) {
-            const wrong = total - correct;
-            const percentage = total > 0 ? (correct / total * 100).toFixed(1) : 0;
-
-            document.querySelector('.study-page').style.display = 'none';
-            document.getElementById('summaryScreen').style.display = 'flex';
-
-            document.getElementById('correctCount').textContent = correct;
-            document.getElementById('wrongCount').textContent = wrong;
-            document.getElementById('totalCount').textContent = total;
-            document.getElementById('percentage').textContent = percentage + '%';
-
-            // Messaggio motivazionale
-            let message = '';
-            if (percentage >= 90) {
-                message = '🌟 Eccellente! Sei un campione!';
-            } else if (percentage >= 70) {
-                message = '👏 Ottimo lavoro! Continua così!';
-            } else if (percentage >= 50) {
-                message = '💪 Buon inizio! Continua a esercitarti!';
-            } else {
-                message = '📚 Non mollare! La pratica rende perfetti!';
-            }
-            document.getElementById('motivationalMsg').textContent = message;
-        }
-
         // Keyboard shortcuts
         document.addEventListener('keydown', function(e) {
-            if (e.code === 'Space' && !answerShown) {
+            if (e.key === ' ' || e.key === 'Spacebar') {
                 e.preventDefault();
-                showAnswer();
-            } else if (e.code === 'ArrowLeft' && answerShown) {
-                e.preventDefault();
-                registerAnswer(false);
-            } else if (e.code === 'ArrowRight' && answerShown) {
-                e.preventDefault();
-                registerAnswer(true);
+                if (!answerShown) {
+                    showAnswer();
+                }
+            } else if (e.key === '1') {
+                if (answerShown) {
+                    registerAnswer(false);
+                }
+            } else if (e.key === '2') {
+                if (answerShown) {
+                    registerAnswer(true);
+                }
             }
         });
 
-        // Carica la prima card all'avvio
+        // Load first card on page load
         loadCurrentCard();
     </script>
+
+    <style>
+        .category-badge-large {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            display: inline-block;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+        }
+    </style>
 </body>
 </html>

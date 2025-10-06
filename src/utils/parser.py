@@ -26,36 +26,31 @@ class FlashcardParser:
     @staticmethod
     def estrai_categoria(linea: str) -> Tuple[str, str]:
         """
-        Estrae la categoria dalla linea se presente
-        
-        Formato: [Categoria] resto_della_linea
+        Estrae la categoria se presente nel formato [Categoria]
         
         Returns:
             Tupla (categoria, linea_senza_categoria)
         """
-        match = re.match(r'^\[([^\]]+)\]\s*(.+)$', linea)
+        # Cerca pattern [Categoria] all'inizio
+        match = re.match(r'^\[([^\]]+)\]\s*(.+)', linea)
         if match:
             return match.group(1).strip(), match.group(2).strip()
         return "Generale", linea
     
     @staticmethod
-    def estrai_coppia(linea: str) -> Tuple[str, str, str, bool]:
+    def estrai_coppia(linea: str) -> Tuple[str, str, bool, str]:
         """
         Estrae la coppia tedesco-italiano da una linea
         
-        Supporta formati:
-        - [Categoria] **tedesco → italiano**
-        - [Categoria] tedesco → italiano
-        - tedesco → italiano (categoria = "Generale")
-        
         Returns:
-            Tupla (tedesco, italiano, categoria, ha_priorita)
+            Tupla (tedesco, italiano, ha_priorita, categoria)
         """
         linea_originale = linea
-        linea_pulita = FlashcardParser.pulisci_linea(linea)
         
-        # Estrai categoria
-        categoria, linea_pulita = FlashcardParser.estrai_categoria(linea_pulita)
+        # Estrae categoria
+        categoria, linea = FlashcardParser.estrai_categoria(linea)
+        
+        linea_pulita = FlashcardParser.pulisci_linea(linea)
         
         # Rimuove gli asterischi per il parsing
         linea_pulita = linea_pulita.replace('**', '')
@@ -75,7 +70,7 @@ class FlashcardParser:
         if not tedesco or not italiano:
             raise ValueError(f"Parola tedesca o italiana vuota nella linea: {linea}")
         
-        return tedesco, italiano, categoria, priorita
+        return tedesco, italiano, priorita, categoria
     
     @staticmethod
     def parse_testo(testo: str) -> List[Flashcard]:
@@ -83,16 +78,16 @@ class FlashcardParser:
         Parse un testo con multiple flashcards
         
         Formato supportato:
-        [Verbi] **gehen → andare**
-        [Verbi] fahren → guidare
-        [Sostantivi] Haus → casa
-        * weit → Lontano (categoria automatica: Generale)
+        [Verbi] * **weit→ Lontano**
+        [Sostantivi] * üben → esercitare
+        Nachmittag → pomeriggio
         
         Returns:
             Lista di oggetti Flashcard
         """
         flashcards = []
         linee = testo.strip().split('\n')
+        categoria_corrente = "Generale"
         
         for i, linea in enumerate(linee, 1):
             linea = linea.strip()
@@ -101,17 +96,27 @@ class FlashcardParser:
             if not linea:
                 continue
             
+            # Controlla se è un'intestazione di categoria (es: "# Verbi" o "## Casa")
+            if linea.startswith('#'):
+                categoria_corrente = linea.lstrip('#').strip()
+                continue
+            
             # Salta linee che non contengono il separatore
             if '→' not in linea:
                 continue
             
             try:
-                tedesco, italiano, categoria, priorita = FlashcardParser.estrai_coppia(linea)
+                tedesco, italiano, priorita, categoria = FlashcardParser.estrai_coppia(linea)
+                
+                # Se la categoria è "Generale" e abbiamo una categoria corrente, usa quella
+                if categoria == "Generale" and categoria_corrente != "Generale":
+                    categoria = categoria_corrente
+                
                 flashcard = Flashcard(
                     tedesco=tedesco,
                     italiano=italiano,
-                    categoria=categoria,
-                    priorita=priorita
+                    priorita=priorita,
+                    categoria=categoria
                 )
                 flashcards.append(flashcard)
             except ValueError as e:
@@ -131,7 +136,20 @@ class FlashcardParser:
     def collezione_to_text(flashcards: List[Flashcard]) -> str:
         """Converte una lista di flashcards in testo formattato"""
         linee = []
-        for flashcard in flashcards:
+        categoria_corrente = None
+        
+        # Ordina per categoria
+        flashcards_ordinate = sorted(flashcards, key=lambda f: f.categoria)
+        
+        for flashcard in flashcards_ordinate:
+            # Aggiungi intestazione categoria se cambiata
+            if flashcard.categoria != categoria_corrente:
+                if linee:  # Aggiungi linea vuota tra categorie
+                    linee.append("")
+                linee.append(f"# {flashcard.categoria}")
+                categoria_corrente = flashcard.categoria
+            
             testo = FlashcardParser.flashcard_to_text(flashcard)
             linee.append(f"* {testo}")
+        
         return '\n'.join(linee)
