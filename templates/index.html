@@ -5,70 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>🇩🇪 Flashcards Tedesco-Italiano 🇮🇹</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-    <style>
-        /* Stili per le categorie */
-        .category-badge {
-            display: inline-block;
-            padding: 4px 12px;
-            border-radius: 12px;
-            font-size: 0.85rem;
-            font-weight: 600;
-            margin-right: 10px;
-        }
-        
-        .category-select {
-            padding: 10px 15px;
-            border: 2px solid var(--light-gray);
-            border-radius: 10px;
-            font-size: 1rem;
-            cursor: pointer;
-            background: white;
-            min-width: 200px;
-        }
-        
-        .category-select:focus {
-            outline: none;
-            border-color: var(--secondary);
-        }
-        
-        .category-stats {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 15px;
-            margin-bottom: 30px;
-        }
-        
-        .category-stat-card {
-            background: white;
-            border: 2px solid var(--light-gray);
-            padding: 20px;
-            border-radius: 10px;
-            transition: all 0.3s;
-        }
-        
-        .category-stat-card:hover {
-            border-color: var(--secondary);
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-        }
-        
-        .category-stat-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 10px;
-        }
-        
-        .category-stat-name {
-            font-weight: bold;
-            font-size: 1.1rem;
-        }
-        
-        .category-stat-count {
-            color: var(--gray);
-            font-size: 0.9rem;
-        }
-    </style>
 </head>
 <body>
     <div class="container">
@@ -84,7 +20,7 @@
                 <div class="stat-label">Flashcards</div>
             </div>
             <div class="stat-card">
-                <div class="stat-icon">🏷️</div>
+                <div class="stat-icon">📂</div>
                 <div class="stat-value">{{ stats.totale_categorie }}</div>
                 <div class="stat-label">Categorie</div>
             </div>
@@ -97,6 +33,11 @@
                 <div class="stat-icon">🎯</div>
                 <div class="stat-value">{{ stats.totale_tentativi }}</div>
                 <div class="stat-label">Tentativi</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">📈</div>
+                <div class="stat-value">{{ "%.1f"|format(stats.percentuale_media) }}%</div>
+                <div class="stat-label">Media</div>
             </div>
         </div>
 
@@ -112,47 +53,39 @@
                     <input type="radio" name="modalita" value="italiano-tedesco">
                     <span>Italiano → Tedesco</span>
                 </label>
-                
-                <div style="margin-top: 15px;">
-                    <label>
-                        <strong>Categoria:</strong>
-                        <select id="studyCategorySelect" class="category-select">
-                            <option value="">Tutte le categorie</option>
-                            {% for cat in categorie %}
-                            <option value="{{ cat }}">{{ cat }}</option>
-                            {% endfor %}
-                        </select>
-                    </label>
-                </div>
             </div>
 
             <div class="action-buttons">
-                <button class="btn btn-primary btn-large" id="startStudyBtn" {% if stats.totale_flashcards == 0 %}disabled{% endif %}>
+                <button class="btn btn-primary btn-large" onclick="startStudy()" {% if stats.totale_flashcards == 0 %}disabled{% endif %}>
                     🎯 INIZIA STUDIO
                 </button>
                 <button class="btn btn-secondary" onclick="location.href='/stats'">
                     📊 Statistiche
                 </button>
-                <button class="btn btn-accent" id="addFlashcardsBtn">
+                <button class="btn btn-accent" onclick="showAddDialog()">
                     ➕ Aggiungi Flashcards
                 </button>
             </div>
         </div>
+
+
 
         <!-- Lista flashcards -->
         <div class="flashcards-section">
             <div class="section-header">
                 <h2>Le tue Flashcards</h2>
                 <div class="search-box">
-                    <select id="categoryFilter" class="category-select" style="margin-right: 15px;">
+                    <input type="text" id="searchInput" placeholder="🔍 Cerca..." onkeyup="filterFlashcards()">
+                    
+                    <select id="categoryFilter" onchange="filterFlashcards()">
                         <option value="">Tutte le categorie</option>
-                        {% for cat in categorie %}
-                        <option value="{{ cat }}">{{ cat }}</option>
+                        {% for categoria in categorie %}
+                        <option value="{{ categoria }}">{{ categoria }}</option>
                         {% endfor %}
                     </select>
-                    <input type="text" id="searchInput" placeholder="🔍 Cerca...">
+                    
                     <label>
-                        <input type="checkbox" id="priorityFilter">
+                        <input type="checkbox" id="priorityFilter" onchange="filterFlashcards()">
                         Solo priorità ⭐
                     </label>
                 </div>
@@ -162,39 +95,26 @@
                 {% if flashcards %}
                     {% for card in flashcards %}
                     <div class="flashcard-item" 
-                         data-index="{{ loop.index0 }}"
-                         data-tedesco="{{ card.tedesco|lower|e }}" 
-                         data-italiano="{{ card.italiano|lower|e }}"
-                         data-categoria="{{ card.categoria|e }}"
+                         data-tedesco="{{ card.tedesco|lower }}" 
+                         data-italiano="{{ card.italiano|lower }}" 
+                         data-categoria="{{ card.categoria }}"
                          data-priorita="{{ card.priorita }}">
                         <div class="card-content">
                             <span class="priority-icon">{% if card.priorita %}⭐{% endif %}</span>
                             <div class="card-text">
-                                <div style="display: flex; flex-direction: column; gap: 5px; flex: 1;">
-                                    <span class="category-badge" style="color: white;">
-                                        {{ card.categoria }}
-                                    </span>
-                                    <div style="display: flex; align-items: center; gap: 10px;">
-                                        <div class="word-with-audio">
-                                            <strong>{{ card.tedesco }}</strong>
-                                            <button class="audio-btn-small" 
-                                                    data-lang="de" 
-                                                    data-text="{{ card.tedesco|e }}" 
-                                                    title="Ascolta tedesco">
-                                                🔊
-                                            </button>
-                                        </div>
-                                        <span class="arrow">→</span>
-                                        <div class="word-with-audio">
-                                            <span>{{ card.italiano }}</span>
-                                            <button class="audio-btn-small" 
-                                                    data-lang="it" 
-                                                    data-text="{{ card.italiano|e }}" 
-                                                    title="Ascolta italiano">
-                                                🔊
-                                            </button>
-                                        </div>
-                                    </div>
+                                <span class="category-badge">{{ card.categoria }}</span>
+                                <div class="word-with-audio">
+                                    <strong>{{ card.tedesco }}</strong>
+                                    <button class="audio-btn-small" onclick="playWordAudio('de', '{{ card.tedesco }}', event)" title="Ascolta tedesco">
+                                        🔊
+                                    </button>
+                                </div>
+                                <span class="arrow">→</span>
+                                <div class="word-with-audio">
+                                    <span>{{ card.italiano }}</span>
+                                    <button class="audio-btn-small" onclick="playWordAudio('it', '{{ card.italiano }}', event)" title="Ascolta italiano">
+                                        🔊
+                                    </button>
                                 </div>
                             </div>
                             <div class="card-stats">
@@ -209,10 +129,10 @@
                             </div>
                         </div>
                         <div class="card-actions">
-                            <button class="btn-icon toggle-priority-btn" title="Toggle priorità">
+                            <button class="btn-icon" onclick="togglePriority({{ loop.index0 }})" title="Toggle priorità">
                                 ⭐
                             </button>
-                            <button class="btn-icon btn-danger delete-btn" title="Elimina">
+                            <button class="btn-icon btn-danger" onclick="deleteFlashcard({{ loop.index0 }})" title="Elimina">
                                 🗑️
                             </button>
                         </div>
@@ -231,93 +151,37 @@
     <!-- Dialog per aggiungere flashcards -->
     <div id="addDialog" class="modal">
         <div class="modal-content">
-            <span class="close" id="closeModalBtn">&times;</span>
+            <span class="close" onclick="closeAddDialog()">&times;</span>
             <h2>Aggiungi Flashcards</h2>
             <p>Incolla le tue flashcards nel formato:</p>
             <code>
-                #Verbi<br>
-                * sprechen → parlare<br>
-                * **laufen → correre**<br>
-                <br>
-                #Cibo<br>
-                * Brot → pane<br>
-                * Wasser → acqua
+                [Verbi] **gehen → andare**<br>
+                [Sostantivi] Haus → casa<br>
+                * weit → Lontano
             </code>
-            <p style="margin-top: 15px;">
-                <strong>Formati supportati:</strong><br>
-                • <code>#Categoria</code> per definire una categoria<br>
-                • <code>[Categoria]</code> alternativa<br>
-                • <code>**parola → traduzione**</code> per priorità<br>
-                • Senza categoria = "Generale"
+            <p style="margin-top: 10px; font-size: 0.9rem; color: #7f8c8d;">
+                💡 Usa [Categoria] prima della parola per organizzare le flashcards<br>
+                💡 Usa ** per marcare come priorità
             </p>
             <textarea id="flashcardsText" rows="15" placeholder="Incolla qui le tue flashcards..."></textarea>
             <div class="modal-actions">
-                <button class="btn btn-primary" id="addFlashcardsSubmitBtn">✓ Aggiungi</button>
-                <button class="btn btn-secondary" id="cancelModalBtn">✗ Annulla</button>
+                <button class="btn btn-primary" onclick="addFlashcards()">✓ Aggiungi</button>
+                <button class="btn btn-secondary" onclick="closeAddDialog()">✗ Annulla</button>
             </div>
         </div>
     </div>
 
     <script>
-        // Colori per le categorie (hash-based)
-        const categoryColors = {};
-        
-        function getCategoryColor(categoria) {
-            if (!categoryColors[categoria]) {
-                const colors = [
-                    '#3498db', '#9b59b6', '#e74c3c', '#f39c12', '#27ae60',
-                    '#16a085', '#2980b9', '#8e44ad', '#c0392b', '#d35400'
-                ];
-                const hash = categoria.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
-                categoryColors[categoria] = colors[hash % colors.length];
-            }
-            return categoryColors[categoria];
-        }
-        
-        // Applica colori alle categorie
-        document.querySelectorAll('.category-badge').forEach(badge => {
-            const categoria = badge.textContent.trim();
-            badge.style.background = getCategoryColor(categoria);
-        });
-        
-        // ==========================================
-        // UTILITY FUNCTIONS
-        // ==========================================
-
-        function debounce(func, wait) {
-            let timeout;
-            return function executedFunction(...args) {
-                const later = () => {
-                    clearTimeout(timeout);
-                    func(...args);
-                };
-                clearTimeout(timeout);
-                timeout = setTimeout(later, wait);
-            };
-        }
-
-        function setButtonLoading(button, isLoading) {
-            if (isLoading) {
-                button.disabled = true;
-                button.dataset.originalText = button.textContent;
-                button.textContent = '⏳ Caricamento...';
-            } else {
-                button.disabled = false;
-                button.textContent = button.dataset.originalText || button.textContent;
-            }
-        }
-
-        // ==========================================
-        // AUDIO FUNCTIONS
-        // ==========================================
-
-        function playWordAudio(lang, text) {
+        function playWordAudio(lang, text, event) {
+            event.stopPropagation();
+            
             if (!('speechSynthesis' in window)) {
-                console.error('Speech Synthesis non supportata');
+                alert('Il tuo browser non supporta la sintesi vocale');
                 return;
             }
 
             speechSynthesis.cancel();
+
             const langCode = lang === 'de' ? 'de-DE' : 'it-IT';
             const utterance = new SpeechSynthesisUtterance(text);
             utterance.lang = langCode;
@@ -329,20 +193,11 @@
                 console.error('Errore sintesi vocale:', error);
             };
 
-            try {
-                speechSynthesis.speak(utterance);
-            } catch (error) {
-                console.error('Errore durante la riproduzione:', error);
-            }
+            speechSynthesis.speak(utterance);
         }
-
-        // ==========================================
-        // MODAL FUNCTIONS
-        // ==========================================
 
         function showAddDialog() {
             document.getElementById('addDialog').style.display = 'block';
-            document.getElementById('flashcardsText').focus();
         }
 
         function closeAddDialog() {
@@ -350,20 +205,13 @@
             document.getElementById('flashcardsText').value = '';
         }
 
-        // ==========================================
-        // API FUNCTIONS
-        // ==========================================
-
         async function addFlashcards() {
             const text = document.getElementById('flashcardsText').value;
-            const submitBtn = document.getElementById('addFlashcardsSubmitBtn');
             
             if (!text.trim()) {
-                alert('⚠️ Inserisci del testo!');
+                alert('Inserisci del testo!');
                 return;
             }
-
-            setButtonLoading(submitBtn, true);
 
             try {
                 const response = await fetch('/api/flashcards/add', {
@@ -375,23 +223,18 @@
                 const data = await response.json();
 
                 if (response.ok) {
-                    const catMsg = data.categorie && data.categorie.length > 0 
-                        ? ` in ${data.categorie.length} categorie` 
-                        : '';
-                    alert('✅ ' + data.message + catMsg);
+                    alert(data.message);
                     location.reload();
                 } else {
-                    alert('❌ Errore: ' + data.error);
+                    alert('Errore: ' + data.error);
                 }
             } catch (error) {
-                alert('❌ Errore di rete: ' + error.message);
-            } finally {
-                setButtonLoading(submitBtn, false);
+                alert('Errore di rete: ' + error);
             }
         }
 
         async function deleteFlashcard(index) {
-            if (!confirm('🗑️ Sei sicuro di voler eliminare questa flashcard?')) {
+            if (!confirm('Sei sicuro di voler eliminare questa flashcard?')) {
                 return;
             }
 
@@ -403,11 +246,10 @@
                 if (response.ok) {
                     location.reload();
                 } else {
-                    const data = await response.json();
-                    alert('❌ Errore durante l\'eliminazione: ' + (data.error || 'Errore sconosciuto'));
+                    alert('Errore durante l\'eliminazione');
                 }
             } catch (error) {
-                alert('❌ Errore di rete: ' + error.message);
+                alert('Errore di rete: ' + error);
             }
         }
 
@@ -420,52 +262,37 @@
                 if (response.ok) {
                     location.reload();
                 } else {
-                    const data = await response.json();
-                    alert('❌ Errore durante il cambio di priorità: ' + (data.error || 'Errore sconosciuto'));
+                    alert('Errore durante il cambio di priorità');
                 }
             } catch (error) {
-                alert('❌ Errore di rete: ' + error.message);
+                alert('Errore di rete: ' + error);
             }
         }
 
         async function startStudy() {
             const modalita = document.querySelector('input[name="modalita"]:checked').value;
-            const categoria = document.getElementById('studyCategorySelect').value;
-            const startBtn = document.getElementById('startStudyBtn');
-
-            setButtonLoading(startBtn, true);
 
             try {
                 const response = await fetch('/api/study/start', {
                     method: 'POST',
                     headers: {'Content-Type': 'application/json'},
-                    body: JSON.stringify({
-                        modalita: modalita,
-                        categoria: categoria || null
-                    })
+                    body: JSON.stringify({modalita: modalita})
                 });
 
                 if (response.ok) {
                     location.href = '/study';
                 } else {
-                    const data = await response.json();
-                    alert('❌ Errore durante l\'avvio dello studio: ' + (data.error || 'Errore sconosciuto'));
-                    setButtonLoading(startBtn, false);
+                    alert('Errore durante l\'avvio dello studio');
                 }
             } catch (error) {
-                alert('❌ Errore di rete: ' + error.message);
-                setButtonLoading(startBtn, false);
+                alert('Errore di rete: ' + error);
             }
         }
 
-        // ==========================================
-        // FILTER FUNCTIONS
-        // ==========================================
-
         function filterFlashcards() {
             const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const categoryFilter = document.getElementById('categoryFilter').value;
             const priorityOnly = document.getElementById('priorityFilter').checked;
-            const categoriaFiltro = document.getElementById('categoryFilter').value;
             const items = document.querySelectorAll('.flashcard-item');
 
             items.forEach(item => {
@@ -475,95 +302,19 @@
                 const priorita = item.dataset.priorita === 'True';
 
                 const matchesSearch = tedesco.includes(searchTerm) || italiano.includes(searchTerm);
+                const matchesCategory = !categoryFilter || categoria === categoryFilter;
                 const matchesPriority = !priorityOnly || priorita;
-                const matchesCategory = !categoriaFiltro || categoria === categoriaFiltro;
 
-                item.style.display = matchesSearch && matchesPriority && matchesCategory ? 'flex' : 'none';
+                item.style.display = matchesSearch && matchesCategory && matchesPriority ? 'flex' : 'none';
             });
         }
 
-        const debouncedFilter = debounce(filterFlashcards, 300);
-
-        // ==========================================
-        // EVENT LISTENERS
-        // ==========================================
-
-        document.addEventListener('DOMContentLoaded', function() {
-            // Audio buttons
-            document.querySelectorAll('.audio-btn-small').forEach(btn => {
-                btn.addEventListener('click', function(e) {
-                    e.stopPropagation();
-                    const lang = this.dataset.lang;
-                    const text = this.dataset.text;
-                    playWordAudio(lang, text);
-                });
-            });
-
-            // Delete buttons
-            document.querySelectorAll('.delete-btn').forEach(btn => {
-                btn.addEventListener('click', function() {
-                    const index = this.closest('.flashcard-item').dataset.index;
-                    deleteFlashcard(parseInt(index));
-                });
-            });
-
-            // Toggle priority buttons
-            document.querySelectorAll('.toggle-priority-btn').forEach(btn => {
-                btn.addEventListener('click', function() {
-                    const index = this.closest('.flashcard-item').dataset.index;
-                    togglePriority(parseInt(index));
-                });
-            });
-
-            // Start study button
-            const startStudyBtn = document.getElementById('startStudyBtn');
-            if (startStudyBtn) {
-                startStudyBtn.addEventListener('click', startStudy);
+        window.onclick = function(event) {
+            const modal = document.getElementById('addDialog');
+            if (event.target == modal) {
+                closeAddDialog();
             }
-
-            // Add flashcards button
-            document.getElementById('addFlashcardsBtn').addEventListener('click', showAddDialog);
-
-            // Modal buttons
-            document.getElementById('closeModalBtn').addEventListener('click', closeAddDialog);
-            document.getElementById('cancelModalBtn').addEventListener('click', closeAddDialog);
-            document.getElementById('addFlashcardsSubmitBtn').addEventListener('click', addFlashcards);
-
-            // Search input con debounce
-            document.getElementById('searchInput').addEventListener('keyup', debouncedFilter);
-
-            // Priority filter
-            document.getElementById('priorityFilter').addEventListener('change', filterFlashcards);
-
-            // Category filter
-            document.getElementById('categoryFilter').addEventListener('change', filterFlashcards);
-
-            // Chiudi modal con ESC
-            document.addEventListener('keydown', function(e) {
-                if (e.key === 'Escape') {
-                    const modal = document.getElementById('addDialog');
-                    if (modal.style.display === 'block') {
-                        closeAddDialog();
-                    }
-                }
-            });
-
-            // Chiudi modal cliccando fuori
-            window.addEventListener('click', function(event) {
-                const modal = document.getElementById('addDialog');
-                if (event.target === modal) {
-                    closeAddDialog();
-                }
-            });
-
-            // Enter nel textarea per aggiungere (Ctrl+Enter)
-            document.getElementById('flashcardsText').addEventListener('keydown', function(e) {
-                if (e.key === 'Enter' && e.ctrlKey) {
-                    e.preventDefault();
-                    addFlashcards();
-                }
-            });
-        });
+        }
     </script>
 </body>
 </html>

@@ -1,0 +1,895 @@
+{
+  "flashcards": [
+    {
+      "tedesco": "weit",
+      "italiano": "Lontano",
+      "categoria": "Aggettivi",
+      "priorita": true,
+      "corrette": 0,
+      "sbagliate": 1,
+      "ultima_revisione": "2025-10-02T11:41:58.531994"
+    },
+    {
+      "tedesco": "üben",
+      "italiano": "esercitare",
+      "categoria": "Verbi",
+      "priorita": true,
+      "corrette": 0,
+      "sbagliate": 0,
+      "ultima_revisione": null
+    },
+    {
+      "tedesco": "Nachmittag",
+      "italiano": "pomeriggio",
+      "categoria": "Tempo",
+      "priorita": false,
+      "corrette": 1,
+      "sbagliate": 0,
+      "ultima_revisione": "2025-10-02T11:41:38.114291"
+    },
+    {
+      "tedesco": "verkauft",
+      "italiano": "vende",
+      "categoria": "Verbi",
+      "priorita": true,
+      "corrette": 0,
+      "sbagliate": 0,
+      "ultima_revisione": null
+    },
+    {
+      "tedesco": "Leute",
+      "italiano": "persone",
+      "categoria": "Sostantivi",
+      "priorita": true,
+      "corrette": 1,
+      "sbagliate": 0,
+      "ultima_revisione": "2025-10-02T11:42:29.444046"
+    },
+    {
+      "tedesco": "Kunden",
+      "italiano": "clienti",
+      "categoria": "Sostantivi",
+      "priorita": true,
+      "corrette": 0,
+      "sbagliate": 0,
+      "ultima_revisione": null
+    },
+    {
+      "tedesco": "schwierig",
+      "italiano": "difficile",
+      "categoria": "Aggettivi",
+      "priorita": true,
+      "corrette": 0,
+      "sbagliate": 0,
+      "ultima_revisione": null
+    },
+    {
+      "tedesco": "erzählen",
+      "italiano": "raccontare",
+      "categoria": "Verbi",
+      "priorita": true,
+      "corrette": 0,
+      "sbagliate": 1,
+      "ultima_revisione": "2025-10-02T11:43:04.990652"
+    },
+    {
+      "tedesco": "Nachrichten",
+      "italiano": "Notizie",
+      "categoria": "Sostantivi",
+      "priorita": true,
+      "corrette": 1,
+      "sbagliate": 0,
+      "ultima_revisione": "2025-10-02T11:41:26.125910"
+    },
+    {
+      "tedesco": "vorvereiten",
+      "italiano": "preparare",
+      "categoria": "Verbi",
+      "priorita": true,
+      "corrette": 0,
+      "sbagliate": 1,
+      "ultima_revisione": "2025-10-02T11:41:48.408749"
+    },
+    {
+      "tedesco": "regnet es",
+      "italiano": "piove",
+      "categoria": "Espressioni",
+      "priorita": true,
+      "corrette": 0,
+      "sbagliate": 0,
+      "ultima_revisione": null
+    },
+    {
+      "tedesco": "anziehen",
+      "italiano": "vestirsi",
+      "categoria": "Verbi",
+      "priorita": true,
+      "corrette": 0,
+      "sbagliate": 1,
+      "ultima_revisione": "2025-10-02T11:42:54.210881"
+    },
+    {
+      "tedesco": "nach",
+      "italiano": "poi/dopo",
+      "categoria": "Avverbi",
+      "priorita": true,
+      "corrette": 1,
+      "sbagliate": 0,
+      "ultima_revisione": "2025-10-02T11:41:06.763372"
+    },
+    {
+      "tedesco": "aufmerksam",
+      "italiano": "attentamente",
+      "categoria": "Avverbi",
+      "priorita": true,
+      "corrette": 1,
+      "sbagliate": 1,
+      "ultima_revisione": "2025-10-02T11:43:23.980243"
+    },
+    {
+      "tedesco": "stellen",
+      "italiano": "mettere/porre",
+      "categoria": "Verbi",
+      "priorita": true,
+      "corrette": 0,
+      "sbagliate": 1,
+      "ultima_revisione": "2025-10-02T11:43:14.826929"
+    },
+    {
+      "tedesco": "dort",
+      "italiano": "lì",
+      "categoria": "Avverbi",
+      "priorita": true,
+      "corrette": 1,
+      "sbagliate": 0,
+      "ultima_revisione": "2025-10-02T11:41:35.473535"
+    },
+    {
+      "tedesco": "treffen",
+      "italiano": "incontrare",
+      "categoria": "Verbi",
+      "priorita": true,
+      "corrette": 0,
+      "sbagliate": 1,
+      "ultima_revisione": "2025-10-02T11:43:11.595478"
+    },
+    {
+      "tedesco": "danach",
+      "italiano": "Dopodiché",
+      "categoria": "Avverbi",
+      "priorita": true,
+      "corrette": 1,
+      "sbagliate": 0,
+      "ultima_revisione": "2025-10-02T11:42:09.725780"
+    },
+    {
+      "tedesco": "bergen",
+      "italiano": "montagne",
+      "categoria": "Sostantivi",
+      "priorita": true,
+      "corrette": 1,
+      "sbagliate": 0,
+      "ultima_revisione": "2025-10-02T11:43:19.540291"
+    },
+    {
+      "tedesco": "träume",
+      "italiano": "sogno",
+      "categoria": "Sostantivi",
+      "priorita": true,
+      "corrette": 1,
+      "sbagliate": 0,
+      "ultima_revisione": "2025-10-02T11:43:16.699842"
+    },
+    {
+      "tedesco": "Zukunft",
+      "italiano": "futuro",
+      "categoria": "Sostantivi",
+      "priorita": true,
+      "corrette": 0,
+      "sbagliate": 1,
+      "ultima_revisione": "2025-10-02T11:41:43.256134"
+    },
+    {
+      "tedesco": "froh",
+      "italiano": "felice",
+      "categoria": "Aggettivi",
+      "priorita": true,
+      "corrette": 0,
+      "sbagliate": 0,
+      "ultima_revisione": null
+    },
+    {
+      "tedesco": "zufrieden",
+      "italiano": "soddisfatto",
+      "categoria": "Aggettivi",
+      "priorita": true,
+      "corrette": 0,
+      "sbagliate": 1,
+      "ultima_revisione": "2025-10-02T11:43:32.423597"
+    },
+    {
+      "tedesco": "seiten",
+      "italiano": "pagine",
+      "categoria": "Sostantivi",
+      "priorita": true,
+      "corrette": 0,
+      "sbagliate": 0,
+      "ultima_revisione": null
+    },
+    {
+      "tedesco": "schlafen",
+      "italiano": "dormire",
+      "categoria": "Verbi",
+      "priorita": true,
+      "corrette": 0,
+      "sbagliate": 1,
+      "ultima_revisione": "2025-10-02T11:41:32.511072"
+    },
+    {
+      "tedesco": "möglichkeiten",
+      "italiano": "possibilità",
+      "categoria": "Sostantivi",
+      "priorita": true,
+      "corrette": 0,
+      "sbagliate": 0,
+      "ultima_revisione": null
+    },
+    {
+      "tedesco": "Gesicht",
+      "italiano": "volto, faccia",
+      "categoria": "Corpo",
+      "priorita": true,
+      "corrette": 0,
+      "sbagliate": 1,
+      "ultima_revisione": "2025-10-02T11:30:52.976362"
+    },
+    {
+      "tedesco": "Zahnbürste",
+      "italiano": "spazzolino da denti",
+      "categoria": "Oggetti",
+      "priorita": true,
+      "corrette": 2,
+      "sbagliate": 0,
+      "ultima_revisione": "2025-10-02T11:42:23.679052"
+    },
+    {
+      "tedesco": "Haare kämmen",
+      "italiano": "pettinarsi i capelli",
+      "categoria": "Espressioni",
+      "priorita": true,
+      "corrette": 0,
+      "sbagliate": 1,
+      "ultima_revisione": "2025-10-02T11:43:09.331983"
+    },
+    {
+      "tedesco": "Kleidung",
+      "italiano": "vestiti",
+      "categoria": "Abbigliamento",
+      "priorita": true,
+      "corrette": 1,
+      "sbagliate": 0,
+      "ultima_revisione": "2025-10-02T11:42:42.398983"
+    },
+    {
+      "tedesco": "überlegen",
+      "italiano": "riflettere, pensare a cosa fare",
+      "categoria": "Verbi",
+      "priorita": true,
+      "corrette": 0,
+      "sbagliate": 0,
+      "ultima_revisione": null
+    },
+    {
+      "tedesco": "tragen",
+      "italiano": "portare, indossare",
+      "categoria": "Verbi",
+      "priorita": true,
+      "corrette": 0,
+      "sbagliate": 1,
+      "ultima_revisione": "2025-10-02T11:42:59.719313"
+    },
+    {
+      "tedesco": "Hose",
+      "italiano": "pantaloni",
+      "categoria": "Abbigliamento",
+      "priorita": true,
+      "corrette": 0,
+      "sbagliate": 1,
+      "ultima_revisione": "2025-10-02T11:42:27.760834"
+    },
+    {
+      "tedesco": "deshalb",
+      "italiano": "perciò, quindi",
+      "categoria": "Avverbi",
+      "priorita": true,
+      "corrette": 0,
+      "sbagliate": 0,
+      "ultima_revisione": null
+    },
+    {
+      "tedesco": "während",
+      "italiano": "mentre",
+      "categoria": "Avverbi",
+      "priorita": true,
+      "corrette": 0,
+      "sbagliate": 0,
+      "ultima_revisione": null
+    },
+    {
+      "tedesco": "räumen (aufräumen)",
+      "italiano": "mettere in ordine",
+      "categoria": "Verbi",
+      "priorita": true,
+      "corrette": 0,
+      "sbagliate": 0,
+      "ultima_revisione": null
+    },
+    {
+      "tedesco": "verlassen",
+      "italiano": "lasciare, uscire da",
+      "categoria": "Verbi",
+      "priorita": true,
+      "corrette": 0,
+      "sbagliate": 1,
+      "ultima_revisione": "2025-10-02T11:42:37.748841"
+    },
+    {
+      "tedesco": "draußen",
+      "italiano": "fuori",
+      "categoria": "Avverbi",
+      "priorita": true,
+      "corrette": 0,
+      "sbagliate": 1,
+      "ultima_revisione": "2025-10-02T11:41:14.826517"
+    },
+    {
+      "tedesco": "der Himmel",
+      "italiano": "il cielo",
+      "categoria": "Natura",
+      "priorita": true,
+      "corrette": 0,
+      "sbagliate": 0,
+      "ultima_revisione": null
+    },
+    {
+      "tedesco": "Bushaltestelle",
+      "italiano": "fermata dell'autobus",
+      "categoria": "Luoghi",
+      "priorita": true,
+      "corrette": 0,
+      "sbagliate": 0,
+      "ultima_revisione": null
+    },
+    {
+      "tedesco": "warten",
+      "italiano": "aspettare",
+      "categoria": "Verbi",
+      "priorita": true,
+      "corrette": 0,
+      "sbagliate": 0,
+      "ultima_revisione": null
+    },
+    {
+      "tedesco": "manche",
+      "italiano": "alcuni",
+      "categoria": "Pronomi",
+      "priorita": true,
+      "corrette": 0,
+      "sbagliate": 0,
+      "ultima_revisione": null
+    },
+    {
+      "tedesco": "andere",
+      "italiano": "altri",
+      "categoria": "Pronomi",
+      "priorita": true,
+      "corrette": 0,
+      "sbagliate": 0,
+      "ultima_revisione": null
+    },
+    {
+      "tedesco": "wach werden",
+      "italiano": "svegliarsi",
+      "categoria": "Espressioni",
+      "priorita": false,
+      "corrette": 0,
+      "sbagliate": 0,
+      "ultima_revisione": null
+    },
+    {
+      "tedesco": "Wohnzimmer",
+      "italiano": "salotto",
+      "categoria": "Casa",
+      "priorita": false,
+      "corrette": 2,
+      "sbagliate": 0,
+      "ultima_revisione": "2025-10-02T11:42:44.647391"
+    },
+    {
+      "tedesco": "entfernt",
+      "italiano": "distante",
+      "categoria": "Aggettivi",
+      "priorita": false,
+      "corrette": 0,
+      "sbagliate": 0,
+      "ultima_revisione": null
+    },
+    {
+      "tedesco": "Das klingt toll",
+      "italiano": "sembra fantasico",
+      "categoria": "Espressioni",
+      "priorita": false,
+      "corrette": 0,
+      "sbagliate": 0,
+      "ultima_revisione": null
+    },
+    {
+      "tedesco": "Tafel",
+      "italiano": "lavagna",
+      "categoria": "Scuola",
+      "priorita": false,
+      "corrette": 0,
+      "sbagliate": 0,
+      "ultima_revisione": null
+    },
+    {
+      "tedesco": "wartet auf",
+      "italiano": "sta aspettando / essere in attesa",
+      "categoria": "Espressioni",
+      "priorita": false,
+      "corrette": 0,
+      "sbagliate": 1,
+      "ultima_revisione": "2025-10-02T11:42:07.394167"
+    },
+    {
+      "tedesco": "fühlt sich",
+      "italiano": "si sente",
+      "categoria": "Espressioni",
+      "priorita": false,
+      "corrette": 0,
+      "sbagliate": 0,
+      "ultima_revisione": null
+    },
+    {
+      "tedesco": "er weiß",
+      "italiano": "lo sa",
+      "categoria": "Espressioni",
+      "priorita": false,
+      "corrette": 0,
+      "sbagliate": 1,
+      "ultima_revisione": "2025-10-02T11:42:20.478092"
+    },
+    {
+      "tedesco": "erklären",
+      "italiano": "spiegare",
+      "categoria": "Verbi",
+      "priorita": false,
+      "corrette": 1,
+      "sbagliate": 0,
+      "ultima_revisione": "2025-10-02T11:43:38.091191"
+    },
+    {
+      "tedesco": "schauen",
+      "italiano": "vedere / dare un'occhiata / controllare",
+      "categoria": "Verbi",
+      "priorita": false,
+      "corrette": 0,
+      "sbagliate": 0,
+      "ultima_revisione": null
+    },
+    {
+      "tedesco": "völgeln",
+      "italiano": "uccelli",
+      "categoria": "Animali",
+      "priorita": false,
+      "corrette": 0,
+      "sbagliate": 1,
+      "ultima_revisione": "2025-10-02T11:42:49.449780"
+    },
+    {
+      "tedesco": "gleich",
+      "italiano": "uguale",
+      "categoria": "Aggettivi",
+      "priorita": false,
+      "corrette": 1,
+      "sbagliate": 0,
+      "ultima_revisione": "2025-10-02T11:42:32.732411"
+    },
+    {
+      "tedesco": "wichtig",
+      "italiano": "essenziale / importante",
+      "categoria": "Aggettivi",
+      "priorita": false,
+      "corrette": 1,
+      "sbagliate": 0,
+      "ultima_revisione": "2025-10-02T11:41:20.493230"
+    },
+    {
+      "tedesco": "holen",
+      "italiano": "prendere",
+      "categoria": "Verbi",
+      "priorita": false,
+      "corrette": 0,
+      "sbagliate": 0,
+      "ultima_revisione": null
+    },
+    {
+      "tedesco": "stolz",
+      "italiano": "orgoglioso",
+      "categoria": "Aggettivi",
+      "priorita": false,
+      "corrette": 1,
+      "sbagliate": 0,
+      "ultima_revisione": "2025-10-02T11:35:46.581967"
+    },
+    {
+      "tedesco": "geschichten",
+      "italiano": "storie",
+      "categoria": "Sostantivi",
+      "priorita": false,
+      "corrette": 1,
+      "sbagliate": 0,
+      "ultima_revisione": "2025-10-02T11:42:01.826940"
+    },
+    {
+      "tedesco": "dauert",
+      "italiano": "durare",
+      "categoria": "Generale",
+      "priorita": false,
+      "corrette": 0,
+      "sbagliate": 0,
+      "ultima_revisione": null
+    },
+    {
+      "tedesco": "vergessen",
+      "italiano": "dimenticare",
+      "categoria": "Generale",
+      "priorita": false,
+      "corrette": 0,
+      "sbagliate": 0,
+      "ultima_revisione": null
+    },
+    {
+      "tedesco": "genießen",
+      "italiano": "godere, gustare",
+      "categoria": "Generale",
+      "priorita": false,
+      "corrette": 0,
+      "sbagliate": 0,
+      "ultima_revisione": null
+    },
+    {
+      "tedesco": "mitnehmen",
+      "italiano": "portare con sé",
+      "categoria": "Generale",
+      "priorita": false,
+      "corrette": 0,
+      "sbagliate": 0,
+      "ultima_revisione": null
+    },
+    {
+      "tedesco": "Besuch",
+      "italiano": "visita",
+      "categoria": "Generale",
+      "priorita": false,
+      "corrette": 0,
+      "sbagliate": 0,
+      "ultima_revisione": null
+    },
+    {
+      "tedesco": "Felder",
+      "italiano": "campi",
+      "categoria": "Generale",
+      "priorita": false,
+      "corrette": 0,
+      "sbagliate": 0,
+      "ultima_revisione": null
+    },
+    {
+      "tedesco": "Bäume",
+      "italiano": "alberi",
+      "categoria": "Generale",
+      "priorita": false,
+      "corrette": 0,
+      "sbagliate": 0,
+      "ultima_revisione": null
+    },
+    {
+      "tedesco": "Kühe",
+      "italiano": "mucche",
+      "categoria": "Generale",
+      "priorita": false,
+      "corrette": 0,
+      "sbagliate": 0,
+      "ultima_revisione": null
+    },
+    {
+      "tedesco": "Pferde",
+      "italiano": "cavalli",
+      "categoria": "Generale",
+      "priorita": false,
+      "corrette": 0,
+      "sbagliate": 0,
+      "ultima_revisione": null
+    },
+    {
+      "tedesco": "Kindheit",
+      "italiano": "infanzia",
+      "categoria": "Generale",
+      "priorita": false,
+      "corrette": 0,
+      "sbagliate": 0,
+      "ultima_revisione": null
+    },
+    {
+      "tedesco": "Garten",
+      "italiano": "giardino",
+      "categoria": "Generale",
+      "priorita": false,
+      "corrette": 0,
+      "sbagliate": 0,
+      "ultima_revisione": null
+    },
+    {
+      "tedesco": "Keller",
+      "italiano": "cantina",
+      "categoria": "Generale",
+      "priorita": false,
+      "corrette": 0,
+      "sbagliate": 0,
+      "ultima_revisione": null
+    },
+    {
+      "tedesco": "Marmelade",
+      "italiano": "marmellata",
+      "categoria": "Generale",
+      "priorita": false,
+      "corrette": 0,
+      "sbagliate": 0,
+      "ultima_revisione": null
+    },
+    {
+      "tedesco": "Dinge",
+      "italiano": "cose",
+      "categoria": "Generale",
+      "priorita": false,
+      "corrette": 0,
+      "sbagliate": 0,
+      "ultima_revisione": null
+    },
+    {
+      "tedesco": "Stock",
+      "italiano": "bastone / ramo",
+      "categoria": "Generale",
+      "priorita": false,
+      "corrette": 0,
+      "sbagliate": 0,
+      "ultima_revisione": null
+    },
+    {
+      "tedesco": "Brettspiele",
+      "italiano": "giochi da tavolo",
+      "categoria": "Generale",
+      "priorita": false,
+      "corrette": 0,
+      "sbagliate": 0,
+      "ultima_revisione": null
+    },
+    {
+      "tedesco": "Regal",
+      "italiano": "scaffale",
+      "categoria": "Generale",
+      "priorita": false,
+      "corrette": 0,
+      "sbagliate": 0,
+      "ultima_revisione": null
+    },
+    {
+      "tedesco": "Spielsachen",
+      "italiano": "giocattoli",
+      "categoria": "Generale",
+      "priorita": false,
+      "corrette": 0,
+      "sbagliate": 0,
+      "ultima_revisione": null
+    },
+    {
+      "tedesco": "Essen",
+      "italiano": "cibo",
+      "categoria": "Generale",
+      "priorita": false,
+      "corrette": 0,
+      "sbagliate": 0,
+      "ultima_revisione": null
+    },
+    {
+      "tedesco": "Baum",
+      "italiano": "albero",
+      "categoria": "Generale",
+      "priorita": false,
+      "corrette": 0,
+      "sbagliate": 0,
+      "ultima_revisione": null
+    },
+    {
+      "tedesco": "Schaukel",
+      "italiano": "altalena",
+      "categoria": "Generale",
+      "priorita": false,
+      "corrette": 0,
+      "sbagliate": 0,
+      "ultima_revisione": null
+    },
+    {
+      "tedesco": "Saft",
+      "italiano": "succo",
+      "categoria": "Generale",
+      "priorita": false,
+      "corrette": 0,
+      "sbagliate": 0,
+      "ultima_revisione": null
+    },
+    {
+      "tedesco": "Mehl",
+      "italiano": "farina",
+      "categoria": "Generale",
+      "priorita": false,
+      "corrette": 0,
+      "sbagliate": 0,
+      "ultima_revisione": null
+    },
+    {
+      "tedesco": "Taschen",
+      "italiano": "borse",
+      "categoria": "Generale",
+      "priorita": false,
+      "corrette": 0,
+      "sbagliate": 0,
+      "ultima_revisione": null
+    },
+    {
+      "tedesco": "Vergangenheit",
+      "italiano": "passato",
+      "categoria": "Generale",
+      "priorita": false,
+      "corrette": 0,
+      "sbagliate": 0,
+      "ultima_revisione": null
+    },
+    {
+      "tedesco": "Wochenende",
+      "italiano": "fine settimana",
+      "categoria": "Generale",
+      "priorita": false,
+      "corrette": 0,
+      "sbagliate": 0,
+      "ultima_revisione": null
+    },
+    {
+      "tedesco": "gemütlich",
+      "italiano": "accogliente",
+      "categoria": "Generale",
+      "priorita": false,
+      "corrette": 0,
+      "sbagliate": 0,
+      "ultima_revisione": null
+    },
+    {
+      "tedesco": "ruhig",
+      "italiano": "tranquillo",
+      "categoria": "Generale",
+      "priorita": false,
+      "corrette": 0,
+      "sbagliate": 0,
+      "ultima_revisione": null
+    },
+    {
+      "tedesco": "berühmt",
+      "italiano": "famoso",
+      "categoria": "Generale",
+      "priorita": false,
+      "corrette": 0,
+      "sbagliate": 0,
+      "ultima_revisione": null
+    },
+    {
+      "tedesco": "lustig",
+      "italiano": "divertente",
+      "categoria": "Generale",
+      "priorita": false,
+      "corrette": 0,
+      "sbagliate": 0,
+      "ultima_revisione": null
+    },
+    {
+      "tedesco": "spannend",
+      "italiano": "interessante, avvincente",
+      "categoria": "Generale",
+      "priorita": false,
+      "corrette": 0,
+      "sbagliate": 0,
+      "ultima_revisione": null
+    },
+    {
+      "tedesco": "selbstgemacht",
+      "italiano": "fatto in casa",
+      "categoria": "Generale",
+      "priorita": false,
+      "corrette": 0,
+      "sbagliate": 0,
+      "ultima_revisione": null
+    },
+    {
+      "tedesco": "lecker",
+      "italiano": "delizioso",
+      "categoria": "Generale",
+      "priorita": false,
+      "corrette": 0,
+      "sbagliate": 0,
+      "ultima_revisione": null
+    },
+    {
+      "tedesco": "dorthin",
+      "italiano": "lì, verso quel luogo",
+      "categoria": "Generale",
+      "priorita": false,
+      "corrette": 0,
+      "sbagliate": 0,
+      "ultima_revisione": null
+    },
+    {
+      "tedesco": "fast",
+      "italiano": "quasi",
+      "categoria": "Generale",
+      "priorita": false,
+      "corrette": 0,
+      "sbagliate": 0,
+      "ultima_revisione": null
+    },
+    {
+      "tedesco": "vielleicht",
+      "italiano": "forse, magari",
+      "categoria": "Generale",
+      "priorita": false,
+      "corrette": 0,
+      "sbagliate": 0,
+      "ultima_revisione": null
+    },
+    {
+      "tedesco": "wieder",
+      "italiano": "di nuovo",
+      "categoria": "Generale",
+      "priorita": false,
+      "corrette": 0,
+      "sbagliate": 0,
+      "ultima_revisione": null
+    },
+    {
+      "tedesco": "Das stimmt!",
+      "italiano": "è vero!",
+      "categoria": "Generale",
+      "priorita": false,
+      "corrette": 0,
+      "sbagliate": 0,
+      "ultima_revisione": null
+    },
+    {
+      "tedesco": "Bevor",
+      "italiano": "prima che",
+      "categoria": "Generale",
+      "priorita": false,
+      "corrette": 0,
+      "sbagliate": 0,
+      "ultima_revisione": null
+    },
+    {
+      "tedesco": "Sonst",
+      "italiano": "altrimenti",
+      "categoria": "Generale",
+      "priorita": false,
+      "corrette": 0,
+      "sbagliate": 0,
+      "ultima_revisione": null
+    }
+  ]
+}

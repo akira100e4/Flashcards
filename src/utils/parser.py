@@ -12,7 +12,9 @@ class FlashcardParser:
     @staticmethod
     def pulisci_linea(linea: str) -> str:
         """Rimuove bullet points, asterischi e spazi extra"""
+        # Rimuove bullet points all'inizio
         linea = re.sub(r'^\s*[*\-•]\s*', '', linea)
+        # Rimuove spazi multipli
         linea = re.sub(r'\s+', ' ', linea)
         return linea.strip()
     
@@ -22,15 +24,38 @@ class FlashcardParser:
         return '**' in linea_originale
     
     @staticmethod
-    def estrai_coppia(linea: str) -> Tuple[str, str, bool]:
+    def estrai_categoria(linea: str) -> Tuple[str, str]:
+        """
+        Estrae la categoria dalla linea se presente
+        
+        Formato: [Categoria] resto_della_linea
+        
+        Returns:
+            Tupla (categoria, linea_senza_categoria)
+        """
+        match = re.match(r'^\[([^\]]+)\]\s*(.+)$', linea)
+        if match:
+            return match.group(1).strip(), match.group(2).strip()
+        return "Generale", linea
+    
+    @staticmethod
+    def estrai_coppia(linea: str) -> Tuple[str, str, str, bool]:
         """
         Estrae la coppia tedesco-italiano da una linea
         
+        Supporta formati:
+        - [Categoria] **tedesco → italiano**
+        - [Categoria] tedesco → italiano
+        - tedesco → italiano (categoria = "Generale")
+        
         Returns:
-            Tupla (tedesco, italiano, ha_priorita)
+            Tupla (tedesco, italiano, categoria, ha_priorita)
         """
         linea_originale = linea
         linea_pulita = FlashcardParser.pulisci_linea(linea)
+        
+        # Estrai categoria
+        categoria, linea_pulita = FlashcardParser.estrai_categoria(linea_pulita)
         
         # Rimuove gli asterischi per il parsing
         linea_pulita = linea_pulita.replace('**', '')
@@ -50,21 +75,18 @@ class FlashcardParser:
         if not tedesco or not italiano:
             raise ValueError(f"Parola tedesca o italiana vuota nella linea: {linea}")
         
-        return tedesco, italiano, priorita
+        return tedesco, italiano, categoria, priorita
     
     @staticmethod
-    def parse_testo(testo: str, categoria: str = "Generale") -> List[Flashcard]:
+    def parse_testo(testo: str) -> List[Flashcard]:
         """
         Parse un testo con multiple flashcards
         
         Formato supportato:
-        * **weit→ Lontano**
-        * üben → esercitare
-        Nachmittag → pomeriggio
-        
-        Args:
-            testo: Il testo da parsare
-            categoria: La categoria da assegnare a tutte le flashcards
+        [Verbi] **gehen → andare**
+        [Verbi] fahren → guidare
+        [Sostantivi] Haus → casa
+        * weit → Lontano (categoria automatica: Generale)
         
         Returns:
             Lista di oggetti Flashcard
@@ -84,11 +106,11 @@ class FlashcardParser:
                 continue
             
             try:
-                tedesco, italiano, priorita = FlashcardParser.estrai_coppia(linea)
+                tedesco, italiano, categoria, priorita = FlashcardParser.estrai_coppia(linea)
                 flashcard = Flashcard(
                     tedesco=tedesco,
                     italiano=italiano,
-                    categoria=categoria,  # Usa la categoria passata come parametro
+                    categoria=categoria,
                     priorita=priorita
                 )
                 flashcards.append(flashcard)
@@ -102,7 +124,8 @@ class FlashcardParser:
     def flashcard_to_text(flashcard: Flashcard) -> str:
         """Converte una flashcard in formato testo"""
         asterischi = "**" if flashcard.priorita else ""
-        return f"{asterischi}{flashcard.tedesco} → {flashcard.italiano}{asterischi}"
+        categoria_str = f"[{flashcard.categoria}] " if flashcard.categoria != "Generale" else ""
+        return f"{categoria_str}{asterischi}{flashcard.tedesco} → {flashcard.italiano}{asterischi}"
     
     @staticmethod
     def collezione_to_text(flashcards: List[Flashcard]) -> str:
